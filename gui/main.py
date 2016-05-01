@@ -62,7 +62,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.terminalLayout.addWidget(self.terminal)
         self.terminal.show()
 
-        self.collectionFrame.hide()
+     #   self.collectionFrame.hide()
 
         # Arguments
         self.args = args
@@ -97,12 +97,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.pushBrowseReleaseFiles.clicked.connect(self.slotBrowseReleaseFiles)
 
         # Change Package Selection
-        self.pushAddCollection.clicked.connect(self.slotAddPackageCollection)
-        self.pushModifyCollection.clicked.connect(self.slotModifyPackageCollection)
-        self.pushRemoveCollection.clicked.connect(self.slotRemovePackageCollection)
-        self.pushSetDefaultCollection.clicked.connect(self.slotSetDefaultCollection)
-        self.checkCollection.stateChanged[int].connect(self.slotShowPackageCollection)
-        self.listPackageCollection.itemClicked[QListWidgetItem].connect(self.slotClickedCollection)
+      #  self.pushAddCollection.clicked.connect(self.slotAddPackageCollection)
+       # self.pushModifyCollection.clicked.connect(self.slotModifyPackageCollection)
+       # self.pushRemoveCollection.clicked.connect(self.slotRemovePackageCollection)
+       # self.pushSetDefaultCollection.clicked.connect(self.slotSetDefaultCollection)
+       # self.checkCollection.stateChanged[int].connect(self.slotShowPackageCollection)
+       # self.listPackageCollection.itemClicked[QListWidgetItem].connect(self.slotClickedCollection)
 
         # Initialize
         self.initialize()

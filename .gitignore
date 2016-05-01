@@ -5,3 +5,4 @@
 *.svn
 *~
 .dir*
+raw_rc.pyc
