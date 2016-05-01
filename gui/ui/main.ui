@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Pardusman</string>
+   <string>Pisiman</string>
   </property>
   <property name="windowIcon">
    <iconset resource="raw.qrc">
@@ -282,12 +282,12 @@
      <x>0</x>
      <y>0</y>
      <width>619</width>
-     <height>20</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>Fi&amp;le</string>
     </property>
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
@@ -299,7 +299,7 @@
    </widget>
    <widget class="QMenu" name="menuProject">
     <property name="title">
-     <string>Project</string>
+     <string>Pro&amp;ject</string>
     </property>
     <addaction name="actionUpdateRepo"/>
     <addaction name="separator"/>
@@ -318,7 +318,7 @@
      <normaloff>:/raw/pics/document-new.png</normaloff>:/raw/pics/document-new.png</iconset>
    </property>
    <property name="text">
-    <string>New</string>
+    <string>&amp;New</string>
    </property>
   </action>
   <action name="actionOpen">
@@ -327,7 +327,7 @@
      <normaloff>:/raw/pics/document-open.png</normaloff>:/raw/pics/document-open.png</iconset>
    </property>
    <property name="text">
-    <string>Open...</string>
+    <string>&amp;Open...</string>
    </property>
   </action>
   <action name="actionSave">
@@ -336,7 +336,7 @@
      <normaloff>:/raw/pics/document-save.png</normaloff>:/raw/pics/document-save.png</iconset>
    </property>
    <property name="text">
-    <string>Save</string>
+    <string>&amp;Save</string>
    </property>
   </action>
   <action name="actionSaveAs">
@@ -345,7 +345,7 @@
      <normaloff>:/raw/pics/document-save-as.png</normaloff>:/raw/pics/document-save-as.png</iconset>
    </property>
    <property name="text">
-    <string>Save As...</string>
+    <string>Sa&amp;ve As...</string>
    </property>
   </action>
   <action name="actionExit">
@@ -354,7 +354,7 @@
      <normaloff>:/raw/pics/application-exit.png</normaloff>:/raw/pics/application-exit.png</iconset>
    </property>
    <property name="text">
-    <string>Exit</string>
+    <string>&amp;Exit</string>
    </property>
   </action>
   <action name="actionUpdateRepo">
@@ -363,7 +363,7 @@
      <normaloff>:/raw/pics/view-refresh.png</normaloff>:/raw/pics/view-refresh.png</iconset>
    </property>
    <property name="text">
-    <string>Update Repo</string>
+    <string>&amp;Update Repo</string>
    </property>
   </action>
   <action name="actionPackages">
@@ -372,7 +372,7 @@
      <normaloff>:/raw/pics/applications-other.png</normaloff>:/raw/pics/applications-other.png</iconset>
    </property>
    <property name="text">
-    <string>Packages...</string>
+    <string>&amp;Packages...</string>
    </property>
   </action>
   <action name="actionInstallationImagePackages">
@@ -381,7 +381,7 @@
      <normaloff>:/raw/pics/applications-other.png</normaloff>:/raw/pics/applications-other.png</iconset>
    </property>
    <property name="text">
-    <string>Installation Image Packages...</string>
+    <string>&amp;Installation Image Packages...</string>
    </property>
   </action>
   <action name="actionLanguages">
@@ -390,7 +390,7 @@
      <normaloff>:/raw/pics/applications-education-language.png</normaloff>:/raw/pics/applications-education-language.png</iconset>
    </property>
    <property name="text">
-    <string>Languages...</string>
+    <string>&amp;Languages...</string>
    </property>
   </action>
   <action name="actionMakeImage">
@@ -399,7 +399,7 @@
      <normaloff>:/raw/pics/media-optical.png</normaloff>:/raw/pics/media-optical.png</iconset>
    </property>
    <property name="text">
-    <string>Make Image</string>
+    <string>&amp;Make Image</string>
    </property>
   </action>
  </widget>

@@ -9,3 +9,4 @@ Requirements
  - pyqtermwidget5  (Required for GUI)
  - python-sip
  - python-qt5
+ - kernel >4.0
