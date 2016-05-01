@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>619</width>
-    <height>702</height>
+    <width>846</width>
+    <height>533</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -202,76 +202,6 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QFrame" name="collectionFrame">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_4">
-       <item row="0" column="0">
-        <layout class="QGridLayout" name="gridLayout_3">
-         <item row="1" column="0" rowspan="4">
-          <widget class="QListWidget" name="listPackageCollection"/>
-         </item>
-         <item row="2" column="1">
-          <widget class="QPushButton" name="pushModifyCollection">
-           <property name="text">
-            <string>Modify</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_9">
-           <property name="text">
-            <string>Installation Collection List</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QPushButton" name="pushSetDefaultCollection">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="text">
-            <string>Set as Default</string>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QPushButton" name="pushAddCollection">
-           <property name="text">
-            <string>Add</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QPushButton" name="pushRemoveCollection">
-           <property name="text">
-            <string>Remove</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-      <zorder></zorder>
-     </widget>
-    </item>
-    <item row="2" column="0">
      <layout class="QVBoxLayout" name="terminalLayout"/>
     </item>
    </layout>
@@ -281,7 +211,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>619</width>
+     <width>846</width>
      <height>27</height>
     </rect>
    </property>
@@ -416,11 +346,6 @@
   <tabstop>pushBrowsePluginPackage</tabstop>
   <tabstop>pushBrowseWorkFolder</tabstop>
   <tabstop>comboCompression</tabstop>
-  <tabstop>listPackageCollection</tabstop>
-  <tabstop>pushAddCollection</tabstop>
-  <tabstop>pushModifyCollection</tabstop>
-  <tabstop>pushRemoveCollection</tabstop>
-  <tabstop>pushSetDefaultCollection</tabstop>
  </tabstops>
  <resources>
   <include location="raw.qrc"/>
