@@ -318,7 +318,20 @@ class Project:
         languageSelectionTag = doc.getTag("LanguageSelection")
         if languageSelectionTag:
             self.default_language, self.selected_languages = __languageSelection(languageSelectionTag)
+            
+        rootImagePackagesTag = doc.getTag("RootImagePackages")
+        if rootImagePackagesTag:
+            uri, \
+            self.selected_root_image_components, \
+            self.selected_root_image_packages, \
+            self.all_root_image_packages = __packageSelection(rootImagePackagesTag)
 
+            self.selected_root_image_components.sort()
+            self.selected_root_image_packages.sort()
+          #  self.selected_components += self.selected_root_image_components
+            self.selected_components.sort()
+          #  self.selected_packages += self.selected_root_image_packages
+            self.selected_packages.sort()     
 
         installImagePackagesTag = doc.getTag("InstallImagePackages")
         if installImagePackagesTag:
@@ -334,6 +347,8 @@ class Project:
             self.selected_components.sort()
             self.selected_packages += self.selected_install_image_packages
             self.selected_packages.sort()
+            
+       
 
     def save(self, filename=None):
         # Save the data into filename as pardusman project file
@@ -408,7 +423,7 @@ class Project:
             self.all_install_image_packages.sort()
 
             package_selection = doc.insertTag("InstallImagePackages")
-
+            
             # Insert components if any
             for item in self.selected_install_image_components:
                 package_selection.insertTag("SelectedComponent").insertData(item)
@@ -418,7 +433,23 @@ class Project:
 
             for item in self.all_install_image_packages:
                 package_selection.insertTag("Package").insertData(item)
+                
+        if self.all_root_image_packages:
+          #  self.selected_root_image_components.sort()
+           # self.selected_root_image_packages.sort()
 
+            package_selection = doc.insertTag("RootImagePackages")
+            
+            # Insert components if any
+            for item in self.selected_install_image_components:
+                package_selection.insertTag("SelectedComponent").insertData(item)
+
+            for item in self.selected_install_image_packages:
+                package_selection.insertTag("SelectedPackage").insertData(item)
+
+            for item in self.all_install_image_packages:
+                package_selection.insertTag("Package").insertData(item)
+                
         if self.default_language:
             # Set the default language
             langs = doc.insertTag("LanguageSelection")

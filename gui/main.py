@@ -420,15 +420,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.comboType.setCurrentIndex(["install", "live"].index(self.project.type))
         self.comboCompression.setCurrentIndex(["xz","gzip", "lzma", "lzo"].index(self.project.squashfs_comp_type))
 
-        self.listPackageCollection.clear()
-        if self.project.package_collections:
-            for index, collection in enumerate(self.project.package_collections):
-                PackageCollectionListItem(self.listPackageCollection, collection, self.project.default_language)
-                if collection.default:
-                    self.listPackageCollection.setCurrentRow(index)
-            self.checkCollection.setChecked(True)
-        else:
-            self.checkCollection.setChecked(False)
 
     def updateRepo(self, update_repo=True):
         """
