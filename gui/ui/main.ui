@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>647</width>
-    <height>393</height>
+    <height>405</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,31 +36,10 @@
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
         <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label">
+         <item row="2" column="3">
+          <widget class="QPushButton" name="pushBrowseRepository">
            <property name="text">
-            <string>Image title</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2" colspan="2">
-          <widget class="QLineEdit" name="lineTitle">
-           <property name="toolTip">
-            <string>The title of the Pardus image</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>Extra parameters</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2" colspan="2">
-          <widget class="QLineEdit" name="lineParameters">
-           <property name="toolTip">
-            <string>Extra parameters to pass to the kernel command line during boot.</string>
+            <string>Browse</string>
            </property>
           </widget>
          </item>
@@ -71,6 +50,20 @@
            </property>
           </widget>
          </item>
+         <item row="5" column="3">
+          <widget class="QPushButton" name="pushBrowseWorkFolder">
+           <property name="text">
+            <string>Browse</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Image title</string>
+           </property>
+          </widget>
+         </item>
          <item row="2" column="2">
           <widget class="QLineEdit" name="lineRepository">
            <property name="toolTip">
@@ -78,29 +71,8 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="3">
-          <widget class="QPushButton" name="pushBrowseRepository">
-           <property name="text">
-            <string>Browse</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label_4">
-           <property name="text">
-            <string>Release files</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="2">
-          <widget class="QLineEdit" name="lineReleaseFiles">
-           <property name="toolTip">
-            <string>Path to the local directory which contains metadata about the image like the release notes, etc.</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="3">
-          <widget class="QPushButton" name="pushBrowseReleaseFiles">
+         <item row="4" column="3">
+          <widget class="QPushButton" name="pushBrowsePluginPackage">
            <property name="text">
             <string>Browse</string>
            </property>
@@ -113,23 +85,6 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="2">
-          <widget class="QLineEdit" name="linePluginPackage"/>
-         </item>
-         <item row="4" column="3">
-          <widget class="QPushButton" name="pushBrowsePluginPackage">
-           <property name="text">
-            <string>Browse</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="0">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Work folder</string>
-           </property>
-          </widget>
-         </item>
          <item row="5" column="2">
           <widget class="QLineEdit" name="lineWorkFolder">
            <property name="toolTip">
@@ -137,32 +92,11 @@
            </property>
           </widget>
          </item>
-         <item row="5" column="3">
-          <widget class="QPushButton" name="pushBrowseWorkFolder">
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_4">
            <property name="text">
-            <string>Browse</string>
+            <string>Release files</string>
            </property>
-          </widget>
-         </item>
-         <item row="6" column="0">
-          <widget class="QLabel" name="label_7">
-           <property name="text">
-            <string>Image type</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="2">
-          <widget class="QComboBox" name="comboType">
-           <item>
-            <property name="text">
-             <string>Installation Image</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Live Image</string>
-            </property>
-           </item>
           </widget>
          </item>
          <item row="6" column="3">
@@ -189,10 +123,69 @@
            </item>
           </widget>
          </item>
-         <item row="7" column="0">
-          <widget class="QCheckBox" name="checkCollection">
+         <item row="5" column="0">
+          <widget class="QLabel" name="label_2">
            <property name="text">
-            <string>Collection Base</string>
+            <string>Work folder</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="2">
+          <widget class="QComboBox" name="comboType">
+           <item>
+            <property name="text">
+             <string>Installation Image</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Live Image</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="2" colspan="2">
+          <widget class="QLineEdit" name="lineParameters">
+           <property name="toolTip">
+            <string>Extra parameters to pass to the kernel command line during boot.</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2" colspan="2">
+          <widget class="QLineEdit" name="lineTitle">
+           <property name="toolTip">
+            <string>The title of the Pardus image</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0">
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>Image type</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="2">
+          <widget class="QLineEdit" name="linePluginPackage"/>
+         </item>
+         <item row="3" column="3">
+          <widget class="QPushButton" name="pushBrowseReleaseFiles">
+           <property name="text">
+            <string>Browse</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>Extra parameters</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="2">
+          <widget class="QLineEdit" name="lineReleaseFiles">
+           <property name="toolTip">
+            <string>Path to the local directory which contains metadata about the image like the release notes, etc.</string>
            </property>
           </widget>
          </item>
@@ -238,6 +231,7 @@
     <addaction name="actionLanguages"/>
     <addaction name="separator"/>
     <addaction name="actionMakeImage"/>
+    <addaction name="actionRootImagePackages"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuProject"/>
@@ -330,6 +324,15 @@
    </property>
    <property name="text">
     <string>&amp;Make Image</string>
+   </property>
+  </action>
+  <action name="actionRootImagePackages">
+   <property name="icon">
+    <iconset resource="raw.qrc">
+     <normaloff>:/raw/pics/applications-other.png</normaloff>:/raw/pics/applications-other.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Root Image Packages...</string>
    </property>
   </action>
  </widget>

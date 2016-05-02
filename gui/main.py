@@ -88,6 +88,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionLanguages.triggered.connect(self.slotSelectLanguages)
         self.actionPackages.triggered.connect(self.slotSelectPackages)
         self.actionInstallationImagePackages.triggered.connect(self.slotSelectInstallImagePackages)
+        self.actionRootImagePackages.triggered.connect(self.slotSelectRootImagePackages)
         self.actionMakeImage.triggered.connect(self.slotMakeImage)
 
         # Browse buttons
@@ -315,6 +316,27 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.project.selected_install_image_packages = dialog.packages
             self.project.selected_install_image_components = dialog.components
             self.project.all_install_image_packages = dialog.all_packages
+            
+            
+    def slotSelectRootImagePackages(self):
+        """
+            "Installation Image Packages..." menu item fires this function.
+        """
+        if not self.repo:
+            if not self.checkProject():
+                return
+            if not self.updateRepo():
+                return
+
+        dialog = PackagesDialog(self, \
+                                self.repo, \
+                                self.project.selected_root_image_packages, \
+                                self.project.selected_root_image_components)
+
+        if dialog.exec_():
+            self.project.selected_root_image_packages = dialog.packages
+            self.project.selected_root_image_components = dialog.components
+            self.project.all_install_image_packages = dialog.all_packages            
 
     def slotUpdateRepo(self):
         """
@@ -380,10 +402,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.project.extra_params = unicode(self.lineParameters.text())
         self.project.type = ["install", "live"][self.comboType.currentIndex()]
         self.project.squashfs_comp_type = ["xz", "gzip", "lzma", "lzo"][self.comboCompression.currentIndex()]
-        if self.checkCollection.isChecked():
-            self.updateCollection()
-        else:
-            self.listPackageCollection.clear()
+     #   if self.checkCollection.isChecked():
+        #    self.updateCollection()
+      #  else:
+       #     self.listPackageCollection.clear()
 
     def loadProject(self):
         """

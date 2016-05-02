@@ -188,6 +188,8 @@ class Project:
         self.missing_components = []
         self.selected_install_image_components = []
         self.selected_install_image_packages = []
+        self.selected_root_image_components = []
+        self.selected_root_image_packages = []
         self.all_install_image_packages = []
 
     def guessReleaseFiles(self):
