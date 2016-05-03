@@ -88,7 +88,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionLanguages.triggered.connect(self.slotSelectLanguages)
         self.actionPackages.triggered.connect(self.slotSelectPackages)
         self.actionInstallationImagePackages.triggered.connect(self.slotSelectInstallImagePackages)
-        self.actionRootImagePackages.triggered.connect(self.slotSelectRootImagePackages)
+        self.actionLivecdImagePackages.triggered.connect(self.slotSelectLivecdImagePackages)
+        self.actionDesktopImagePackages.triggered.connect(self.slotSelectDesktopImagePackages)
         self.actionMakeImage.triggered.connect(self.slotMakeImage)
 
         # Browse buttons
@@ -318,7 +319,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.project.all_install_image_packages = dialog.all_packages
             
             
-    def slotSelectRootImagePackages(self):
+    def slotSelectLivecdImagePackages(self):
         """
             "Installation Image Packages..." menu item fires this function.
         """
@@ -330,14 +331,34 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         dialog = PackagesDialog(self, \
                                 self.repo, \
-                                self.project.selected_root_image_packages, \
-                                self.project.selected_root_image_components)
+                                self.project.selected_livecd_image_packages, \
+                                self.project.selected_livecd_image_components)
 
         if dialog.exec_():
-            self.project.selected_root_image_packages = dialog.packages
-            self.project.selected_root_image_components = dialog.components
-            self.project.all_root_image_packages = dialog.all_packages            
+            self.project.selected_livecd_image_packages = dialog.packages
+            self.project.selected_livecd_image_components = dialog.components
+            self.project.all_livecd_image_packages = dialog.all_packages   
+            
+    def slotSelectDesktopImagePackages(self):
+        """
+            "Installation Image Packages..." menu item fires this function.
+        """
+        if not self.repo:
+            if not self.checkProject():
+                return
+            if not self.updateRepo():
+                return
 
+        dialog = PackagesDialog(self, \
+                                self.repo, \
+                                self.project.selected_desktop_image_packages, \
+                                self.project.selected_desktop_image_components)
+
+        if dialog.exec_():
+            self.project.selected_desktop_image_packages = dialog.packages
+            self.project.selected_desktop_image_components = dialog.components
+            self.project.all_desktop_image_packages = dialog.all_packages 
+            
     def slotUpdateRepo(self):
         """
             Update repository button fires this function.

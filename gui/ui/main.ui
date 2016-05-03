@@ -95,7 +95,7 @@
          <item row="3" column="0">
           <widget class="QLabel" name="label_4">
            <property name="text">
-            <string>Release files</string>
+            <string>Config files</string>
            </property>
           </widget>
          </item>
@@ -226,12 +226,12 @@
     </property>
     <addaction name="actionUpdateRepo"/>
     <addaction name="separator"/>
-    <addaction name="actionPackages"/>
     <addaction name="actionInstallationImagePackages"/>
+    <addaction name="actionDesktopImagePackages"/>
+    <addaction name="actionLivecdImagePackages"/>
     <addaction name="actionLanguages"/>
     <addaction name="separator"/>
     <addaction name="actionMakeImage"/>
-    <addaction name="actionRootImagePackages"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuProject"/>
@@ -305,7 +305,7 @@
      <normaloff>:/raw/pics/applications-other.png</normaloff>:/raw/pics/applications-other.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Installation Image Packages...</string>
+    <string>&amp;Root Image Packages...</string>
    </property>
   </action>
   <action name="actionLanguages">
@@ -326,13 +326,22 @@
     <string>&amp;Make Image</string>
    </property>
   </action>
-  <action name="actionRootImagePackages">
+  <action name="actionLivecdImagePackages">
    <property name="icon">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/applications-other.png</normaloff>:/raw/pics/applications-other.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Root Image Packages...</string>
+    <string>&amp;Live Util Packages</string>
+   </property>
+  </action>
+  <action name="actionDesktopImagePackages">
+   <property name="icon">
+    <iconset resource="raw.qrc">
+     <normaloff>:/raw/pics/applications-other.png</normaloff>:/raw/pics/applications-other.png</iconset>
+   </property>
+   <property name="text">
+    <string>Desktop Image Packages</string>
    </property>
   </action>
  </widget>

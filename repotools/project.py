@@ -188,8 +188,10 @@ class Project:
         self.missing_components = []
         self.selected_install_image_components = []
         self.selected_install_image_packages = []
-        self.selected_root_image_components = []
-        self.selected_root_image_packages = []
+        self.selected_livecd_image_components = []
+        self.selected_livecd_image_packages = []
+        self.selected_desktop_image_components = []
+        self.selected_desktop_image_packages = []
         self.all_install_image_packages = []
 
     def guessReleaseFiles(self):
@@ -209,7 +211,7 @@ class Project:
             raise
         except piksemel.ParseError:
             raise ExProjectBogus
-        if doc.name() != "PardusmanProject":
+        if doc.name() != "PisiManProject":
             raise ExProjectBogus
 
         self.reset()
@@ -319,16 +321,29 @@ class Project:
         if languageSelectionTag:
             self.default_language, self.selected_languages = __languageSelection(languageSelectionTag)
             
-        rootImagePackagesTag = doc.getTag("RootImagePackages")
-        if rootImagePackagesTag:
+        livecdImagePackagesTag = doc.getTag("LivecdImagePackages")
+        if livecdImagePackagesTag:
             uri, \
-            self.selected_root_image_components, \
-            self.selected_root_image_packages, \
-            self.all_root_image_packages = __packageSelection(rootImagePackagesTag)
+            self.selected_livecd_image_components, \
+            self.selected_livecd_image_packages, \
+            self.all_livecd_image_packages = __packageSelection(livecdImagePackagesTag)
 
-            self.selected_root_image_components.sort()
-            self.selected_root_image_packages.sort()
-            self.all_root_image_packages.sort()
+            self.selected_livecd_image_components.sort()
+            self.selected_livecd_image_packages.sort()
+            self.all_livecd_image_packages.sort()
+            
+            
+        desktopImagePackagesTag = doc.getTag("DesktopImagePackages")
+        if desktopImagePackagesTag:
+            uri, \
+            self.selected_desktop_image_components, \
+            self.selected_desktop_image_packages, \
+            self.all_desktop_image_packages = __packageSelection(desktopImagePackagesTag)
+
+            self.selected_desktop_image_components.sort()
+            self.selected_desktop_image_packages.sort()
+            self.all_desktop_image_packages.sort()           
+            
 
         installImagePackagesTag = doc.getTag("InstallImagePackages")
         
@@ -347,7 +362,7 @@ class Project:
 
     def save(self, filename=None):
         # Save the data into filename as pardusman project file
-        doc = piksemel.newDocument("PardusmanProject")
+        doc = piksemel.newDocument("PisiManProject")
 
         doc.setAttribute("type", self.type)
         doc.setAttribute("compression", str(self.squashfs_comp_type))
@@ -429,22 +444,39 @@ class Project:
             for item in self.all_install_image_packages:
                 package_selection.insertTag("Package").insertData(item)
                 
-        if self.all_root_image_packages:
-            self.selected_root_image_components.sort()
-            self.selected_root_image_packages.sort()
-            self.all_root_image_packages.sort()
+        if self.all_livecd_image_packages:
+            self.selected_livecd_image_components.sort()
+            self.selected_livecd_image_packages.sort()
+            self.all_livecd_image_packages.sort()
              
-            package_selection = doc.insertTag("RootImagePackages")
+            package_selection = doc.insertTag("LivecdImagePackages")
             
             # Insert components if any
-            for item in self.selected_root_image_components:
+            for item in self.selected_livecd_image_components:
                 package_selection.insertTag("SelectedComponent").insertData(item)
 
-            for item in self.selected_root_image_packages:
+            for item in self.selected_livecd_image_packages:
                 package_selection.insertTag("SelectedPackage").insertData(item)
 
-            for item in self.all_root_image_packages:
+            for item in self.all_livecd_image_packages:
                 package_selection.insertTag("Package").insertData(item)
+                
+        if self.all_desktop_image_packages:
+            self.selected_desktop_image_components.sort()
+            self.selected_desktop_image_packages.sort()
+            self.all_desktop_image_packages.sort()
+             
+            package_selection = doc.insertTag("DesktopImagePackages")
+            
+            # Insert components if any
+            for item in self.selected_desktop_image_components:
+                package_selection.insertTag("SelectedComponent").insertData(item)
+
+            for item in self.selected_desktop_image_packages:
+                package_selection.insertTag("SelectedPackage").insertData(item)
+
+            for item in self.all_desktop_image_packages:
+                package_selection.insertTag("Package").insertData(item)                
                 
         if self.default_language:
             # Set the default language
