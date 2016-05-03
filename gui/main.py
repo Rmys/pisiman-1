@@ -96,7 +96,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.pushBrowseRepository.clicked.connect(self.slotBrowseRepository)
         self.pushBrowseWorkFolder.clicked.connect(self.slotBrowseWorkFolder)
         self.pushBrowsePluginPackage.clicked.connect(self.slotBrowsePluginPackage)
-        self.pushBrowseReleaseFiles.clicked.connect(self.slotBrowseReleaseFiles)
+        self.pushBrowseConfigFiles.clicked.connect(self.slotBrowseConfigFiles)
 
         # Change Package Selection
       #  self.pushAddCollection.clicked.connect(self.slotAddPackageCollection)
@@ -188,13 +188,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if filename:
             self.linePluginPackage.setText(filename)
 
-    def slotBrowseReleaseFiles(self):
+    def slotBrowseConfigFiles(self):
         """
             Browse release files button fires this function.
         """
         directory = QFileDialog.getExistingDirectory(self, "")
         if directory:
-            self.lineReleaseFiles.setText(directory)
+            self.lineConfigFiles.setText(directory)
 
     def slotBrowseWorkFolder(self):
         """

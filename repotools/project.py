@@ -172,7 +172,7 @@ class Project:
         self.filename = None
         self.title = ""
         self.work_dir = ""
-        self.release_files = ""
+        self.config_files = ""
         self.repo_uri = ""
         self.type = "install"
         self.squashfs_comp_type = "xz"
@@ -236,7 +236,11 @@ class Project:
         self.work_dir = doc.getTagData("WorkDir")
         if not self.work_dir:
             self.work_dir = ""
-
+            
+        self.config_files = doc.getTagData("ConfigFiles")
+        if not self.config_files:
+            self.config_files = ""      
+            
         def __packageSelection(node):
             # Fill in the packages
             selectedComponents = [ ]
@@ -371,6 +375,10 @@ class Project:
             doc.insertTag("Title").insertData(self.title)
         if self.work_dir:
             doc.insertTag("WorkDir").insertData(self.work_dir)
+            
+        if self.config_files:
+            doc.insertTag("ConfigFiles").insertData(self.config_files)            
+            
         if self.release_files:
             doc.insertTag("ReleaseFiles").insertData(self.release_files)
         if self.plugin_package:

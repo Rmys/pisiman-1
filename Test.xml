@@ -1,7 +1,7 @@
 <PisiManProject type="install" compression="xz">
-    <Title>sdfsdf</Title>
-    <WorkDir>/tmp/lsaad</WorkDir>
-    <ReleaseFiles>None</ReleaseFiles>
+    <Title>Test</Title>
+    <WorkDir>/tmp/lsdlfjk</WorkDir>
+    <ConfigFiles>/home/erturk/git/pisiman/conf</ConfigFiles>
     <PackageSelection repo_uri="http://packages.pisilinux.org/repositories/1.0/stable/x86_64/pisi-index.xml.xz"/>
     <InstallImagePackages>
         <SelectedComponent>system.base</SelectedComponent>
@@ -175,31 +175,156 @@
         <Package>zlib</Package>
     </InstallImagePackages>
     <LivecdImagePackages>
-        <SelectedPackage>gloox</SelectedPackage>
-        <Package>autogen</Package>
+        <SelectedPackage>zenmap</SelectedPackage>
+        <Package>acl</Package>
+        <Package>alsa-lib</Package>
+        <Package>apr</Package>
+        <Package>apr-util</Package>
+        <Package>atk</Package>
+        <Package>attr</Package>
+        <Package>avahi</Package>
+        <Package>avahi-glib</Package>
+        <Package>avahi-libs</Package>
+        <Package>blas</Package>
+        <Package>bluez</Package>
+        <Package>bluez-libs</Package>
         <Package>bzip2</Package>
         <Package>ca-certificates</Package>
+        <Package>cairo</Package>
+        <Package>cdparanoia</Package>
+        <Package>cracklib</Package>
+        <Package>cups</Package>
+        <Package>cyrus-sasl</Package>
+        <Package>dbus</Package>
+        <Package>dejavu-fonts</Package>
+        <Package>e2fsprogs</Package>
+        <Package>elfutils</Package>
         <Package>expat</Package>
-        <Package>gc</Package>
+        <Package>flac</Package>
+        <Package>fontconfig</Package>
+        <Package>freeglut</Package>
+        <Package>freetype</Package>
+        <Package>gamin</Package>
+        <Package>gconf</Package>
         <Package>gdbm</Package>
-        <Package>gmp</Package>
-        <Package>gnutls</Package>
-        <Package>guile</Package>
+        <Package>gdk-pixbuf</Package>
+        <Package>gettext</Package>
+        <Package>glib2</Package>
+        <Package>glibc</Package>
+        <Package>gnome-vfs</Package>
+        <Package>gobject-introspection</Package>
+        <Package>graphite2</Package>
+        <Package>gst-plugins-base</Package>
+        <Package>gstreamer</Package>
+        <Package>gtk-theme-mediterranean</Package>
+        <Package>gtk2</Package>
+        <Package>gtk2-engines-murrine</Package>
+        <Package>harfbuzz</Package>
+        <Package>icu4c</Package>
+        <Package>jasper</Package>
+        <Package>jbigkit</Package>
+        <Package>keyutils</Package>
+        <Package>lapack</Package>
+        <Package>libIDL</Package>
+        <Package>libX11</Package>
+        <Package>libXau</Package>
+        <Package>libXcomposite</Package>
+        <Package>libXcursor</Package>
+        <Package>libXdamage</Package>
+        <Package>libXdmcp</Package>
+        <Package>libXext</Package>
+        <Package>libXfixes</Package>
+        <Package>libXft</Package>
+        <Package>libXi</Package>
+        <Package>libXinerama</Package>
+        <Package>libXrandr</Package>
+        <Package>libXrender</Package>
+        <Package>libXv</Package>
+        <Package>libXvMC</Package>
+        <Package>libXxf86vm</Package>
+        <Package>libaio</Package>
+        <Package>libblkid</Package>
+        <Package>libbsd</Package>
+        <Package>libcap-ng</Package>
+        <Package>libcddb</Package>
+        <Package>libcdio</Package>
+        <Package>libclc</Package>
+        <Package>libdaemon</Package>
+        <Package>libdrm</Package>
+        <Package>libdrm-intel</Package>
+        <Package>libdrm-nouveau</Package>
+        <Package>libdrm-radeon</Package>
         <Package>libffi</Package>
         <Package>libgcc</Package>
-        <Package>libidn</Package>
-        <Package>libtasn1</Package>
-        <Package>libtool-ltdl</Package>
+        <Package>libgcrypt</Package>
+        <Package>libgfortran</Package>
+        <Package>libglade</Package>
+        <Package>libgnome-keyring</Package>
+        <Package>libgomp</Package>
+        <Package>libgpg-error</Package>
+        <Package>libical</Package>
+        <Package>libjpeg-turbo</Package>
+        <Package>libnl</Package>
+        <Package>libogg</Package>
+        <Package>libpaper</Package>
+        <Package>libpcap</Package>
+        <Package>libpciaccess</Package>
+        <Package>libpcre</Package>
+        <Package>libpng</Package>
+        <Package>libquadmath</Package>
+        <Package>libsndfile</Package>
+        <Package>libtheora</Package>
+        <Package>libudev</Package>
         <Package>libunistring</Package>
+        <Package>libusb</Package>
+        <Package>libuuid</Package>
+        <Package>libvisual</Package>
+        <Package>libvorbis</Package>
+        <Package>libxcb</Package>
         <Package>libxml2</Package>
+        <Package>libxshmfence</Package>
+        <Package>libxslt</Package>
+        <Package>llvm</Package>
+        <Package>llvm-clang</Package>
+        <Package>llvm-libs</Package>
+        <Package>lua</Package>
+        <Package>lzo</Package>
+        <Package>mariadb-lib</Package>
+        <Package>mesa</Package>
+        <Package>mesa-glu</Package>
+        <Package>mit-kerberos</Package>
         <Package>ncurses</Package>
-        <Package>nettle</Package>
+        <Package>nmap</Package>
+        <Package>nspr</Package>
+        <Package>nss</Package>
+        <Package>openldap-client</Package>
         <Package>openssl</Package>
-        <Package>p11-kit</Package>
+        <Package>orbit2</Package>
+        <Package>orc</Package>
+        <Package>pam</Package>
+        <Package>pango</Package>
+        <Package>pixman</Package>
+        <Package>postgresql-lib</Package>
         <Package>python</Package>
+        <Package>python-cairo</Package>
+        <Package>python-gtk</Package>
+        <Package>python-nose</Package>
+        <Package>python-numpy</Package>
+        <Package>python-pygobject</Package>
         <Package>readline</Package>
         <Package>run-parts</Package>
+        <Package>serf</Package>
+        <Package>setserial</Package>
         <Package>sqlite</Package>
+        <Package>subversion</Package>
+        <Package>tcl</Package>
+        <Package>tiff</Package>
+        <Package>timezone</Package>
+        <Package>unixODBC</Package>
+        <Package>wayland</Package>
+        <Package>wayland-client</Package>
+        <Package>wayland-server</Package>
+        <Package>xdg-utils</Package>
         <Package>xz</Package>
         <Package>zlib</Package>
     </LivecdImagePackages>

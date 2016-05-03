@@ -169,7 +169,7 @@
           <widget class="QLineEdit" name="linePluginPackage"/>
          </item>
          <item row="3" column="3">
-          <widget class="QPushButton" name="pushBrowseReleaseFiles">
+          <widget class="QPushButton" name="pushBrowseConfigFiles">
            <property name="text">
             <string>Browse</string>
            </property>
@@ -354,7 +354,7 @@
   <tabstop>lineWorkFolder</tabstop>
   <tabstop>comboType</tabstop>
   <tabstop>pushBrowseRepository</tabstop>
-  <tabstop>pushBrowseReleaseFiles</tabstop>
+  <tabstop>pushBrowseConfigFiles</tabstop>
   <tabstop>pushBrowsePluginPackage</tabstop>
   <tabstop>pushBrowseWorkFolder</tabstop>
   <tabstop>comboCompression</tabstop>
