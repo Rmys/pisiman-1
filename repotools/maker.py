@@ -275,23 +275,6 @@ def setup_isolinux(project):
 # Image related stuff
 #
 
-def setup_live_kdm(project):
-    image_dir = project.image_dir()
-    kdmrc_path = os.path.join(image_dir, "etc/X11/kdm/kdmrc")
-    if os.path.exists(kdmrc_path):
-        lines = []
-        for line in open(kdmrc_path, "r").readlines():
-            if line.startswith("#AutoLoginEnable"):
-                lines.append("AutoLoginEnable=true\n")
-            elif line.startswith("#AutoLoginUser"):
-                lines.append("AutoLoginUser=pisi\n")
-            elif line.startswith("#ServerTimeout="):
-                lines.append("ServerTimeout=60\n")
-            else:
-                lines.append(line)
-        open(kdmrc_path, "w").write("".join(lines))
-    else:
-        print "*** %s doesn't exist, setup_live_kdm() returned" % kdmrc_path
 
 def setup_live_sddm(project):
     image_dir = project.image_dir()
@@ -333,21 +316,13 @@ ResultActive=yes
 
 
 
-def install_packages(project):
+def v(project):
     image_dir = project.image_dir()
     path = os.path.join(image_dir, "var/lib/pisi/package")
     print "len(project.all_packages:%s" % len(project.all_packages)
     run('pisi --yes-all --ignore-comar --ignore-dependency --ignore-file-conflicts -D"%s" it %s ' % (image_dir, " ".join(project.all_packages)))
-    # --ignore-dep added to avoid dependencies re not in system.base like exceptions
-    #for name in project.all_packages:
-        #flag = True
-        #if os.path.exists(path):
-            #for avail in os.listdir(path):
-                #if avail.startswith(name) and avail[len(name)] == "-":
-                    #flag = False
-        #if flag:
-            #run('pisi --yes-all --ignore-comar --ignore-file-conflicts -D"%s" it %s ' % (image_dir, name))
-     ##commented from "for line" above
+
+
 def squash_image(project):
     image_dir = project.image_dir()
     image_file = project.image_file()
@@ -372,15 +347,13 @@ def make_repos(project):
     print "Preparing image repo..."
     xterm_title("Preparing repo")
     
-    
 
     try:
         repo = project.get_repo()
         repo_dir = project.image_repo_dir(clean=True)
-        if project.type == "install":
-            imagedeps = project.all_install_image_packages
-            imagedeps1 = project.all_root_image_packages 
-            xterm_title("Preparing image repo for installation")
+        
+        imagedeps = project.all_install_image_packages
+        imagedeps1 = project.all_root_image_packages 
             
 
         repo.make_local_repo(repo_dir, imagedeps)
@@ -402,39 +375,6 @@ def check_file(repo_dir, name, _hash):
     if cur_hash != _hash:
         print "\nWrong hash: %s" % path
 
-def check_repo_files(project):
-    print "Checking image repo..."
-    xterm_title("Checking image repo")
-
-    try:
-        repo = project.get_repo()
-        repo_dir = project.image_repo_dir()
-        if project.type == "install":
-            imagedeps = project.all_install_image_packages or repo.full_deps("yali")
-        else:
-            imagedeps = project.all_packages
-        i = 0
-        for name in imagedeps:
-            i += 1
-            sys.stdout.write("\r%-70.70s" % "Checking %d of %s packages" % (i, len(imagedeps)))
-            sys.stdout.flush()
-            pak = repo.packages[name]
-            check_file(repo_dir, pak.uri, pak.sha1sum)
-        sys.stdout.write("\n")
-
-        if project.type == "install":
-            repo_dir = project.install_repo_dir()
-            i = 0
-            for name in project.all_packages:
-                i += 1
-                sys.stdout.write("\r%-70.70s" % "Checking %d of %s packages" % (i, len(project.all_packages)))
-                sys.stdout.flush()
-                pak = repo.packages[name]
-                check_file(repo_dir, pak.uri, pak.sha1sum)
-        sys.stdout.write("\n")
-    except KeyboardInterrupt:
-        print "Keyboard Interrupt: check_repo() cancelled."
-        sys.exit(1)
 
 def make_image(project):
     global bus
@@ -445,12 +385,15 @@ def make_image(project):
     try:
         repo = project.get_repo()
         repo_dir = project.image_repo_dir()
-#        image_file = project.image_file()
 
         image_dir = project.image_dir()
+        
         run('umount %s/proc' % image_dir, ignore_error=True)
         run('umount %s/sys' % image_dir, ignore_error=True)
+        
         image_dir = project.image_dir(clean=True)
+        desktop_image_dir = project.desktop_image_dir(clean=True)
+        
         
         reposs = os.path.join(project.work_dir, "repo_cache")
 
@@ -460,17 +403,17 @@ def make_image(project):
         
         run('pisi --yes-all -D"%s" ar pisilinux-install "%s" --ignore-check' % (image_dir, reposs + "/pisi-index.xml"))
         print "project type = ",project.type
-        if project.type == "install":
-            if project.all_install_image_packages:
-                install_image_packages = " ".join(project.all_install_image_packages)
-            else:
-                install_image_packages = " ".join(repo.full_deps("yali"))
-            run('pisi --yes-all --ignore-comar --ignore-dep --ignore-check -D"%s" it %s' % (image_dir, install_image_packages))
-            if project.plugin_package:
-                plugin_package = project.plugin_package
-                run('pisi --yes-all --ignore-comar --ignore-check -D"%s" it %s' % (image_dir, plugin_package))
-        else:
-            install_packages(project)
+        
+
+        install_image_packages = " ".join(project.all_install_image_packages)
+
+        run('pisi --yes-all --ignore-comar --ignore-dep --ignore-check -D"%s" it %s' % (image_dir, install_image_packages))
+        
+        
+        #    if project.plugin_package:
+         #       plugin_package = project.plugin_package
+          #      run('pisi --yes-all --ignore-comar --ignore-check -D"%s" it %s' % (image_dir, plugin_package))
+
 
         def chrun(cmd):
             run('chroot "%s" %s' % (image_dir, cmd))
@@ -501,6 +444,7 @@ def make_image(project):
         chrun("/usr/bin/pisi configure-pending baselayout")
 
         chrun("/usr/bin/pisi configure-pending")
+
         # Disable Nepomuk in live CDs
         if project.type == "live":
             try:

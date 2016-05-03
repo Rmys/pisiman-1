@@ -577,7 +577,11 @@ class Project:
         return self._get_dir("image_repo", clean)
 
     def image_dir(self, clean=False):
-        return self._get_dir("image", clean)
+        return self._get_dir("rootimage", clean)
+    
+    def desktop_image_dir(self, clean=False):
+        return self._get_dir("desktopimage", clean)
+    
 
     def image_file(self):
         return os.path.join(self.work_dir, "pisi.sqfs")
