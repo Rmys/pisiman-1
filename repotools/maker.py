@@ -345,14 +345,18 @@ def make_repos(project):
     try:
         repo = project.get_repo()
         repo_dir = project.image_repo_dir(clean=True)
-        
+        reposs = os.path.join(project.work_dir, "repo_cache")
+
+
         imagedeps = project.all_install_image_packages
-        imagedeps1 = project.all_root_image_packages 
+        imagedeps1 = project.all_desktop_image_packages 
             
 
         repo.make_local_repo(repo_dir, imagedeps)
         repo.make_local_repo(repo_dir, imagedeps1)
 
+        os.chdir(reposs)
+        run('pisi ix -D "%s/" --skip-signing' % (reposs))
 
     except KeyboardInterrupt:
         print "Keyboard Interrupt: make_repo() cancelled."
@@ -379,6 +383,7 @@ def make_image(project):
     try:
         repo = project.get_repo()
         repo_dir = project.image_repo_dir()
+        reposs = os.path.join(project.work_dir, "repo_cache")
 
         image_dir = project.image_dir()
         
@@ -387,12 +392,6 @@ def make_image(project):
         
         image_dir = project.image_dir(clean=True)
         desktop_image_dir = project.desktop_image_dir(clean=True)
-        
-        
-        reposs = os.path.join(project.work_dir, "repo_cache")
-
-        os.chdir(reposs)
-        run('pisi ix -D "%s/" --skip-signing' % (reposs))
         
         
         run('pisi --yes-all -D"%s" ar pisilinux-install "%s" --ignore-check' % (image_dir, reposs + "/pisi-index.xml"))

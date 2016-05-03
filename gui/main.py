@@ -418,7 +418,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.project.title = unicode(self.lineTitle.text())
         self.project.repo_uri = unicode(self.lineRepository.text())
         self.project.work_dir = unicode(self.lineWorkFolder.text())
-        self.project.release_files = unicode(self.lineReleaseFiles.text())
+        self.project.config_files = unicode(self.lineConfigFiles.text())
         self.project.plugin_package = unicode(self.linePluginPackage.text())
         self.project.extra_params = unicode(self.lineParameters.text())
         self.project.type = ["install", "live"][self.comboType.currentIndex()]
@@ -435,7 +435,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.lineTitle.setText(unicode(self.project.title))
         self.lineRepository.setText(unicode(self.project.repo_uri))
         self.lineWorkFolder.setText(unicode(self.project.work_dir))
-        self.lineReleaseFiles.setText(unicode(self.project.release_files))
+        self.lineConfigFiles.setText(unicode(self.project.config_files))
         self.linePluginPackage.setText(unicode(self.project.plugin_package))
         self.lineParameters.setText(unicode(self.project.extra_params))
         self.comboType.setCurrentIndex(["install", "live"].index(self.project.type))

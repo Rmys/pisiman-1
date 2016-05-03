@@ -183,9 +183,9 @@
           </widget>
          </item>
          <item row="3" column="2">
-          <widget class="QLineEdit" name="lineReleaseFiles">
+          <widget class="QLineEdit" name="lineConfigFiles">
            <property name="toolTip">
-            <string>Path to the local directory which contains metadata about the image like the release notes, etc.</string>
+            <string>Path to the local directory config files</string>
            </property>
           </widget>
          </item>
@@ -349,7 +349,7 @@
   <tabstop>lineTitle</tabstop>
   <tabstop>lineParameters</tabstop>
   <tabstop>lineRepository</tabstop>
-  <tabstop>lineReleaseFiles</tabstop>
+  <tabstop>lineConfigFiles</tabstop>
   <tabstop>linePluginPackage</tabstop>
   <tabstop>lineWorkFolder</tabstop>
   <tabstop>comboType</tabstop>

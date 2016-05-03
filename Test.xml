@@ -1,6 +1,7 @@
 <PisiManProject type="install" compression="xz">
     <Title>sdfsdf</Title>
-    <WorkDir>/tmp/asreg</WorkDir>
+    <WorkDir>/tmp/lsaad</WorkDir>
+    <ReleaseFiles>None</ReleaseFiles>
     <PackageSelection repo_uri="http://packages.pisilinux.org/repositories/1.0/stable/x86_64/pisi-index.xml.xz"/>
     <InstallImagePackages>
         <SelectedComponent>system.base</SelectedComponent>
