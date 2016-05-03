@@ -331,37 +331,7 @@ ResultActive=yes
     f.write(policykit_conf_tmpl)
     f.close()
 
-def copyPisiIndex(project):
-    image_dir = project.image_dir()
-    if project.package_collections:
-        destination = os.path.join(image_dir, "usr/share/yali/data")
-        collectionDir = os.path.join(destination, "index")
-        collectionFile = os.path.join(destination, "index/collection.xml")
-        run('mkdir -p %s' % collectionDir)
-        run('cp -PR "%s" "%s"' % (os.path.join(project.install_repo_dir(), "collection.xml"), collectionDir))
-        run('sha1sum "%s" > "%s"' % (collectionFile, "%s.sha1sum" % collectionFile))
 
-        for collection in project.package_collections:
-            source = os.path.join(project.install_repo_dir(), "%s-index.xml.bz2" % collection._id)
-            run('cp -PR "%s" "%s"' % (source, collectionDir))
-            run('sha1sum "%s" > "%s"' % (source, "%s.sha1sum" % os.path.join(collectionDir, os.path.basename(source))))
-            #run('cp -PR "%s" "%s"' % (os.path.join(os.getcwd(), "icons", collection.icon), collectionDir))
-            #print('cp -PR "%s" "%s"' % (source, collectionDir))
-            #print('sha1sum "%s" > "%s"' % (source, "%s.sha1sum" % os.path.join(collectionDir,os.path.basename(source))))
-            #print('cp -PR "%s" "%s"' % (collection.icon, collectionDir))
-
-    # Copy All Collection Packages index as pisi index dvd and default cd installation
-    yali_data_dir = os.path.join(image_dir, "usr/share/yali/data")
-    if not os.path.exists(yali_data_dir):
-        print "Creating data directory for YALI..."
-        run('mkdir -p %s' % yali_data_dir)
-    path = os.path.join(image_dir, "usr/share/yali/data/%s" % os.path.basename(project.repo_uri))
-    repo = os.path.join(project.work_dir, "repo_cache/%s" % os.path.basename(project.repo_uri))
-
-    run('cp -PR "%s" "%s"' % (repo, path))
-    run('sha1sum "%s" > "%s"' % (repo, "%s.sha1sum" % path))
-    print('cp -PR "%s" "%s"' % (repo, path))
-    print('sha1sum "%s" > "%s"' % (repo, "%s.sha1sum" % path))
 
 def install_packages(project):
     image_dir = project.image_dir()
@@ -401,40 +371,26 @@ def squash_image(project):
 def make_repos(project):
     print "Preparing image repo..."
     xterm_title("Preparing repo")
+    
+    
 
     try:
         repo = project.get_repo()
         repo_dir = project.image_repo_dir(clean=True)
         if project.type == "install":
-            imagedeps = project.all_install_image_packages or repo.full_deps("yali")
+            imagedeps = project.all_install_image_packages
+            imagedeps1 = project.all_root_image_packages 
             xterm_title("Preparing image repo for installation")
-        else:
-            imagedeps = project.all_packages
-            xterm_title("Preparing image repo for live")
+            
 
         repo.make_local_repo(repo_dir, imagedeps)
+        repo.make_local_repo(repo_dir, imagedeps1)
 
-        if project.type == "install":
-            xterm_title("Preparing installination repo")
-            print "Preparing installation repository..."
-
-            repo_dir = project.install_repo_dir(clean=True)
-            if project.package_collections:
-                all_packages = []
-                for collection in project.package_collections:
-                    all_packages.extend(collection.packages.allPackages)
-                    # Making repos and index files per collection
-                    repo.make_local_repo(repo_dir, collection.packages.allPackages, collection._id)
-
-                repo.make_local_repo(repo_dir, all_packages)
-                repo.make_collection_index(repo_dir, project.package_collections, project.default_language)
-                print "Preparing collections project file"
-            else:
-                repo.make_local_repo(repo_dir, project.all_packages)
 
     except KeyboardInterrupt:
         print "Keyboard Interrupt: make_repo() cancelled."
         sys.exit(1)
+
 
 def check_file(repo_dir, name, _hash):
     path = os.path.join(repo_dir, name)
@@ -495,17 +451,24 @@ def make_image(project):
         run('umount %s/proc' % image_dir, ignore_error=True)
         run('umount %s/sys' % image_dir, ignore_error=True)
         image_dir = project.image_dir(clean=True)
-        run('pisi --yes-all -D"%s" ar pisilinux-install %s --ignore-check' % (image_dir, repo_dir + "/pisi-index.xml.bz2"))
+        
+        reposs = os.path.join(project.work_dir, "repo_cache")
+
+        os.chdir(reposs)
+        run('pisi ix -D "%s/" --skip-signing' % (reposs))
+        
+        
+        run('pisi --yes-all -D"%s" ar pisilinux-install "%s" --ignore-check' % (image_dir, reposs + "/pisi-index.xml"))
         print "project type = ",project.type
         if project.type == "install":
             if project.all_install_image_packages:
                 install_image_packages = " ".join(project.all_install_image_packages)
             else:
                 install_image_packages = " ".join(repo.full_deps("yali"))
-            run('pisi --yes-all --ignore-comar --ignore-dep -D"%s" it %s' % (image_dir, install_image_packages))
+            run('pisi --yes-all --ignore-comar --ignore-dep --ignore-check -D"%s" it %s' % (image_dir, install_image_packages))
             if project.plugin_package:
                 plugin_package = project.plugin_package
-                run('pisi --yes-all --ignore-comar -D"%s" it %s' % (image_dir, plugin_package))
+                run('pisi --yes-all --ignore-comar --ignore-check -D"%s" it %s' % (image_dir, plugin_package))
         else:
             install_packages(project)
 
@@ -576,8 +539,6 @@ def make_image(project):
             setup_live_sddm(project)            #setup_live_sddm olarak değiştirildi
             setup_live_policykit_conf(project)
 
-        if project.type == "install":
-            copyPisiIndex(project)
 
         # Make sure environment is updated regardless of the booting system, by setting comparison
         # files' atime and mtime to UNIX time 1

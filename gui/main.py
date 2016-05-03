@@ -80,7 +80,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionNew.triggered.connect(self.slotNew)
         self.actionOpen.triggered.connect(self.slotOpen)
         self.actionSave.triggered.connect(self.slotSave)
-	self.actionSaveAs.triggered.connect(self.slotSaveAs)
+        self.actionSaveAs.triggered.connect(self.slotSaveAs)
         self.actionExit.triggered.connect(self.close)
 
         # Project menu
@@ -336,7 +336,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if dialog.exec_():
             self.project.selected_root_image_packages = dialog.packages
             self.project.selected_root_image_components = dialog.components
-            self.project.all_install_image_packages = dialog.all_packages            
+            self.project.all_root_image_packages = dialog.all_packages            
 
     def slotUpdateRepo(self):
         """

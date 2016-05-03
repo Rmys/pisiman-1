@@ -328,12 +328,10 @@ class Project:
 
             self.selected_root_image_components.sort()
             self.selected_root_image_packages.sort()
-          #  self.selected_components += self.selected_root_image_components
-            self.selected_components.sort()
-          #  self.selected_packages += self.selected_root_image_packages
-            self.selected_packages.sort()     
+            self.all_root_image_packages.sort()
 
         installImagePackagesTag = doc.getTag("InstallImagePackages")
+        
         if installImagePackagesTag:
             uri, \
             self.selected_install_image_components, \
@@ -343,10 +341,7 @@ class Project:
             self.selected_install_image_components.sort()
             self.selected_install_image_packages.sort()
             self.all_install_image_packages.sort()
-            self.selected_components += self.selected_install_image_components
-            self.selected_components.sort()
-            self.selected_packages += self.selected_install_image_packages
-            self.selected_packages.sort()
+
             
        
 
@@ -435,19 +430,20 @@ class Project:
                 package_selection.insertTag("Package").insertData(item)
                 
         if self.all_root_image_packages:
-          #  self.selected_root_image_components.sort()
-           # self.selected_root_image_packages.sort()
-
+            self.selected_root_image_components.sort()
+            self.selected_root_image_packages.sort()
+            self.all_root_image_packages.sort()
+             
             package_selection = doc.insertTag("RootImagePackages")
             
             # Insert components if any
-            for item in self.selected_install_image_components:
+            for item in self.selected_root_image_components:
                 package_selection.insertTag("SelectedComponent").insertData(item)
 
-            for item in self.selected_install_image_packages:
+            for item in self.selected_root_image_packages:
                 package_selection.insertTag("SelectedPackage").insertData(item)
 
-            for item in self.all_install_image_packages:
+            for item in self.all_root_image_packages:
                 package_selection.insertTag("Package").insertData(item)
                 
         if self.default_language:
@@ -540,7 +536,7 @@ class Project:
 
                 packages.sort()
                 collection.packages.allPackages = packages
-            self.all_packages.extend(packages)
+           # self.all_packages.extend(packages)
         else:
             for component in self.selected_components:
                 if component not in repo.components:
