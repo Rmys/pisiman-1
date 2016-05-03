@@ -316,12 +316,6 @@ ResultActive=yes
 
 
 
-def v(project):
-    image_dir = project.image_dir()
-    path = os.path.join(image_dir, "var/lib/pisi/package")
-    print "len(project.all_packages:%s" % len(project.all_packages)
-    run('pisi --yes-all --ignore-comar --ignore-dependency --ignore-file-conflicts -D"%s" it %s ' % (image_dir, " ".join(project.all_packages)))
-
 
 def squash_image(project):
     image_dir = project.image_dir()
