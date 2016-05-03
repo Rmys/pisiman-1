@@ -1,10 +1,13 @@
 <PisiManProject type="install" compression="xz">
     <Title>Test</Title>
-    <WorkDir>/tmp/lsdlfjk</WorkDir>
-    <ConfigFiles>/home/erturk/git/pisiman/conf</ConfigFiles>
+    <WorkDir>/tmp/temp</WorkDir>
+    <ConfigFiles>/home/erturk/yedek/git/pisiman/conf</ConfigFiles>
     <PackageSelection repo_uri="http://packages.pisilinux.org/repositories/1.0/stable/x86_64/pisi-index.xml.xz"/>
     <InstallImagePackages>
         <SelectedComponent>system.base</SelectedComponent>
+        <SelectedPackage>gfxtheme-pisilinux-install</SelectedPackage>
+        <SelectedPackage>kernel</SelectedPackage>
+        <SelectedPackage>syslinux</SelectedPackage>
         <Package>ConsoleKit</Package>
         <Package>acl</Package>
         <Package>alternatives</Package>
@@ -47,6 +50,7 @@
         <Package>gc</Package>
         <Package>gdbm</Package>
         <Package>gettext</Package>
+        <Package>gfxtheme-pisilinux-install</Package>
         <Package>glib2</Package>
         <Package>glibc</Package>
         <Package>glibc-32bit</Package>
@@ -63,6 +67,7 @@
         <Package>iputils</Package>
         <Package>json-c</Package>
         <Package>kbd</Package>
+        <Package>kernel</Package>
         <Package>kmod</Package>
         <Package>less</Package>
         <Package>leveldb</Package>
@@ -101,6 +106,7 @@
         <Package>libuuid</Package>
         <Package>libxcb</Package>
         <Package>libxml2</Package>
+        <Package>linux-firmware</Package>
         <Package>lsb-release</Package>
         <Package>lvm2</Package>
         <Package>lvm2-static</Package>
@@ -113,6 +119,7 @@
         <Package>miscfiles</Package>
         <Package>mkinitramfs</Package>
         <Package>mpfr</Package>
+        <Package>mtools</Package>
         <Package>mudur</Package>
         <Package>nano</Package>
         <Package>ncompress</Package>
@@ -129,6 +136,8 @@
         <Package>pciutils</Package>
         <Package>pcmciautils</Package>
         <Package>perl</Package>
+        <Package>perl-Crypt-PasswdMD5</Package>
+        <Package>perl-Digest-SHA1</Package>
         <Package>perl-Locale-gettext</Package>
         <Package>piksemel</Package>
         <Package>pisi</Package>
@@ -154,6 +163,7 @@
         <Package>spidermonkey</Package>
         <Package>sqlite</Package>
         <Package>sysfsutils</Package>
+        <Package>syslinux</Package>
         <Package>sysvinit</Package>
         <Package>sysvinit-tools</Package>
         <Package>tar</Package>
@@ -175,14 +185,23 @@
         <Package>zlib</Package>
     </InstallImagePackages>
     <LivecdImagePackages>
-        <SelectedPackage>zenmap</SelectedPackage>
+        <SelectedPackage>zip</SelectedPackage>
+        <Package>bzip2</Package>
+    </LivecdImagePackages>
+    <DesktopImagePackages>
+        <SelectedComponent>desktop.fluxbox.base</SelectedComponent>
+        <Package>ConsoleKit</Package>
+        <Package>ModemManager</Package>
+        <Package>NetworkManager</Package>
         <Package>acl</Package>
         <Package>alsa-lib</Package>
-        <Package>apr</Package>
-        <Package>apr-util</Package>
+        <Package>at-spi2-atk</Package>
+        <Package>at-spi2-core</Package>
         <Package>atk</Package>
         <Package>attr</Package>
+        <Package>autogen</Package>
         <Package>avahi</Package>
+        <Package>avahi-autoipd</Package>
         <Package>avahi-glib</Package>
         <Package>avahi-libs</Package>
         <Package>blas</Package>
@@ -190,190 +209,32 @@
         <Package>bluez-libs</Package>
         <Package>bzip2</Package>
         <Package>ca-certificates</Package>
+        <Package>ca-certificates-java</Package>
         <Package>cairo</Package>
         <Package>cdparanoia</Package>
-        <Package>cracklib</Package>
-        <Package>cups</Package>
-        <Package>cyrus-sasl</Package>
-        <Package>dbus</Package>
-        <Package>dejavu-fonts</Package>
-        <Package>e2fsprogs</Package>
-        <Package>elfutils</Package>
-        <Package>expat</Package>
-        <Package>flac</Package>
-        <Package>fontconfig</Package>
-        <Package>freeglut</Package>
-        <Package>freetype</Package>
-        <Package>gamin</Package>
-        <Package>gconf</Package>
-        <Package>gdbm</Package>
-        <Package>gdk-pixbuf</Package>
-        <Package>gettext</Package>
-        <Package>glib2</Package>
-        <Package>glibc</Package>
-        <Package>gnome-vfs</Package>
-        <Package>gobject-introspection</Package>
-        <Package>graphite2</Package>
-        <Package>gst-plugins-base</Package>
-        <Package>gstreamer</Package>
-        <Package>gtk-theme-mediterranean</Package>
-        <Package>gtk2</Package>
-        <Package>gtk2-engines-murrine</Package>
-        <Package>harfbuzz</Package>
-        <Package>icu4c</Package>
-        <Package>jasper</Package>
-        <Package>jbigkit</Package>
-        <Package>keyutils</Package>
-        <Package>lapack</Package>
-        <Package>libIDL</Package>
-        <Package>libX11</Package>
-        <Package>libXau</Package>
-        <Package>libXcomposite</Package>
-        <Package>libXcursor</Package>
-        <Package>libXdamage</Package>
-        <Package>libXdmcp</Package>
-        <Package>libXext</Package>
-        <Package>libXfixes</Package>
-        <Package>libXft</Package>
-        <Package>libXi</Package>
-        <Package>libXinerama</Package>
-        <Package>libXrandr</Package>
-        <Package>libXrender</Package>
-        <Package>libXv</Package>
-        <Package>libXvMC</Package>
-        <Package>libXxf86vm</Package>
-        <Package>libaio</Package>
-        <Package>libblkid</Package>
-        <Package>libbsd</Package>
-        <Package>libcap-ng</Package>
-        <Package>libcddb</Package>
-        <Package>libcdio</Package>
-        <Package>libclc</Package>
-        <Package>libdaemon</Package>
-        <Package>libdrm</Package>
-        <Package>libdrm-intel</Package>
-        <Package>libdrm-nouveau</Package>
-        <Package>libdrm-radeon</Package>
-        <Package>libffi</Package>
-        <Package>libgcc</Package>
-        <Package>libgcrypt</Package>
-        <Package>libgfortran</Package>
-        <Package>libglade</Package>
-        <Package>libgnome-keyring</Package>
-        <Package>libgomp</Package>
-        <Package>libgpg-error</Package>
-        <Package>libical</Package>
-        <Package>libjpeg-turbo</Package>
-        <Package>libnl</Package>
-        <Package>libogg</Package>
-        <Package>libpaper</Package>
-        <Package>libpcap</Package>
-        <Package>libpciaccess</Package>
-        <Package>libpcre</Package>
-        <Package>libpng</Package>
-        <Package>libquadmath</Package>
-        <Package>libsndfile</Package>
-        <Package>libtheora</Package>
-        <Package>libudev</Package>
-        <Package>libunistring</Package>
-        <Package>libusb</Package>
-        <Package>libuuid</Package>
-        <Package>libvisual</Package>
-        <Package>libvorbis</Package>
-        <Package>libxcb</Package>
-        <Package>libxml2</Package>
-        <Package>libxshmfence</Package>
-        <Package>libxslt</Package>
-        <Package>llvm</Package>
-        <Package>llvm-clang</Package>
-        <Package>llvm-libs</Package>
-        <Package>lua</Package>
-        <Package>lzo</Package>
-        <Package>mariadb-lib</Package>
-        <Package>mesa</Package>
-        <Package>mesa-glu</Package>
-        <Package>mit-kerberos</Package>
-        <Package>ncurses</Package>
-        <Package>nmap</Package>
-        <Package>nspr</Package>
-        <Package>nss</Package>
-        <Package>openldap-client</Package>
-        <Package>openssl</Package>
-        <Package>orbit2</Package>
-        <Package>orc</Package>
-        <Package>pam</Package>
-        <Package>pango</Package>
-        <Package>pixman</Package>
-        <Package>postgresql-lib</Package>
-        <Package>python</Package>
-        <Package>python-cairo</Package>
-        <Package>python-gtk</Package>
-        <Package>python-nose</Package>
-        <Package>python-numpy</Package>
-        <Package>python-pygobject</Package>
-        <Package>readline</Package>
-        <Package>run-parts</Package>
-        <Package>serf</Package>
-        <Package>setserial</Package>
-        <Package>sqlite</Package>
-        <Package>subversion</Package>
-        <Package>tcl</Package>
-        <Package>tiff</Package>
-        <Package>timezone</Package>
-        <Package>unixODBC</Package>
-        <Package>wayland</Package>
-        <Package>wayland-client</Package>
-        <Package>wayland-server</Package>
-        <Package>xdg-utils</Package>
-        <Package>xz</Package>
-        <Package>zlib</Package>
-    </LivecdImagePackages>
-    <DesktopImagePackages>
-        <SelectedComponent>desktop.kde</SelectedComponent>
-        <Package>acl</Package>
-        <Package>akonadi</Package>
-        <Package>alsa-lib</Package>
-        <Package>apr</Package>
-        <Package>apr-util</Package>
-        <Package>artwork-pisilinux-release</Package>
-        <Package>aspell</Package>
-        <Package>at-spi2-atk</Package>
-        <Package>at-spi2-core</Package>
-        <Package>atk</Package>
-        <Package>attica</Package>
-        <Package>attr</Package>
-        <Package>autogen</Package>
-        <Package>avahi</Package>
-        <Package>avahi-glib</Package>
-        <Package>avahi-libs</Package>
-        <Package>boost</Package>
-        <Package>bzip2</Package>
-        <Package>ca-certificates</Package>
-        <Package>cairo</Package>
-        <Package>cdparanoia</Package>
-        <Package>clucene</Package>
         <Package>colord</Package>
         <Package>cracklib</Package>
         <Package>cups</Package>
-        <Package>cyrus-sasl</Package>
         <Package>db</Package>
         <Package>dbus</Package>
         <Package>dbus-glib</Package>
         <Package>dejavu-fonts</Package>
         <Package>device-mapper</Package>
         <Package>device-mapper-event</Package>
-        <Package>djvu</Package>
         <Package>dosfstools</Package>
         <Package>e2fsprogs</Package>
         <Package>elfutils</Package>
-        <Package>enchant</Package>
-        <Package>exiv2-libs</Package>
+        <Package>esetroot</Package>
         <Package>expat</Package>
+        <Package>fbdesk</Package>
         <Package>fftw3</Package>
         <Package>flac</Package>
+        <Package>flex</Package>
+        <Package>fluxbox</Package>
         <Package>fontconfig</Package>
         <Package>freeglut</Package>
         <Package>freetype</Package>
+        <Package>fribidi</Package>
         <Package>fuse</Package>
         <Package>gamin</Package>
         <Package>gc</Package>
@@ -382,18 +243,16 @@
         <Package>gdbm</Package>
         <Package>gdk-pixbuf</Package>
         <Package>gettext</Package>
-        <Package>ghostscript</Package>
         <Package>giflib</Package>
         <Package>glib2</Package>
         <Package>glibc</Package>
         <Package>gmp</Package>
+        <Package>gnome-bluetooth</Package>
         <Package>gnome-vfs</Package>
-        <Package>gnu-gs-fonts-std</Package>
-        <Package>gnupg</Package>
         <Package>gnutls</Package>
         <Package>gobject-introspection</Package>
-        <Package>gpgme</Package>
         <Package>graphite2</Package>
+        <Package>gsetroot</Package>
         <Package>gst-plugins-base</Package>
         <Package>gstreamer</Package>
         <Package>gtk-theme-mediterranean</Package>
@@ -401,28 +260,29 @@
         <Package>gtk2-engines-murrine</Package>
         <Package>gtk3</Package>
         <Package>guile</Package>
+        <Package>gvfs</Package>
+        <Package>gvfs-obexftp</Package>
         <Package>harfbuzz</Package>
         <Package>hdparm</Package>
-        <Package>hunspell</Package>
         <Package>icu4c</Package>
-        <Package>ilmbase</Package>
-        <Package>imagemagick</Package>
+        <Package>imlib2</Package>
+        <Package>iproute2</Package>
+        <Package>iptables</Package>
         <Package>jasper</Package>
         <Package>jbigkit</Package>
+        <Package>jre7-openjdk</Package>
+        <Package>jre7-openjdk-headless</Package>
         <Package>json-glib</Package>
-        <Package>kdelibs</Package>
-        <Package>kdepimlibs</Package>
-        <Package>kdewebdev</Package>
         <Package>keyutils</Package>
+        <Package>lapack</Package>
+        <Package>lcms</Package>
         <Package>lcms2</Package>
-        <Package>libFS</Package>
         <Package>libICE</Package>
         <Package>libIDL</Package>
         <Package>libSM</Package>
         <Package>libX11</Package>
         <Package>libXScrnSaver</Package>
         <Package>libXau</Package>
-        <Package>libXaw</Package>
         <Package>libXcomposite</Package>
         <Package>libXcursor</Package>
         <Package>libXdamage</Package>
@@ -433,7 +293,6 @@
         <Package>libXft</Package>
         <Package>libXi</Package>
         <Package>libXinerama</Package>
-        <Package>libXmu</Package>
         <Package>libXpm</Package>
         <Package>libXrandr</Package>
         <Package>libXrender</Package>
@@ -441,61 +300,59 @@
         <Package>libXtst</Package>
         <Package>libXv</Package>
         <Package>libXvMC</Package>
-        <Package>libXxf86dga</Package>
-        <Package>libXxf86misc</Package>
-        <Package>libXxf86miscproto</Package>
         <Package>libXxf86vm</Package>
-        <Package>libaio</Package>
-        <Package>libassuan</Package>
         <Package>libasyncns</Package>
         <Package>libatasmart</Package>
         <Package>libblkid</Package>
+        <Package>libbluray</Package>
         <Package>libbsd</Package>
-        <Package>libcap</Package>
         <Package>libcap-ng</Package>
         <Package>libcddb</Package>
         <Package>libcdio</Package>
+        <Package>libcdio-paranoia</Package>
         <Package>libclc</Package>
-        <Package>libcroco</Package>
         <Package>libdaemon</Package>
-        <Package>libdbusmenu-qt</Package>
-        <Package>libdee</Package>
-        <Package>libdmtx</Package>
-        <Package>libdmx</Package>
         <Package>libdrm</Package>
         <Package>libdrm-intel</Package>
         <Package>libdrm-nouveau</Package>
         <Package>libdrm-radeon</Package>
+        <Package>libepoxy</Package>
         <Package>libexif</Package>
         <Package>libffi</Package>
         <Package>libfontenc</Package>
         <Package>libgcc</Package>
         <Package>libgcrypt</Package>
         <Package>libgfortran</Package>
+        <Package>libglade</Package>
         <Package>libgomp</Package>
         <Package>libgpg-error</Package>
         <Package>libgphoto2</Package>
+        <Package>libgudev1</Package>
         <Package>libgusb</Package>
         <Package>libical</Package>
+        <Package>libid3tag</Package>
         <Package>libidn</Package>
         <Package>libieee1284</Package>
         <Package>libimobiledevice</Package>
         <Package>libjpeg-turbo</Package>
-        <Package>libksba</Package>
-        <Package>liblqr</Package>
-        <Package>libmng</Package>
+        <Package>libmbim</Package>
+        <Package>libmm-glib</Package>
+        <Package>libndp</Package>
+        <Package>libnfnetlink</Package>
+        <Package>libnl</Package>
         <Package>libnl1</Package>
+        <Package>libnotify</Package>
         <Package>libogg</Package>
         <Package>libpaper</Package>
+        <Package>libpcap</Package>
         <Package>libpciaccess</Package>
         <Package>libpcre</Package>
         <Package>libplist</Package>
         <Package>libpng</Package>
-        <Package>libqjson</Package>
+        <Package>libqmi</Package>
         <Package>libquadmath</Package>
-        <Package>libqzeitgeist</Package>
         <Package>librest</Package>
-        <Package>librsvg</Package>
+        <Package>libsecret</Package>
         <Package>libsndfile</Package>
         <Package>libsoup</Package>
         <Package>libsoup-gnome</Package>
@@ -504,48 +361,42 @@
         <Package>libtool-ltdl</Package>
         <Package>libudev</Package>
         <Package>libunistring</Package>
+        <Package>libunwind</Package>
         <Package>libusb</Package>
-        <Package>libusb-compat</Package>
         <Package>libuuid</Package>
         <Package>libv4l</Package>
         <Package>libvisual</Package>
         <Package>libvorbis</Package>
         <Package>libvpx</Package>
-        <Package>libwmf</Package>
         <Package>libx86</Package>
         <Package>libxcb</Package>
-        <Package>libxkbfile</Package>
         <Package>libxml2</Package>
         <Package>libxshmfence</Package>
         <Package>libxslt</Package>
-        <Package>libzeitgeist</Package>
+        <Package>linux-atm</Package>
         <Package>lirc</Package>
         <Package>llvm</Package>
         <Package>llvm-clang</Package>
         <Package>llvm-libs</Package>
-        <Package>log4cxx</Package>
         <Package>lvm2</Package>
         <Package>lzo</Package>
-        <Package>mariadb-client</Package>
-        <Package>mariadb-lib</Package>
         <Package>mdadm</Package>
-        <Package>media-player-info</Package>
         <Package>mesa</Package>
         <Package>mesa-glu</Package>
         <Package>mit-kerberos</Package>
+        <Package>mobile-broadband-provider-info</Package>
         <Package>mtools</Package>
         <Package>ncurses</Package>
         <Package>net-snmp</Package>
         <Package>nettle</Package>
-        <Package>npth</Package>
+        <Package>network-manager-applet</Package>
+        <Package>newt</Package>
         <Package>nspr</Package>
         <Package>nss</Package>
         <Package>ntfs-3g</Package>
         <Package>ntfsprogs</Package>
-        <Package>numactl</Package>
-        <Package>openexr-libs</Package>
+        <Package>oblogout</Package>
         <Package>openldap-client</Package>
-        <Package>openmpi</Package>
         <Package>openssl</Package>
         <Package>orbit2</Package>
         <Package>orc</Package>
@@ -554,63 +405,57 @@
         <Package>pango</Package>
         <Package>parted</Package>
         <Package>perl</Package>
-        <Package>phonon</Package>
-        <Package>pinentry</Package>
+        <Package>perl-Data-Dump</Package>
+        <Package>perl-Linux-Desktopfiles</Package>
+        <Package>perl-Module-Build</Package>
+        <Package>perl-docs</Package>
         <Package>pixman</Package>
         <Package>pm-utils</Package>
         <Package>polkit</Package>
-        <Package>polkit-qt_1</Package>
-        <Package>poppler-data</Package>
-        <Package>postgresql-lib</Package>
-        <Package>prison</Package>
+        <Package>polkit-gnome</Package>
+        <Package>ppp</Package>
         <Package>pulseaudio-libs</Package>
         <Package>python</Package>
-        <Package>python-isodate</Package>
-        <Package>python-rdflib</Package>
-        <Package>qca2</Package>
-        <Package>qrencode</Package>
-        <Package>qt</Package>
-        <Package>qt-sql-mysql</Package>
-        <Package>qt-webkit</Package>
-        <Package>qtchooser</Package>
-        <Package>raptor2</Package>
+        <Package>python-cairo</Package>
+        <Package>python-distutils-extra</Package>
+        <Package>python-gtk</Package>
+        <Package>python-imaging</Package>
+        <Package>python-nose</Package>
+        <Package>python-numpy</Package>
+        <Package>python-pygobject</Package>
+        <Package>python-tk</Package>
         <Package>readline</Package>
+        <Package>rhino</Package>
         <Package>run-parts</Package>
         <Package>sane-backends</Package>
         <Package>sbc</Package>
+        <Package>setserial</Package>
         <Package>sg3_utils</Package>
         <Package>shared-color-profiles</Package>
-        <Package>shared-desktop-ontologies</Package>
-        <Package>shared-mime-info</Package>
         <Package>smp_utils</Package>
-        <Package>soprano</Package>
         <Package>speex</Package>
         <Package>spidermonkey</Package>
         <Package>sqlite</Package>
-        <Package>strigi</Package>
         <Package>tcl</Package>
-        <Package>telepathy-glib</Package>
-        <Package>tidy</Package>
+        <Package>tcltk</Package>
+        <Package>texinfo</Package>
         <Package>tiff</Package>
         <Package>timezone</Package>
         <Package>udisks2</Package>
-        <Package>unixODBC</Package>
         <Package>upower</Package>
         <Package>usbmuxd</Package>
-        <Package>utempter</Package>
         <Package>util-linux</Package>
         <Package>vala</Package>
         <Package>vbetool</Package>
+        <Package>volumeicon</Package>
         <Package>wayland</Package>
         <Package>wayland-client</Package>
         <Package>wayland-server</Package>
-        <Package>webp</Package>
-        <Package>xapian-core</Package>
-        <Package>xcb-util</Package>
+        <Package>wpa_supplicant</Package>
+        <Package>xdg-utils</Package>
         <Package>xfsprogs</Package>
-        <Package>xorg-app</Package>
+        <Package>xorg-server</Package>
         <Package>xz</Package>
-        <Package>zeitgeist</Package>
         <Package>zlib</Package>
     </DesktopImagePackages>
 </PisiManProject>

@@ -74,63 +74,6 @@ def get_exclude_list(project):
             exc.append("boot/" + name)
     return exc
 
-#
-# Grub related stuff
-#
-
-def generate_grub_conf(project, kernel, initramfs):
-    print "Generating grub.conf files..."
-    xterm_title("Generating grub.conf files")
-
-    image_dir = project.image_dir()
-    iso_dir = project.iso_dir()
-
-    grub_dict = {}
-    grub_dict["kernel"] = kernel
-    grub_dict["initramfs"] = initramfs
-    grub_dict["title"] = project.title
-    grub_dict["exparams"] = project.extra_params or ''
-
-    path = os.path.join(image_dir, "usr/share/grub/templates")
-    dest = os.path.join(iso_dir, "boot/grub")
-    for name in os.listdir(path):
-        if name.startswith("menu"):
-            data = file(os.path.join(path, name)).read()
-            f = file(os.path.join(dest, name), "w")
-            f.write(data % grub_dict)
-            f.close()
-
-def setup_grub(project):
-    image_dir = project.image_dir()
-    iso_dir = project.iso_dir()
-    kernel = ""
-    initramfs = ""
-
-    # Setup dir
-    path = os.path.join(iso_dir, "boot/grub")
-    if not os.path.exists(path):
-        os.makedirs(path)
-
-    def copy(src, dest):
-        run('cp -P "%s" "%s"' % (src, os.path.join(iso_dir, dest)))
-
-    # Copy the kernel and initramfs
-    path = os.path.join(image_dir, "boot")
-    for name in os.listdir(path):
-        if name.startswith("kernel") or name.startswith("initramfs") or name.endswith(".bin"):
-            if name.startswith("kernel"):
-                kernel = name
-            elif name.startswith("initramfs"):
-                initramfs = name
-            copy(os.path.join(path, name), "boot/" + name)
-
-    # and the other files
-    path = os.path.join(image_dir, "boot/grub")
-    for name in os.listdir(path):
-        copy(os.path.join(path, name), "boot/grub/" + name)
-
-    # Generate the config file
-    generate_grub_conf(project, kernel, initramfs)
 
 def generate_isolinux_conf(project):
     print "Generating isolinux config files..."
@@ -349,12 +292,14 @@ def make_repos(project):
 
 
         imagedeps = project.all_install_image_packages
-        imagedeps1 = project.all_desktop_image_packages 
+        imagedeps1 = project.all_desktop_image_packages
+       # imagedeps2 = project.all_livecd_image_packages
             
 
         repo.make_local_repo(repo_dir, imagedeps)
         repo.make_local_repo(repo_dir, imagedeps1)
-
+       # repo.make_local_repo(repo_dir, imagedeps2)
+        
         os.chdir(reposs)
         run('pisi ix -D "%s/" --skip-signing' % (reposs))
 
@@ -386,10 +331,23 @@ def make_image(project):
         reposs = os.path.join(project.work_dir, "repo_cache")
 
         image_dir = project.image_dir()
+        desktop_image_dir = project.desktop_image_dir()
+        livecd_image_dir = project.livecd_image_dir()
+        
+        configdir =os.path.join(project.config_files)
+
+        
         
         run('umount %s/proc' % image_dir, ignore_error=True)
         run('umount %s/sys' % image_dir, ignore_error=True)
         
+        run('umount %s/proc' % desktop_image_dir, ignore_error=True)
+        run('umount %s/sys' % desktop_image_dir, ignore_error=True)
+        
+        run('umount %s/proc' % livecd_image_dir, ignore_error=True)
+        run('umount %s/sys' % livecd_image_dir, ignore_error=True)
+        
+
         image_dir = project.image_dir(clean=True)
         desktop_image_dir = project.desktop_image_dir(clean=True)
         
@@ -422,11 +380,16 @@ def make_image(project):
         os.mknod("%s/dev/console" % image_dir, 0666 | stat.S_IFCHR, os.makedev(5, 1))
         os.mknod("%s/dev/random" % image_dir, 0666 | stat.S_IFCHR, os.makedev(1, 8))
         os.mknod("%s/dev/urandom" % image_dir, 0666 | stat.S_IFCHR, os.makedev(1, 9))
+        
 
+        
+        
         path = "%s/usr/share/baselayout/" % image_dir
         path2 = "%s/etc" % image_dir
         for name in os.listdir(path):
             run('cp -p "%s" "%s"' % (os.path.join(path, name), os.path.join(path2, name)))
+            
+            
         run('/bin/mount --bind /proc %s/proc' % image_dir)
         run('/bin/mount --bind /sys %s/sys' % image_dir)
 
@@ -485,10 +448,86 @@ def make_image(project):
         #chrun('killall comar')
         run('umount %s/proc' % image_dir)
         run('umount %s/sys' % image_dir)
+        
         chrun("rm -rf /run/dbus/*")
+        
+        install_desktop(project)
+        
+
     except KeyboardInterrupt:
         print "Keyboard Interrupt: make_image() cancelled."
-        sys.exit(1)
+        sys.exit(1)        
+        
+def install_desktop(project):
+    
+    image_dir = project.image_dir()
+    desktop_image_dir = project.desktop_image_dir()
+    
+    run('mount -t aufs -o br=%s:%s=ro none %s' % (desktop_image_dir,image_dir, desktop_image_dir))
+    
+    desktop_image_packages = " ".join(project.all_desktop_image_packages)
+            
+    run('pisi --yes-all --ignore-comar --ignore-dep --ignore-check -D"%s" it %s' % (desktop_image_dir, desktop_image_packages))
+    
+    run('/bin/mount --bind /proc %s/proc' % desktop_image_dir)
+    run('/bin/mount --bind /sys %s/sys' % desktop_image_dir)
+    
+    run("chroot \"%s\" /bin/service dbus start" % desktop_image_dir)
+
+    run("chroot \"%s\" /usr/bin/pisi cp" % desktop_image_dir)
+
+    run("chroot \"%s\" /bin/service dbus stop" % desktop_image_dir)
+
+    run('umount %s/proc' % desktop_image_dir)
+    run('umount %s/sys' % desktop_image_dir)
+
+
+    run('/bin/umount -R %s' % desktop_image_dir)
+    run("rm -rf %s/run/dbus/*" % desktop_image_dir)
+
+
+def livecd_util(project):
+    
+    image_dir = project.image_dir()
+    desktop_image_dir = project.desktop_image_dir()    
+    
+    livecd_image_dir = project.livecd_image_dir()
+    
+    configdir =os.path.join(project.config_files)
+    
+    
+    run('mount -t aufs -o br=%s:%s=ro none %s' % (livecd_image_dir,image_dir,livecd_image_dir))
+    
+    path = "%s/install/" % configdir
+    path2 = "%s/usr/lib/initcpio/install/" % livecd_image_dir
+    for name in os.listdir(path):
+        run('cp -p "%s" "%s"' % (os.path.join(path, name), os.path.join(path2, name)))    
+    
+    path = "%s/hooks/" % configdir
+    path2 = "%s/usr/lib/initcpio/hooks/" % livecd_image_dir
+    for name in os.listdir(path):
+        run('cp -p "%s" "%s"' % (os.path.join(path, name), os.path.join(path2, name)))    
+    
+
+    run("cp -p %s/config/miso/mkinitcpio-kde.conf %s/etc/mkinitcpio-kde.conf" % (configdir, livecd_image_dir))
+
+    run('/bin/mount --bind /proc %s/proc' % livecd_image_dir)
+    run('/bin/mount --bind /sys %s/sys' % livecd_image_dir)
+    run('/bin/mount -o bind /dev %s/dev' % livecd_image_dir)
+
+
+    run("chroot \"%s\" /usr/bin/mkinitcpio -k 4.4.4 -c '/etc/mkinitcpio-kde.conf' -g /boot/initramfs.img" % livecd_image_dir)
+
+    run('/bin/umount %s/proc' % livecd_image_dir)
+    run('/bin/umount %s/sys' % livecd_image_dir)
+    run('/bin/umount %s/dev' % livecd_image_dir)
+    run('/bin/umount -R %s' % livecd_image_dir)
+
+    run("cp -p %s/boot/initramfs.img %s/boot/." % (livecd_image_dir,image_dir))    
+    
+    
+    
+    
 
 def generate_sort_list(iso_dir):
     # Sorts the packages in repo_dir according to their size
@@ -540,14 +579,6 @@ def make_iso(project):
             else:
                 shutil.copy2(src, dest)
 
-        if project.release_files:
-            # Allow ~ usage in project xml files
-            path = os.path.expanduser(project.release_files)
-            for name in os.listdir(path):
-                if name != ".svn":
-                    copy(os.path.join(path, name), name)
-
-        # setup_grub(project)
         setup_isolinux(project)
 
         if project.type == "install":
@@ -565,17 +596,7 @@ def make_iso(project):
 -uid 0 -gid 0 -udf -allow-limited-size -iso-level 3 -input-charset utf-8 -no-emul-boot -boot-load-size 4 \
 -publisher "%s" -A "%s"  %s' % (label, iso_file, publisher, application, iso_dir)
 
-        # Generate sort_list for mkisofs and YALI
-        # Disabled for now
-        if sort_cd_layout:
-            sorted_list = generate_sort_list(iso_dir)
-            if sorted_list:
-                open("%s/repo/install.order" % iso_dir, "w").write("\n".join(["%s %d" % (k,v) for (k,v) in sorted_list]))
-                run(the_sorted_iso_command)
 
-        else:
-            run(the_iso_command)
-        # convert iso to a hybrid one
         run("isohybrid %s" % iso_file)
 
     except KeyboardInterrupt:

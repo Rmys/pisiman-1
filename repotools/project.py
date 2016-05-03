@@ -194,13 +194,7 @@ class Project:
         self.selected_desktop_image_packages = []
         self.all_install_image_packages = []
 
-    def guessReleaseFiles(self):
-        if "project-files" in self.filename:
-            # Obeys to the uludag/trunk/distribution hierarchy, nice.
-            releaseFiles = self.filename.split("project-files/")[0]+"media-content"
-            if os.path.exists(releaseFiles):
-                return releaseFiles
-
+  
     def open(self, filename):
         # Open and parse project file filename
         try:
@@ -217,8 +211,7 @@ class Project:
         self.reset()
         self.filename = filename
 
-        # Try to guess releaseFiles location
-        self.release_files = self.guessReleaseFiles()
+
 
         # Fill in the properties from XML file
         self.title = doc.getTagData("Title")
@@ -228,8 +221,7 @@ class Project:
         self.plugin_package = doc.getTagData("PluginPackage")
         if not self.plugin_package:
             self.plugin_package = ""
-        if not self.release_files:
-            self.release_files = doc.getTagData("ReleaseFiles")
+
         self.extra_params = doc.getTagData("ExtraParameters")
         if not self.extra_params:
             self.extra_params = ""
@@ -379,8 +371,6 @@ class Project:
         if self.config_files:
             doc.insertTag("ConfigFiles").insertData(self.config_files)            
             
-        if self.release_files:
-            doc.insertTag("ReleaseFiles").insertData(self.release_files)
         if self.plugin_package:
             doc.insertTag("PluginPackage").insertData(self.plugin_package)
         if self.extra_params:
@@ -622,6 +612,8 @@ class Project:
     def desktop_image_dir(self, clean=False):
         return self._get_dir("desktopimage", clean)
     
+    def livecd_image_dir(self, clean=False):
+        return self._get_dir("livecdimage", clean)    
 
     def image_file(self):
         return os.path.join(self.work_dir, "pisi.sqfs")

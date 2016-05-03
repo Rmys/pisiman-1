@@ -321,7 +321,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             
     def slotSelectLivecdImagePackages(self):
         """
-            "Installation Image Packages..." menu item fires this function.
+            "Live cd Image Packages..." menu item fires this function.
         """
         if not self.repo:
             if not self.checkProject():
@@ -341,7 +341,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             
     def slotSelectDesktopImagePackages(self):
         """
-            "Installation Image Packages..." menu item fires this function.
+            "Desktop Image Packages..." menu item fires this function.
         """
         if not self.repo:
             if not self.checkProject():
@@ -423,10 +423,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.project.extra_params = unicode(self.lineParameters.text())
         self.project.type = ["install", "live"][self.comboType.currentIndex()]
         self.project.squashfs_comp_type = ["xz", "gzip", "lzma", "lzo"][self.comboCompression.currentIndex()]
-     #   if self.checkCollection.isChecked():
-        #    self.updateCollection()
-      #  else:
-       #     self.listPackageCollection.clear()
+
 
     def loadProject(self):
         """

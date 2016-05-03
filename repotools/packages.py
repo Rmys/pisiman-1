@@ -351,13 +351,7 @@ class Repository:
                 collect(item)
 
         collect(package_name)
-        # FIXME: Don't hardcode installer name
-        if package_name =="yali":
-            # Not needed deps search for system.base as default at all click!!!
-            if self.packages.has_key("acl"):
-                for item in self.packages["acl"]:
-                    deps.add(item)
-                    collect(item)
+
         return deps
 
     def __str__(self):
