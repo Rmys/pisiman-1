@@ -262,6 +262,12 @@ ResultActive=yes
 
 def squash_image(project):
     image_dir = project.image_dir()
+    desktop_image_dir = project.desktop_image_dir()
+    livecd_image_dir = project.livecd_image_dir()
+    
+    rootimage_file = project.rootimage_file()
+    desktopimage_file = project.desktopimage_file()
+    livecdimage_file = project.livecdimage_file()
 
     print "squashfs image dir%s" % image_dir
     if not image_dir.endswith("/"):
@@ -272,11 +278,14 @@ def squash_image(project):
     f.write("\n".join(get_exclude_list(project)))
     f.close()
 
-    mksquashfs_cmd = 'mksquashfs "%s" "rootfs.sqfs" -noappend -comp %s -ef "%s"' % (image_dir, project.squashfs_comp_type, temp.name)
+    mksquashfs_cmd = 'mksquashfs "%s" "%s" -noappend -comp %s -ef "%s"' % (image_dir, rootimage_file, project.squashfs_comp_type, temp.name)
     
     run(mksquashfs_cmd)
-
-
+    
+    mksquashfs_cmd1 = 'mksquashfs "%s" "%s" -noappend -comp %s -ef "%s"' % (desktop_image_dir, desktopimage_file, project.squashfs_comp_type, temp.name)
+    
+    run(mksquashfs_cmd1)
+    
 
 #
 # Operations
@@ -555,7 +564,7 @@ def generate_sort_list(iso_dir):
 
     return package_list
 
-
+"""
 def make_iso(project):
     print "Preparing ISO..."
     xterm_title("Preparing ISO")
@@ -604,3 +613,4 @@ def make_iso(project):
     except KeyboardInterrupt:
         print "Keyboard Interrupt: make_iso() cancelled."
         sys.exit(1)
+"""

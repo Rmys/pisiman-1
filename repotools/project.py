@@ -41,7 +41,7 @@ tmp/pisi-root/
 var/log/comar.log
 var/log/pisi.log
 root/.bash_history
-""" % ((PYTHON_VER,)*5)
+"""
 
 default_install_exclude_list = """
 var/db/pisi/
@@ -54,7 +54,20 @@ tmp/pisi-root/
 var/log/comar.log
 var/log/pisi.log
 root/.bash_history
-""" % ((PYTHON_VER,)*16)
+""" 
+
+default_install_glob_excludes = (
+    ( "usr/lib/python%s/" % PYTHON_VER, "*.pyc" ),
+    ( "usr/lib/python%s/" % PYTHON_VER, "*.pyo" ),
+    ( "usr/lib/pardus/", "*.pyc" ),
+    ( "usr/lib/pardus/", "*.pyo" ),
+    ( "usr/lib/", "*.a" ),
+    ( "usr/lib/", "*.la" ),
+    ( "lib/", "*.a" ),
+    ( "lib/", "*.la" ),
+    ( "var/db/comar/", "__db*" ),
+    ( "var/db/comar/", "log.*" ),
+)
 
 default_live_glob_excludes = (
     ( "usr/lib/python%s/" % PYTHON_VER, "*.pyc" ),
@@ -68,8 +81,6 @@ default_live_glob_excludes = (
     ( "var/db/comar/", "__db*" ),
     ( "var/db/comar/", "log.*" ),
 )
-
-
 class ExProject(Exception):
     pass
 
@@ -532,8 +543,14 @@ class Project:
     def livecd_image_dir(self, clean=False):
         return self._get_dir("livecdimage", clean)    
 
-    def image_file(self):
-        return os.path.join(self.work_dir, "pisi.sqfs")
+    def rootimage_file(self):
+        return os.path.join(self.work_dir, "rootfs.sqfs")
+
+    def desktopimage_file(self):
+        return os.path.join(self.work_dir, "desktop.sqfs")
+
+    def livecdimage_file(self):
+        return os.path.join(self.work_dir, "livecd.sqfs")
 
     def install_repo_dir(self, clean=False):
         return self._get_dir("install_repo", clean)
