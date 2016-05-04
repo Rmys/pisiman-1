@@ -262,7 +262,6 @@ ResultActive=yes
 
 def squash_image(project):
     image_dir = project.image_dir()
-    image_file = project.image_file()
 
     print "squashfs image dir%s" % image_dir
     if not image_dir.endswith("/"):
@@ -273,8 +272,11 @@ def squash_image(project):
     f.write("\n".join(get_exclude_list(project)))
     f.close()
 
-    mksquashfs_cmd = 'mksquashfs "%s" "%s" -noappend -comp %s -ef "%s"' % (image_dir, image_file, project.squashfs_comp_type, temp.name)
+    mksquashfs_cmd = 'mksquashfs "%s" "rootfs.sqfs" -noappend -comp %s -ef "%s"' % (image_dir, project.squashfs_comp_type, temp.name)
+    
     run(mksquashfs_cmd)
+
+
 
 #
 # Operations

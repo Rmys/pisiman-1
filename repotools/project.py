@@ -32,19 +32,6 @@ if os.path.exists("/usr/lib/qt5/libQtCore.so"):
     QT_PREFIX += "/lib/qt5"
 
 default_live_exclude_list = """
-lib/rcscripts/
-usr/lib/python%s/lib-tk/
-usr/lib/python%s/idlelib/
-usr/lib/python%s/bsddb/test/
-usr/lib/python%s/lib-old/
-usr/lib/python%s/test/
-usr/lib/klibc/include/
-usr/share/aclocal/
-usr/share/info/
-usr/share/sip/
-usr/share/man/
-usr/share/groff/
-usr/share/dict/
 var/db/pisi/
 var/cache/pisi/packages/
 var/cache/pisi/archives/
@@ -57,36 +44,6 @@ root/.bash_history
 """ % ((PYTHON_VER,)*5)
 
 default_install_exclude_list = """
-lib/rcscripts/
-usr/lib/cups/
-usr/lib/python%s/lib-tk/
-usr/lib/python%s/idlelib/
-usr/lib/python%s/bsddb/test/
-usr/lib/python%s/lib-old/
-usr/lib/python%s/test/
-usr/lib/python%s/site-packages/PyQt5/QtAssistant.so
-usr/lib/python%s/site-packages/PyQt5/QtDesigner.so
-usr/lib/python%s/site-packages/PyQt5/QtHelp.so
-usr/lib/python%s/site-packages/PyQt5/QtNetwork.so
-usr/lib/python%s/site-packages/PyQt5/QtOpenGL.so
-usr/lib/python%s/site-packages/PyQt5/QtScript.so
-usr/lib/python%s/site-packages/PyQt5/QtSql.so
-usr/lib/python%s/site-packages/PyQt5/QtTest.so
-usr/lib/python%s/site-packages/PyQt5/QtWebKit.so
-usr/lib/python%s/site-packages/PyQt5/QtXml.so
-usr/lib/python%s/site-packages/PyQt5/QtXmlPatterns.so
-usr/lib/klibc/include/
-usr/lib/syslinux/
-usr/share/aclocal/
-usr/share/cups/
-usr/share/alsa
-usr/share/doc/
-usr/share/gfxtheme/
-usr/share/info/
-usr/share/sip/
-usr/share/man/
-usr/share/groff/
-usr/share/dict/
 var/db/pisi/
 var/lib/pisi/
 var/cache/pisi/packages/
@@ -99,42 +56,6 @@ var/log/pisi.log
 root/.bash_history
 """ % ((PYTHON_VER,)*16)
 
-default_install_glob_excludes = (
-    ( "usr/lib/python%s/" % PYTHON_VER, "*.pyc" ),
-    ( "usr/lib/python%s/" % PYTHON_VER, "*.pyo" ),
-    ( "usr/lib/pardus/", "*.pyc" ),
-    ( "usr/lib/pardus/", "*.pyo" ),
-    ( "usr/lib/", "*.a" ),
-    ( "usr/lib/", "*.la" ),
-    ( "lib/", "*.a" ),
-    ( "lib/", "*.la" ),
-    ( "var/db/comar/", "__db*" ),
-    ( "var/db/comar/", "log.*" ),
-    ( "%s/lib/" % QT_PREFIX, "libphononexperimental.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libphonon.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libqca.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQt3Support.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQtAssistantClient.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQtCLucene.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQtDBus.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQtDesignerComponents.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQtDesigner.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQtHelp.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQtMultimedia*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQtNetwork.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQtOpenGL.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQtScript.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQtScriptTools.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQtSql.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQtTapioca.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQtTelepathyClient.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQtTest.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQtUiTools.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQtWebKit.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQtXmlPatterns.so*" ),
-    ( "%s/lib/" % QT_PREFIX, "libQtXml.so*" ),
-)
-
 default_live_glob_excludes = (
     ( "usr/lib/python%s/" % PYTHON_VER, "*.pyc" ),
     ( "usr/lib/python%s/" % PYTHON_VER, "*.pyo" ),
@@ -146,10 +67,6 @@ default_live_glob_excludes = (
     ( "lib/", "*.la" ),
     ( "var/db/comar/", "__db*" ),
     ( "var/db/comar/", "log.*" ),
-    ( "var/lib/pisi/index", "*" ),
-    ( "var/lib/pisi/info", "*" ),
-    ( "var/lib/pisi/package", "*" ),
-    ( "var/cache/pisi", "*.cache" ),
 )
 
 
