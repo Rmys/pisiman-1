@@ -543,14 +543,6 @@ class Project:
     def livecd_image_dir(self, clean=False):
         return self._get_dir("livecdimage", clean)    
 
-    def rootimage_file(self):
-        return os.path.join(self.work_dir, "rootfs.sqfs")
-
-    def desktopimage_file(self):
-        return os.path.join(self.work_dir, "desktop.sqfs")
-
-    def livecdimage_file(self):
-        return os.path.join(self.work_dir, "livecd.sqfs")
 
     def install_repo_dir(self, clean=False):
         return self._get_dir("install_repo", clean)

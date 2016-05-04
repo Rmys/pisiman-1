@@ -265,9 +265,11 @@ def squash_image(project):
     desktop_image_dir = project.desktop_image_dir()
     livecd_image_dir = project.livecd_image_dir()
     
-    rootimage_file = project.rootimage_file()
-    desktopimage_file = project.desktopimage_file()
-    livecdimage_file = project.livecdimage_file()
+    iso_dir = project.iso_dir(clean=True)
+    image_path = os.path.join(iso_dir, "pisi")
+
+    if not os.path.exists(image_path):
+        os.makedirs(image_path)
 
     print "squashfs image dir%s" % image_dir
     if not image_dir.endswith("/"):
@@ -278,11 +280,22 @@ def squash_image(project):
     f.write("\n".join(get_exclude_list(project)))
     f.close()
 
-    mksquashfs_cmd = 'mksquashfs "%s" "%s" -noappend -comp %s -ef "%s"' % (image_dir, rootimage_file, project.squashfs_comp_type, temp.name)
+    mksquashfs_cmd = 'mksquashfs "%s" "%s/rootfs.sqfs" -noappend -comp %s -ef "%s"' % (image_dir, image_path, project.squashfs_comp_type, temp.name)
     
     run(mksquashfs_cmd)
     
-    mksquashfs_cmd1 = 'mksquashfs "%s" "%s" -noappend -comp %s -ef "%s"' % (desktop_image_dir, desktopimage_file, project.squashfs_comp_type, temp.name)
+    print "squashfs image dir%s" % desktop_image_dir
+    if not desktop_image_dir.endswith("/"):
+        desktop_image_dir += "/"
+    print "later squashfs image dir%s" % desktop_image_dir
+    temp = tempfile.NamedTemporaryFile()
+    f = file(temp.name, "w")
+    f.write("\n".join(get_exclude_list(project)))
+    f.close()
+
+    
+    
+    mksquashfs_cmd1 = 'mksquashfs "%s" "%s/desktop.sqfs" -noappend -comp %s -ef "%s"' % (desktop_image_dir, image_path, project.squashfs_comp_type, temp.name)
     
     run(mksquashfs_cmd1)
     
