@@ -540,6 +540,9 @@ class Project:
     def desktop_image_dir(self, clean=False):
         return self._get_dir("desktopimage", clean)
     
+    def initrd_image_dir(self, clean=False):
+        return self._get_dir("initrdimage", clean)
+    
     def livecd_image_dir(self, clean=False):
         return self._get_dir("livecdimage", clean)    
 

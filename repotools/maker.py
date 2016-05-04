@@ -105,7 +105,7 @@ timeout  200
 
 label %(title)s
     kernel /boot/kernel
-    append initrd=/boot/initrd %(exparams)s
+    append initrd=/boot/initrd misobasedir=pisi misolabel=pisilive overlay=free quiet %(exparams)s
 
 %(rescue_template)s
 
@@ -168,7 +168,10 @@ def setup_isolinux(project):
     image_dir = project.image_dir()
     iso_dir = project.iso_dir()
     repo = project.get_repo()
+    
+    configdir =os.path.join(project.config_files)
 
+    
     # Setup dir
     path = os.path.join(iso_dir, "boot/isolinux")
     if not os.path.exists(path):
@@ -180,7 +183,7 @@ def setup_isolinux(project):
     # Copy the kernel and initramfs
     path = os.path.join(image_dir, "boot")
     for name in os.listdir(path):
-        if name.startswith("kernel") or name.startswith("initramfs") or name.endswith(".bin"):
+        if name.startswith("kernel") or name.startswith("initramfs") or name.endswith(".img"):
             if name.startswith("kernel"):
                 copy(os.path.join(path, name), "boot/kernel")
             elif name.startswith("initramfs"):
@@ -214,6 +217,7 @@ def setup_isolinux(project):
     #copy(os.path.join(image_dir, "lib/modules/%s/modules.pcimap" % kernel_version), dest)
     copy(os.path.join(image_dir, "boot/memtest"), os.path.join(iso_dir, "boot"))
 
+    
 #
 # Image related stuff
 #
@@ -265,11 +269,8 @@ def squash_image(project):
     desktop_image_dir = project.desktop_image_dir()
     livecd_image_dir = project.livecd_image_dir()
     
-    iso_dir = project.iso_dir(clean=True)
-    image_path = os.path.join(iso_dir, "pisi")
-
-    if not os.path.exists(image_path):
-        os.makedirs(image_path)
+    sqfs_path = os.path.join(project.work_dir)
+    
 
     print "squashfs image dir%s" % image_dir
     if not image_dir.endswith("/"):
@@ -280,7 +281,7 @@ def squash_image(project):
     f.write("\n".join(get_exclude_list(project)))
     f.close()
 
-    mksquashfs_cmd = 'mksquashfs "%s" "%s/rootfs.sqfs" -noappend -comp %s -ef "%s"' % (image_dir, image_path, project.squashfs_comp_type, temp.name)
+    mksquashfs_cmd = 'mksquashfs "%s" "%s/rootfs.sqfs" -noappend -comp %s -ef "%s"' % (image_dir, sqfs_path, project.squashfs_comp_type, temp.name)
     
     run(mksquashfs_cmd)
     
@@ -295,7 +296,7 @@ def squash_image(project):
 
     
     
-    mksquashfs_cmd1 = 'mksquashfs "%s" "%s/desktop.sqfs" -noappend -comp %s -ef "%s"' % (desktop_image_dir, image_path, project.squashfs_comp_type, temp.name)
+    mksquashfs_cmd1 = 'mksquashfs "%s" "%s/desktop.sqfs" -noappend -comp %s -ef "%s"' % (desktop_image_dir, sqfs_path, project.squashfs_comp_type, temp.name)
     
     run(mksquashfs_cmd1)
     
@@ -317,12 +318,12 @@ def make_repos(project):
 
         imagedeps = project.all_install_image_packages
         imagedeps1 = project.all_desktop_image_packages
-       # imagedeps2 = project.all_livecd_image_packages
+        imagedeps2 = project.all_livecd_image_packages
             
 
         repo.make_local_repo(repo_dir, imagedeps)
         repo.make_local_repo(repo_dir, imagedeps1)
-       # repo.make_local_repo(repo_dir, imagedeps2)
+        repo.make_local_repo(repo_dir, imagedeps2)
         
         os.chdir(reposs)
         run('pisi ix -D "%s/" --skip-signing' % (reposs))
@@ -356,11 +357,9 @@ def make_image(project):
 
         image_dir = project.image_dir()
         desktop_image_dir = project.desktop_image_dir()
+        initrd_image_dir = project.initrd_image_dir()
         livecd_image_dir = project.livecd_image_dir()
-        
-        configdir =os.path.join(project.config_files)
-
-        
+       
         
         run('umount %s/proc' % image_dir, ignore_error=True)
         run('umount %s/sys' % image_dir, ignore_error=True)
@@ -371,9 +370,11 @@ def make_image(project):
         run('umount %s/proc' % livecd_image_dir, ignore_error=True)
         run('umount %s/sys' % livecd_image_dir, ignore_error=True)
         
+        run('umount %s/proc' % initrd_image_dir, ignore_error=True)
+        run('umount %s/sys' % initrd_image_dir, ignore_error=True)
+        run('/bin/umount -R %s' % initrd_image_dir, ignore_error=True)
 
         image_dir = project.image_dir(clean=True)
-        desktop_image_dir = project.desktop_image_dir(clean=True)
         
         
         run('pisi --yes-all -D"%s" ar pisilinux-install "%s" --ignore-check' % (image_dir, reposs + "/pisi-index.xml"))
@@ -382,7 +383,7 @@ def make_image(project):
 
         install_image_packages = " ".join(project.all_install_image_packages)
 
-        run('pisi --yes-all --ignore-comar --ignore-dep --ignore-check -D"%s" it %s' % (image_dir, install_image_packages))
+        run('pisi --yes-all --ignore-comar --ignore-dep --ignore-check --ignore-package-conflicts --ignore-file-conflicts -D"%s" it %s' % (image_dir, install_image_packages))
         
         
         #    if project.plugin_package:
@@ -476,7 +477,7 @@ def make_image(project):
         chrun("rm -rf /run/dbus/*")
         
         install_desktop(project)
-        
+        make_initrd(project)
 
     except KeyboardInterrupt:
         print "Keyboard Interrupt: make_image() cancelled."
@@ -485,7 +486,9 @@ def make_image(project):
 def install_desktop(project):
     
     image_dir = project.image_dir()
-    desktop_image_dir = project.desktop_image_dir()
+    
+   
+    desktop_image_dir = project.desktop_image_dir(clean=True)
     
     run('mount -t aufs -o br=%s:%s=ro none %s' % (desktop_image_dir,image_dir, desktop_image_dir))
     
@@ -510,44 +513,44 @@ def install_desktop(project):
     run("rm -rf %s/run/dbus/*" % desktop_image_dir)
 
 
-def livecd_util(project):
+def make_initrd(project):
     
     image_dir = project.image_dir()
-    desktop_image_dir = project.desktop_image_dir()    
+   
+    initrd_image_dir = project.initrd_image_dir(clean=True)
     
-    livecd_image_dir = project.livecd_image_dir()
     
     configdir =os.path.join(project.config_files)
     
     
-    run('mount -t aufs -o br=%s:%s=ro none %s' % (livecd_image_dir,image_dir,livecd_image_dir))
+    run('mount -t aufs -o br=%s:%s=ro none %s' % (initrd_image_dir,image_dir,initrd_image_dir))
     
     path = "%s/install/" % configdir
-    path2 = "%s/usr/lib/initcpio/install/" % livecd_image_dir
+    path2 = "%s/usr/lib/initcpio/install/" %initrd_image_dir
     for name in os.listdir(path):
         run('cp -p "%s" "%s"' % (os.path.join(path, name), os.path.join(path2, name)))    
     
     path = "%s/hooks/" % configdir
-    path2 = "%s/usr/lib/initcpio/hooks/" % livecd_image_dir
+    path2 = "%s/usr/lib/initcpio/hooks/" %initrd_image_dir
     for name in os.listdir(path):
         run('cp -p "%s" "%s"' % (os.path.join(path, name), os.path.join(path2, name)))    
     
 
-    run("cp -p %s/config/miso/mkinitcpio-kde.conf %s/etc/mkinitcpio-kde.conf" % (configdir, livecd_image_dir))
+    run("cp -p %s/mkinitcpio-live.conf %s/etc/mkinitcpio-live.conf" % (configdir,initrd_image_dir))
 
-    run('/bin/mount --bind /proc %s/proc' % livecd_image_dir)
-    run('/bin/mount --bind /sys %s/sys' % livecd_image_dir)
-    run('/bin/mount -o bind /dev %s/dev' % livecd_image_dir)
+    run('/bin/mount --bind /proc %s/proc' %initrd_image_dir)
+    run('/bin/mount --bind /sys %s/sys' %initrd_image_dir)
+    run('/bin/mount -o bind /dev %s/dev' %initrd_image_dir)
 
+    kernel_version = open(os.path.join(image_dir, "etc/kernel/kernel")).read()
+    run("chroot \"%s\" /usr/bin/mkinitcpio -k %s -c '/etc/mkinitcpio-live.conf' -g /boot/initramfs" % (initrd_image_dir,kernel_version))
 
-    run("chroot \"%s\" /usr/bin/mkinitcpio -k 4.4.4 -c '/etc/mkinitcpio-kde.conf' -g /boot/initramfs.img" % livecd_image_dir)
+    run('/bin/umount %s/proc' % initrd_image_dir)
+    run('/bin/umount %s/sys' % initrd_image_dir)
+    run('/bin/umount %s/dev' % initrd_image_dir)
+    run('/bin/umount -R %s' % initrd_image_dir)
 
-    run('/bin/umount %s/proc' % livecd_image_dir)
-    run('/bin/umount %s/sys' % livecd_image_dir)
-    run('/bin/umount %s/dev' % livecd_image_dir)
-    run('/bin/umount -R %s' % livecd_image_dir)
-
-    run("cp -p %s/boot/initramfs.img %s/boot/." % (livecd_image_dir,image_dir))    
+    run("cp -p %s/boot/initramfs %s/boot/." % (initrd_image_dir,image_dir))    
     
     
     
@@ -577,23 +580,35 @@ def generate_sort_list(iso_dir):
 
     return package_list
 
-"""
+
 def make_iso(project):
     print "Preparing ISO..."
     xterm_title("Preparing ISO")
 
-    sort_cd_layout = False
 
     try:
         iso_dir = project.iso_dir(clean=True)
         iso_file = project.iso_file(clean=True)
-        #image_dir = project.image_dir()
-        image_file = project.image_file()
-        image_path = os.path.join(iso_dir, "boot")
+        work_dir = os.path.join(project.work_dir)
+        configdir =os.path.join(project.config_files)
+
+            
+    #iso_dir = project.iso_dir(clean=True)
+
+  #  if not os.path.exists(image_path):
+  #      os.makedirs(image_path)
+        image_path = os.path.join(iso_dir, "pisi")
 
         if not os.path.exists(image_path):
-            os.makedirs(image_path)
-        os.link(image_file, os.path.join(iso_dir, "boot/pisi.sqfs"))
+            os.makedirs(image_path)        
+        
+       
+        run("cp -p %s/isomounts %s/." % (configdir, image_path))
+        run("cp -p %s/*sqfs %s/." % (work_dir, image_path))
+        
+
+   
+        run("touch %s/.miso" % iso_dir)
 
         def copy(src, dest):
             dest = os.path.join(iso_dir, dest)
@@ -605,25 +620,21 @@ def make_iso(project):
 
         setup_isolinux(project)
 
-        if project.type == "install":
-            run('ln -s "%s" "%s"' % (project.install_repo_dir(), os.path.join(iso_dir, "repo")))
 
         publisher="Pisi GNU/Linux http://www.pisilinux.org"
         application="Pisi GNU/Linux Live Media"
         label="PisiLive"
 
-        the_sorted_iso_command='genisoimage -f -sort %s/repo/install.order -J -r -l -V "%s" -o "%s" -b boot/isolinux/isolinux.bin -c boot/isolinux/boot.cat -boot-info-table \
--uid 0 -gid 0 -udf -allow-limited-size -iso-level 3 -input-charset utf-8 -no-emul-boot -boot-load-size 4 \
--publisher "%s" -A "%s"  %s' % (iso_dir, label, iso_file, publisher, application, iso_dir)
 
         the_iso_command='genisoimage -f -J -r -l -V "%s" -o "%s" -b boot/isolinux/isolinux.bin -c boot/isolinux/boot.cat -boot-info-table \
 -uid 0 -gid 0 -udf -allow-limited-size -iso-level 3 -input-charset utf-8 -no-emul-boot -boot-load-size 4 \
 -publisher "%s" -A "%s"  %s' % (label, iso_file, publisher, application, iso_dir)
-
+       
+        run(the_iso_command)
 
         run("isohybrid %s" % iso_file)
 
     except KeyboardInterrupt:
         print "Keyboard Interrupt: make_iso() cancelled."
         sys.exit(1)
-"""
+

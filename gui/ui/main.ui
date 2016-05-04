@@ -231,7 +231,12 @@
     <addaction name="actionLivecdImagePackages"/>
     <addaction name="actionLanguages"/>
     <addaction name="separator"/>
+    <addaction name="actionMake_Repo"/>
+    <addaction name="actionMake_Squashfs"/>
+    <addaction name="actionMake_Iso"/>
+    <addaction name="separator"/>
     <addaction name="actionMakeImage"/>
+    <addaction name="separator"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuProject"/>
@@ -314,7 +319,7 @@
      <normaloff>:/raw/pics/applications-education-language.png</normaloff>:/raw/pics/applications-education-language.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Languages...</string>
+    <string>La&amp;nguages...</string>
    </property>
   </action>
   <action name="actionMakeImage">
@@ -341,7 +346,43 @@
      <normaloff>:/raw/pics/applications-other.png</normaloff>:/raw/pics/applications-other.png</iconset>
    </property>
    <property name="text">
-    <string>Desktop Image Packages</string>
+    <string>&amp;Desktop Image Packages</string>
+   </property>
+  </action>
+  <action name="actionMake_Repo">
+   <property name="icon">
+    <iconset resource="raw.qrc">
+     <normaloff>:/raw/pics/folder-new.png</normaloff>:/raw/pics/folder-new.png</iconset>
+   </property>
+   <property name="text">
+    <string>Make Repo</string>
+   </property>
+   <property name="toolTip">
+    <string>Create  only local repo </string>
+   </property>
+  </action>
+  <action name="actionMake_Squashfs">
+   <property name="icon">
+    <iconset resource="raw.qrc">
+     <normaloff>:/raw/pics/list-add.png</normaloff>:/raw/pics/list-add.png</iconset>
+   </property>
+   <property name="text">
+    <string>Make Squashfs</string>
+   </property>
+   <property name="toolTip">
+    <string>Make Only Squashfs Image</string>
+   </property>
+  </action>
+  <action name="actionMake_Iso">
+   <property name="icon">
+    <iconset resource="raw.qrc">
+     <normaloff>:/raw/pics/media-optical.png</normaloff>:/raw/pics/media-optical.png</iconset>
+   </property>
+   <property name="text">
+    <string>Make Iso</string>
+   </property>
+   <property name="toolTip">
+    <string>skip other steps</string>
    </property>
   </action>
  </widget>

@@ -91,6 +91,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionLivecdImagePackages.triggered.connect(self.slotSelectLivecdImagePackages)
         self.actionDesktopImagePackages.triggered.connect(self.slotSelectDesktopImagePackages)
         self.actionMakeImage.triggered.connect(self.slotMakeImage)
+        #self.actionMake_Repo.triggered.connect(self.slotMake_Repo)
+
+        #self.actionMake_Squashfs.triggered.connect(self.slotMake_Squashfs)
+        self.actionMake_Iso.triggered.connect(self.slotMake_Iso)
 
         # Browse buttons
         self.pushBrowseRepository.clicked.connect(self.slotBrowseRepository)
@@ -390,6 +394,30 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         cmd = '%s make %s' % (app_path, temp_project.name)
         self.terminal.sendText("sudo %s\n" % cmd)
         self.terminal.setFocus()
+        
+    def slotMake_Iso(self):
+        """
+            Make image button fires this function.
+        """
+        if not self.repo:
+            if not self.checkProject():
+                return
+            if not self.updateRepo():
+                return
+            
+        temp_project = tempfile.NamedTemporaryFile(delete=False)
+        self.project.save(temp_project.name)
+        app_path = self.args[0]
+        if app_path[0] != "/":
+            app_path = os.path.join(os.getcwd(), app_path)
+
+        # Konsole Mode
+        # cmd = 'konsole --noclose --workdir "%s" -e "%s" make "%s"' % (os.getcwd(), app_path, temp_project.name)
+        # subprocess.Popen(["xdg-su", "-u", "root", "-c", cmd])
+
+        cmd = '%s make-iso %s' % (app_path, temp_project.name)
+        self.terminal.sendText("sudo %s\n" % cmd)
+        self.terminal.setFocus()        
 
     def updateCollection(self):
         self.project.package_collections = []
