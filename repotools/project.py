@@ -256,6 +256,10 @@ class Project:
             self.selected_livecd_image_packages.sort()
             self.all_livecd_image_packages.sort()
             
+            self.selected_components += self.selected_livecd_image_components
+            self.selected_components.sort()
+            self.selected_packages += self.selected_livecd_image_packages
+            self.selected_packages.sort()            
             
         desktopImagePackagesTag = doc.getTag("DesktopImagePackages")
         if desktopImagePackagesTag:
@@ -268,6 +272,10 @@ class Project:
             self.selected_desktop_image_packages.sort()
             self.all_desktop_image_packages.sort()           
             
+            self.selected_components += self.selected_desktop_image_components
+            self.selected_components.sort()
+            self.selected_packages += self.selected_desktop_image_packages
+            self.selected_packages.sort()
 
         installImagePackagesTag = doc.getTag("InstallImagePackages")
         
@@ -281,7 +289,11 @@ class Project:
             self.selected_install_image_packages.sort()
             self.all_install_image_packages.sort()
 
-            
+            self.selected_components += self.selected_install_image_components
+            self.selected_components.sort()
+            self.selected_packages += self.selected_install_image_packages
+            self.selected_packages.sort()
+
        
 
     def save(self, filename=None):
@@ -370,22 +382,6 @@ class Project:
             for item in self.all_install_image_packages:
                 package_selection.insertTag("Package").insertData(item)
                 
-        if self.all_livecd_image_packages:
-            self.selected_livecd_image_components.sort()
-            self.selected_livecd_image_packages.sort()
-            self.all_livecd_image_packages.sort()
-             
-            package_selection = doc.insertTag("LivecdImagePackages")
-            
-            # Insert components if any
-            for item in self.selected_livecd_image_components:
-                package_selection.insertTag("SelectedComponent").insertData(item)
-
-            for item in self.selected_livecd_image_packages:
-                package_selection.insertTag("SelectedPackage").insertData(item)
-
-            for item in self.all_livecd_image_packages:
-                package_selection.insertTag("Package").insertData(item)
                 
         if self.all_desktop_image_packages:
             self.selected_desktop_image_components.sort()
@@ -403,6 +399,24 @@ class Project:
 
             for item in self.all_desktop_image_packages:
                 package_selection.insertTag("Package").insertData(item)                
+
+        if self.all_livecd_image_packages:
+            self.selected_livecd_image_components.sort()
+            self.selected_livecd_image_packages.sort()
+            self.all_livecd_image_packages.sort()
+             
+            package_selection = doc.insertTag("LivecdImagePackages")
+            
+            # Insert components if any
+            for item in self.selected_livecd_image_components:
+                package_selection.insertTag("SelectedComponent").insertData(item)
+
+            for item in self.selected_livecd_image_packages:
+                package_selection.insertTag("SelectedPackage").insertData(item)
+
+            for item in self.all_livecd_image_packages:
+                package_selection.insertTag("Package").insertData(item)
+                
                 
         if self.default_language:
             # Set the default language
@@ -530,6 +544,44 @@ class Project:
         packages.sort()
         self.all_install_image_packages = packages
         
+        # Find all desktop image packages
+        
+        packages = []
+        self.all_desktop_image_packages = []
+
+        for component in self.selected_desktop_image_components:
+            if component not in repo.components:
+                if component not in self.missing_components:
+                    self.missing_components.append(component)
+                return
+            for package in repo.components[component]:
+                collect(package)
+
+        for package in self.selected_desktop_image_packages:
+            collect(package)
+
+        packages.sort()
+        self.all_desktop_image_packages = packages
+        
+        # Find all livecd image packages
+        
+       
+        packages = []
+        self.all_livecd_image_packages = []
+
+        for component in self.selected_livecd_image_components:
+            if component not in repo.components:
+                if component not in self.missing_components:
+                    self.missing_components.append(component)
+                return
+            for package in repo.components[component]:
+                collect(package)
+
+        for package in self.selected_livecd_image_packages:
+            collect(package)
+
+        packages.sort()
+        self.all_livecd_image_packages = packages
 
     def image_repo_dir(self, clean=False):
         return self._get_dir("image_repo", clean)
