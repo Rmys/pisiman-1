@@ -242,10 +242,7 @@ class Project:
             self.selected_livecd_image_packages.sort()
             self.all_livecd_image_packages.sort()
             
-            self.selected_components += self.selected_livecd_image_components
-            self.selected_components.sort()
-            self.selected_packages += self.selected_livecd_image_packages
-            self.selected_packages.sort()            
+         
             
         desktopImagePackagesTag = doc.getTag("DesktopImagePackages")
         if desktopImagePackagesTag:
@@ -258,10 +255,6 @@ class Project:
             self.selected_desktop_image_packages.sort()
             self.all_desktop_image_packages.sort()           
             
-            self.selected_components += self.selected_desktop_image_components
-            self.selected_components.sort()
-            self.selected_packages += self.selected_desktop_image_packages
-            self.selected_packages.sort()
 
         installImagePackagesTag = doc.getTag("InstallImagePackages")
         
@@ -274,11 +267,6 @@ class Project:
             self.selected_install_image_components.sort()
             self.selected_install_image_packages.sort()
             self.all_install_image_packages.sort()
-
-            self.selected_components += self.selected_install_image_components
-            self.selected_components.sort()
-            self.selected_packages += self.selected_install_image_packages
-            self.selected_packages.sort()
 
        
 

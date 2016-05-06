@@ -92,7 +92,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionDesktopImagePackages.triggered.connect(self.slotSelectDesktopImagePackages)
         self.actionMakeImage.triggered.connect(self.slotMakeImage)
         self.actionMake_Repo.triggered.connect(self.slotMake_Repo)
-
+        self.actionMake_Image.triggered.connect(self.slotMake_Image)
         self.actionMake_Squashfs.triggered.connect(self.slotMake_Squashfs)
         self.actionMake_Iso.triggered.connect(self.slotMake_Iso)
 
@@ -414,7 +414,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         cmd = '%s make-repo %s' % (app_path, temp_project.name)
         self.terminal.sendText("sudo %s\n" % cmd)
-        self.terminal.setFocus()     
+        self.terminal.setFocus() 
+        
+    def slotMake_Image(self):
+        """
+            Make repo button fires this function.
+        """
+        if not self.repo:
+            if not self.checkProject():
+                return
+            if not self.updateRepo():
+                return
+            
+        temp_project = tempfile.NamedTemporaryFile(delete=False)
+        self.project.save(temp_project.name)
+        app_path = self.args[0]
+        if app_path[0] != "/":
+            app_path = os.path.join(os.getcwd(), app_path)
+
+
+        cmd = '%s make-live %s' % (app_path, temp_project.name)
+        self.terminal.sendText("sudo %s\n" % cmd)
+        self.terminal.setFocus()         
         
     def slotMake_Squashfs(self):
         """

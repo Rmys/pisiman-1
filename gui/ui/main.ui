@@ -231,15 +231,21 @@
     <addaction name="actionLivecdImagePackages"/>
     <addaction name="actionLanguages"/>
     <addaction name="separator"/>
-    <addaction name="actionMake_Repo"/>
-    <addaction name="actionMake_Squashfs"/>
-    <addaction name="actionMake_Iso"/>
-    <addaction name="separator"/>
     <addaction name="actionMakeImage"/>
     <addaction name="separator"/>
    </widget>
+   <widget class="QMenu" name="menuHelper">
+    <property name="title">
+     <string>&amp;Helper</string>
+    </property>
+    <addaction name="actionMake_Repo"/>
+    <addaction name="actionMake_Image"/>
+    <addaction name="actionMake_Squashfs"/>
+    <addaction name="actionMake_Iso"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuProject"/>
+   <addaction name="menuHelper"/>
   </widget>
   <action name="actionNew">
    <property name="icon">
@@ -349,6 +355,42 @@
     <string>&amp;Desktop Image Packages</string>
    </property>
   </action>
+  <action name="action">
+   <property name="icon">
+    <iconset resource="raw.qrc">
+     <normaloff>:/raw/pics/folder-new.png</normaloff>:/raw/pics/folder-new.png</iconset>
+   </property>
+   <property name="text">
+    <string>Ma&amp;ke Repo</string>
+   </property>
+   <property name="toolTip">
+    <string>Create  only local repo </string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="icon">
+    <iconset resource="raw.qrc">
+     <normaloff>:/raw/pics/list-add.png</normaloff>:/raw/pics/list-add.png</iconset>
+   </property>
+   <property name="text">
+    <string>Make &amp;Squashfs</string>
+   </property>
+   <property name="toolTip">
+    <string>Make Only Squashfs Image</string>
+   </property>
+  </action>
+  <action name="action_3">
+   <property name="icon">
+    <iconset resource="raw.qrc">
+     <normaloff>:/raw/pics/media-optical.png</normaloff>:/raw/pics/media-optical.png</iconset>
+   </property>
+   <property name="text">
+    <string>Make &amp;Iso</string>
+   </property>
+   <property name="toolTip">
+    <string>skip other steps</string>
+   </property>
+  </action>
   <action name="actionMake_Repo">
    <property name="icon">
     <iconset resource="raw.qrc">
@@ -356,9 +398,6 @@
    </property>
    <property name="text">
     <string>Make Repo</string>
-   </property>
-   <property name="toolTip">
-    <string>Create  only local repo </string>
    </property>
   </action>
   <action name="actionMake_Squashfs">
@@ -369,9 +408,6 @@
    <property name="text">
     <string>Make Squashfs</string>
    </property>
-   <property name="toolTip">
-    <string>Make Only Squashfs Image</string>
-   </property>
   </action>
   <action name="actionMake_Iso">
    <property name="icon">
@@ -381,8 +417,14 @@
    <property name="text">
     <string>Make Iso</string>
    </property>
-   <property name="toolTip">
-    <string>skip other steps</string>
+  </action>
+  <action name="actionMake_Image">
+   <property name="icon">
+    <iconset resource="raw.qrc">
+     <normaloff>:/raw/pics/applications-other.png</normaloff>:/raw/pics/applications-other.png</iconset>
+   </property>
+   <property name="text">
+    <string>Make Image</string>
    </property>
   </action>
  </widget>

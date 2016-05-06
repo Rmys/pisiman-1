@@ -2,7 +2,7 @@
     <Title>TestLiveXfce</Title>
     <WorkDir>/tmp/testxfce</WorkDir>
     <ConfigFiles>/home/erturk/yedek/git/pisiman/conf</ConfigFiles>
-    <PackageSelection repo_uri="file:///home/erturk/yedek/git/git/extra-repo-binary/pisi-index.xml">
+    <PackageSelection repo_uri="file:///home/erturk/git/extra/extra-repo-binary/pisi-index.xml.xz">
         <SelectedComponent>desktop.xfce.base</SelectedComponent>
         <SelectedComponent>desktop.xfce.base</SelectedComponent>
         <SelectedComponent>desktop.xfce.base</SelectedComponent>
