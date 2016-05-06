@@ -241,6 +241,42 @@ def setup_live_sddm(project):
     else:
         print "*** %s doesn't exist, setup_live_sddm() returned" % sddmconf_path
 
+def setup_live_lxdm(project):
+    desktop_image_dir = project.desktop_image_dir()
+    
+    lxdm_path = os.path.join(desktop_image_dir, "etc/lxdm/lxdm.conf")
+    if os.path.exists(lxdm_path):
+        lines = []
+        for line in open(lxdm_path, "r").readlines():
+            if line.startswith("# autologin=dgod"):
+                lines.append("autologin=live\n")
+            elif line.startswith("# session=/usr/bin/startlxde"):
+                lines.append("session=/usr/bin/startxfce4\n")    
+            else:
+                lines.append(line)
+        open(lxdm_path, "w").write("".join(lines))
+    else:
+        print "*** %s doesn't exist, setup_live_lxdm() returned" % lxdm_path
+
+def setup_live_mdm(project):
+    desktop_image_dir = project.desktop_image_dir()
+
+    mdm_path = os.path.join(desktop_image_dir, "usr/share/mdm/distro.conf")
+    if os.path.exists(mdm_path):
+        lines = []
+        for line in open(mdm_path, "r").readlines():
+            if line.startswith("AutomaticLoginEnable=false"):
+                lines.append("AutomaticLoginEnable=true\n")
+            elif line.startswith("AutomaticLogin="):
+                lines.append("AutomaticLogin=live\n")
+            elif line.startswith("#DefaultSession=default.desktop"):
+                lines.append("DefaultSession=xfce.desktop\n")    
+            else:
+                lines.append(line)
+        open(mdm_path, "w").write("".join(lines))
+    else:
+        print "*** %s doesn't exist, setup_live_mdm() returned" % mdm_path
+
 
 def setup_live_policykit_conf(project):
     policykit_conf_tmpl = """[Live CD Rules]
@@ -366,6 +402,8 @@ def make_image(project):
         
         run('umount %s/proc' % desktop_image_dir, ignore_error=True)
         run('umount %s/sys' % desktop_image_dir, ignore_error=True)
+        run('/bin/umount -R %s' % desktop_image_dir, ignore_error=True)
+
         
         run('umount %s/proc' % livecd_image_dir, ignore_error=True)
         run('umount %s/sys' % livecd_image_dir, ignore_error=True)
@@ -395,12 +433,7 @@ def make_image(project):
             run('chroot "%s" %s' % (image_dir, cmd))
 
 
-        # FIXME: we write static initramfs.conf for live systems for now, hopefully we will make it dynamic later on
-        # Note that this must be done before configure pending for the mkinitramfs use it
-        f = file(os.path.join(image_dir, "etc/initramfs.conf"), "w")
-        f.write("liveroot=LABEL=PisiLive\n")
-        f.close()
-
+     
         os.mknod("%s/dev/null" % image_dir, 0666 | stat.S_IFCHR, os.makedev(1, 3))
         os.mknod("%s/dev/console" % image_dir, 0666 | stat.S_IFCHR, os.makedev(5, 1))
         os.mknod("%s/dev/random" % image_dir, 0666 | stat.S_IFCHR, os.makedev(1, 8))
@@ -435,7 +468,7 @@ def make_image(project):
 
         if project.type == "install":
             # FIXME: Do not hard code installer name
-            dm_config ="DISPLAY_MANAGER=yali"
+            dm_config ="DISPLAY_MANAGER=mdm"
 
             # Write default display manager config
             image_dir = project.image_dir()
@@ -450,9 +483,14 @@ def make_image(project):
 
         obj = bus.get_object("tr.org.pardus.comar", "/package/baselayout")
 
-        obj.setUser(0, "", "", "", "pisilinux", "", dbus_interface="tr.org.pardus.comar.User.Manager")
-        if project.type != "install":
-            obj.addUser(1000, "pisi", "Pisi Linux", "/home/pisi", "/bin/bash", "pisilinux", ["wheel", "users", "lp", "lpadmin", "cdrom", "floppy", "disk", "audio", "video", "power", "dialout"], [], [], dbus_interface="tr.org.pardus.comar.User.Manager")
+        obj.setUser(0, "", "", "", "pisilive", "", dbus_interface="tr.org.pardus.comar.User.Manager")
+
+        obj.addUser(1000, "live", "live", "/home/live", "/bin/bash", "pisilive", ["wheel", "users", "lp", "lpadmin", "cdrom", "floppy", "disk", "audio", "video", "power", "dialout"], [], [], 
+        
+        dbus_interface="tr.org.pardus.comar.User.Manager")
+
+    
+
 
         path1 = os.path.join(image_dir, "usr/share/baselayout/inittab.live")
         path2 = os.path.join(image_dir, "etc/inittab")
@@ -477,6 +515,7 @@ def make_image(project):
         chrun("rm -rf /run/dbus/*")
         
         install_desktop(project)
+        setup_live_mdm(project)
         make_initrd(project)
 
     except KeyboardInterrupt:
@@ -504,7 +543,7 @@ def install_desktop(project):
     run("chroot \"%s\" /usr/bin/pisi cp" % desktop_image_dir)
 
     run("chroot \"%s\" /bin/service dbus stop" % desktop_image_dir)
-
+    
     run('umount %s/proc' % desktop_image_dir)
     run('umount %s/sys' % desktop_image_dir)
 

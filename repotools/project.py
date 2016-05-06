@@ -32,7 +32,6 @@ if os.path.exists("/usr/lib/qt5/libQtCore.so"):
     QT_PREFIX += "/lib/qt5"
 
 default_live_exclude_list = """
-var/db/pisi/
 var/cache/pisi/packages/
 var/cache/pisi/archives/
 var/tmp/pisi/
@@ -44,8 +43,6 @@ root/.bash_history
 """
 
 default_install_exclude_list = """
-var/db/pisi/
-var/lib/pisi/
 var/cache/pisi/packages/
 var/cache/pisi/archives/
 var/tmp/pisi/
@@ -61,23 +58,12 @@ default_install_glob_excludes = (
     ( "usr/lib/python%s/" % PYTHON_VER, "*.pyo" ),
     ( "usr/lib/pardus/", "*.pyc" ),
     ( "usr/lib/pardus/", "*.pyo" ),
-    ( "usr/lib/", "*.a" ),
-    ( "usr/lib/", "*.la" ),
-    ( "lib/", "*.a" ),
-    ( "lib/", "*.la" ),
-    ( "var/db/comar/", "__db*" ),
     ( "var/db/comar/", "log.*" ),
 )
 
 default_live_glob_excludes = (
     ( "usr/lib/python%s/" % PYTHON_VER, "*.pyc" ),
     ( "usr/lib/python%s/" % PYTHON_VER, "*.pyo" ),
-    ( "usr/lib/pardus/", "*.pyc" ),
-    ( "usr/lib/pardus/", "*.pyo" ),
-    ( "usr/lib/", "*.a" ),
-    ( "usr/lib/", "*.la" ),
-    ( "lib/", "*.a" ),
-    ( "lib/", "*.la" ),
     ( "var/db/comar/", "__db*" ),
     ( "var/db/comar/", "log.*" ),
 )

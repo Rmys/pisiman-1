@@ -48,8 +48,8 @@ class ExPackageCycle(ExPisiIndex):
 
 def fetch_uri(base_uri, cache_dir, filename, console=None, update_repo=False):
     # Dont cache for local repos
-    if base_uri.startswith("file://") and not filename.startswith("pisi-index.xml"):
-        return os.path.join(base_uri[7:], filename)
+  #  if base_uri.startswith("file://") and not filename.startswith("pisi-index.xml"):
+   #     return os.path.join(base_uri[7:], filename)
 
     # Check that local file isnt older or has missing parts
     path = os.path.join(cache_dir, filename)
