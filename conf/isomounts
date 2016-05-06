@@ -3,3 +3,4 @@
 
 desktop.sqfs x86_64 / squashfs
 rootfs.sqfs x86_64 / squashfs
+livecd.sqfs x86_64 / squashfs

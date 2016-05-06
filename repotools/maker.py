@@ -336,6 +336,20 @@ def squash_image(project):
     
     run(mksquashfs_cmd1)
     
+    print "squashfs image dir%s" % livecd_image_dir
+    if not livecd_image_dir.endswith("/"):
+        livecd_image_dir += "/"
+    print "later squashfs image dir%s" % livecd_image_dir
+    temp = tempfile.NamedTemporaryFile()
+    f = file(temp.name, "w")
+    f.write("\n".join(get_exclude_list(project)))
+    f.close()
+
+    
+    
+    mksquashfs_cmd2 = 'mksquashfs "%s" "%s/livecd.sqfs" -noappend -comp %s -ef "%s"' % (livecd_image_dir, sqfs_path, project.squashfs_comp_type, temp.name)
+    
+    run(mksquashfs_cmd2)    
 
 #
 # Operations
@@ -396,21 +410,24 @@ def make_image(project):
         initrd_image_dir = project.initrd_image_dir()
         livecd_image_dir = project.livecd_image_dir()
        
+        #umount all mount dirs
         
         run('umount %s/proc' % image_dir, ignore_error=True)
         run('umount %s/sys' % image_dir, ignore_error=True)
-        
+        run('umount -R %s' % image_dir, ignore_error=True)
+
         run('umount %s/proc' % desktop_image_dir, ignore_error=True)
         run('umount %s/sys' % desktop_image_dir, ignore_error=True)
-        run('/bin/umount -R %s' % desktop_image_dir, ignore_error=True)
+        run('umount -R %s' % desktop_image_dir, ignore_error=True)
 
         
         run('umount %s/proc' % livecd_image_dir, ignore_error=True)
         run('umount %s/sys' % livecd_image_dir, ignore_error=True)
+        run('umount -R %s' % livecd_image_dir, ignore_error=True)
         
         run('umount %s/proc' % initrd_image_dir, ignore_error=True)
         run('umount %s/sys' % initrd_image_dir, ignore_error=True)
-        run('/bin/umount -R %s' % initrd_image_dir, ignore_error=True)
+        run('umount -R %s' % initrd_image_dir, ignore_error=True)
 
         image_dir = project.image_dir(clean=True)
         
@@ -516,6 +533,7 @@ def make_image(project):
         
         install_desktop(project)
         setup_live_mdm(project)
+        install_livecd_util(project)
         make_initrd(project)
 
     except KeyboardInterrupt:
@@ -550,6 +568,42 @@ def install_desktop(project):
 
     run('/bin/umount -R %s' % desktop_image_dir)
     run("rm -rf %s/run/dbus/*" % desktop_image_dir)
+    
+    
+    
+def install_livecd_util(project):
+    
+    livecd_image_dir = project.livecd_image_dir(clean=True)
+    desktop_image_dir = project.desktop_image_dir()
+
+    image_dir = project.image_dir()
+    
+   
+    run('mount -t aufs -o br=%s:%s=ro none %s' % (livecd_image_dir,desktop_image_dir, livecd_image_dir))
+    
+    run('mount -t aufs -o remount,append:%s=ro none %s' % (image_dir, livecd_image_dir))
+   
+    
+    
+    livecd_image_packages = " ".join(project.all_livecd_image_packages)
+            
+    run('pisi --yes-all --ignore-comar --ignore-dep --ignore-check -D"%s" it %s' % (livecd_image_dir, livecd_image_packages))
+    
+    run('/bin/mount --bind /proc %s/proc' % livecd_image_dir)
+    run('/bin/mount --bind /sys %s/sys' % livecd_image_dir)
+    
+    run("chroot \"%s\" /bin/service dbus start" % livecd_image_dir)
+
+    run("chroot \"%s\" /usr/bin/pisi cp" % livecd_image_dir)
+
+    run("chroot \"%s\" /bin/service dbus stop" % livecd_image_dir)
+    
+    run('umount %s/proc' % livecd_image_dir)
+    run('umount %s/sys' % livecd_image_dir)
+
+
+    run('/bin/umount -R %s' % livecd_image_dir)
+    run("rm -rf %s/run/dbus/*" % livecd_image_dir)
 
 
 def make_initrd(project):
@@ -632,10 +686,6 @@ def make_iso(project):
         configdir =os.path.join(project.config_files)
 
             
-    #iso_dir = project.iso_dir(clean=True)
-
-  #  if not os.path.exists(image_path):
-  #      os.makedirs(image_path)
         image_path = os.path.join(iso_dir, "pisi")
 
         if not os.path.exists(image_path):
