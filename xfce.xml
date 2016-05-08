@@ -1,11 +1,13 @@
 <PisiManProject type="install" compression="xz">
-    <Title>Xfcexfce</Title>
-    <WorkDir>/temp/xfces</WorkDir>
-    <ConfigFiles>/home/erturk/git/pisiman/conf</ConfigFiles>
-    <PackageSelection repo_uri="file:///home/erturk/git/extra/extra-repo-binary/pisi-index.xml.xz"/>
+    <Title>PisiLinux_Beta_2_x86_64_Xfce</Title>
+    <WorkDir>/tmp/xfces</WorkDir>
+    <ConfigFiles>/home/erturk/yedek/git/pisiman/conf</ConfigFiles>
+    <PackageSelection repo_uri="file:///home/erturk/yedek/git/git/extra-repo-binary/pisi-index.xml.xz"/>
     <InstallImagePackages>
         <SelectedComponent>system.base</SelectedComponent>
+        <SelectedPackage>bash-completion</SelectedPackage>
         <SelectedPackage>gfxtheme-pisilinux-install</SelectedPackage>
+        <SelectedPackage>glibc-locales-en</SelectedPackage>
         <SelectedPackage>kernel</SelectedPackage>
         <SelectedPackage>memtest86</SelectedPackage>
         <SelectedPackage>nano</SelectedPackage>
@@ -16,6 +18,7 @@
         <Package>attr</Package>
         <Package>baselayout</Package>
         <Package>bash</Package>
+        <Package>bash-completion</Package>
         <Package>bc</Package>
         <Package>biosdevname</Package>
         <Package>busybox</Package>
@@ -52,6 +55,7 @@
         <Package>gfxtheme-pisilinux-install</Package>
         <Package>glib2</Package>
         <Package>glibc</Package>
+        <Package>glibc-locales-en</Package>
         <Package>gmp</Package>
         <Package>gperf</Package>
         <Package>gperftools</Package>
@@ -178,6 +182,7 @@
         <SelectedPackage>Xaw3d</SelectedPackage>
         <SelectedPackage>alsa-firmware</SelectedPackage>
         <SelectedPackage>alsa-utils</SelectedPackage>
+        <SelectedPackage>audit</SelectedPackage>
         <SelectedPackage>b43-firmware</SelectedPackage>
         <SelectedPackage>b43-fwcutter</SelectedPackage>
         <SelectedPackage>bash-completion</SelectedPackage>
@@ -187,23 +192,33 @@
         <SelectedPackage>freeglut</SelectedPackage>
         <SelectedPackage>glew</SelectedPackage>
         <SelectedPackage>glibc-locales-en</SelectedPackage>
+        <SelectedPackage>gnome-common</SelectedPackage>
+        <SelectedPackage>gnome-vfs</SelectedPackage>
+        <SelectedPackage>inkscape</SelectedPackage>
+        <SelectedPackage>inxi</SelectedPackage>
         <SelectedPackage>libXp</SelectedPackage>
         <SelectedPackage>libevdev</SelectedPackage>
         <SelectedPackage>libexplain</SelectedPackage>
+        <SelectedPackage>libgsf-gnome</SelectedPackage>
         <SelectedPackage>libkms</SelectedPackage>
+        <SelectedPackage>libsoup-gnome</SelectedPackage>
         <SelectedPackage>libva</SelectedPackage>
         <SelectedPackage>libva-intel-driver</SelectedPackage>
         <SelectedPackage>libvdpau</SelectedPackage>
         <SelectedPackage>libxkbcommon</SelectedPackage>
         <SelectedPackage>mdm</SelectedPackage>
+        <SelectedPackage>medit</SelectedPackage>
         <SelectedPackage>mesa-glu</SelectedPackage>
         <SelectedPackage>module-bbswitch</SelectedPackage>
         <SelectedPackage>module-broadcom-wl</SelectedPackage>
         <SelectedPackage>module-broadcom-wl-userspace</SelectedPackage>
         <SelectedPackage>module-virtualbox</SelectedPackage>
         <SelectedPackage>ndiswrapper</SelectedPackage>
+        <SelectedPackage>network-manager-applet</SelectedPackage>
         <SelectedPackage>openssh</SelectedPackage>
+        <SelectedPackage>package-manager</SelectedPackage>
         <SelectedPackage>pisilinux-python-xorg</SelectedPackage>
+        <SelectedPackage>pulseaudio</SelectedPackage>
         <SelectedPackage>qbittorrent</SelectedPackage>
         <SelectedPackage>smplayer</SelectedPackage>
         <SelectedPackage>taglib</SelectedPackage>
@@ -274,12 +289,16 @@
         <Package>alsa-lib</Package>
         <Package>alsa-utils</Package>
         <Package>alternatives</Package>
+        <Package>aspell</Package>
         <Package>at-spi2-atk</Package>
         <Package>at-spi2-core</Package>
         <Package>atk</Package>
+        <Package>atkmm</Package>
         <Package>attr</Package>
+        <Package>audit</Package>
         <Package>autogen</Package>
         <Package>avahi</Package>
+        <Package>avahi-glib</Package>
         <Package>avahi-libs</Package>
         <Package>b43-firmware</Package>
         <Package>b43-fwcutter</Package>
@@ -293,6 +312,7 @@
         <Package>bzip2</Package>
         <Package>ca-certificates</Package>
         <Package>cairo</Package>
+        <Package>cairomm</Package>
         <Package>cdparanoia</Package>
         <Package>celt</Package>
         <Package>chromium-browser</Package>
@@ -337,8 +357,10 @@
         <Package>freetype</Package>
         <Package>fribidi</Package>
         <Package>fuse</Package>
+        <Package>gamin</Package>
         <Package>garcon</Package>
         <Package>gc</Package>
+        <Package>gconf</Package>
         <Package>gdb</Package>
         <Package>gdbm</Package>
         <Package>gdk-pixbuf</Package>
@@ -354,6 +376,8 @@
         <Package>glibc-locales-en</Package>
         <Package>glibmm</Package>
         <Package>gmp</Package>
+        <Package>gnome-common</Package>
+        <Package>gnome-vfs</Package>
         <Package>gnu-gs-fonts-std</Package>
         <Package>gnutls</Package>
         <Package>gobject-introspection</Package>
@@ -361,6 +385,7 @@
         <Package>gpm</Package>
         <Package>graphite2</Package>
         <Package>grub2</Package>
+        <Package>gsl</Package>
         <Package>gsm</Package>
         <Package>gst-plugins-base</Package>
         <Package>gst-plugins-base-next</Package>
@@ -370,14 +395,20 @@
         <Package>gtk2</Package>
         <Package>gtk2-engines-murrine</Package>
         <Package>gtk3</Package>
+        <Package>gtkmm</Package>
+        <Package>gtkspell</Package>
         <Package>guile</Package>
         <Package>harfbuzz</Package>
         <Package>icon-theme-faenza</Package>
         <Package>icon-theme-hicolor</Package>
         <Package>icon-theme-xfce4</Package>
         <Package>icu4c</Package>
+        <Package>ilmbase</Package>
+        <Package>imagemagick</Package>
         <Package>imlib2</Package>
         <Package>iniparser</Package>
+        <Package>inkscape</Package>
+        <Package>inxi</Package>
         <Package>iproute2</Package>
         <Package>iptables</Package>
         <Package>jack-audio-connection-kit</Package>
@@ -393,6 +424,7 @@
         <Package>leveldb</Package>
         <Package>libFS</Package>
         <Package>libICE</Package>
+        <Package>libIDL</Package>
         <Package>libSM</Package>
         <Package>libX11</Package>
         <Package>libXScrnSaver</Package>
@@ -436,6 +468,7 @@
         <Package>libcddb</Package>
         <Package>libcdio</Package>
         <Package>libcdio-paranoia</Package>
+        <Package>libcdr</Package>
         <Package>libconfig</Package>
         <Package>libcroco</Package>
         <Package>libdaemon</Package>
@@ -466,6 +499,7 @@
         <Package>libgomp</Package>
         <Package>libgpg-error</Package>
         <Package>libgsf</Package>
+        <Package>libgsf-gnome</Package>
         <Package>libgudev</Package>
         <Package>libical</Package>
         <Package>libid3tag</Package>
@@ -477,6 +511,7 @@
         <Package>libkmod</Package>
         <Package>libkms</Package>
         <Package>liblogging</Package>
+        <Package>liblqr</Package>
         <Package>libmad</Package>
         <Package>libmbim</Package>
         <Package>libmm-glib</Package>
@@ -500,6 +535,7 @@
         <Package>libqmi</Package>
         <Package>libquadmath</Package>
         <Package>libraw1394</Package>
+        <Package>librevenge</Package>
         <Package>librsvg</Package>
         <Package>libsamplerate</Package>
         <Package>libsdl</Package>
@@ -507,6 +543,7 @@
         <Package>libsigc++</Package>
         <Package>libsndfile</Package>
         <Package>libsoup</Package>
+        <Package>libsoup-gnome</Package>
         <Package>libssh2</Package>
         <Package>libtalloc</Package>
         <Package>libtasn1</Package>
@@ -524,13 +561,17 @@
         <Package>libva</Package>
         <Package>libva-intel-driver</Package>
         <Package>libvdpau</Package>
+        <Package>libvisio</Package>
         <Package>libvisual</Package>
         <Package>libvo-aacenc</Package>
         <Package>libvo-amrwbenc</Package>
         <Package>libvorbis</Package>
         <Package>libvpx</Package>
         <Package>libwacom</Package>
+        <Package>libwmf</Package>
         <Package>libwnck2</Package>
+        <Package>libwpd</Package>
+        <Package>libwpg</Package>
         <Package>libxcb</Package>
         <Package>libxfce4ui</Package>
         <Package>libxfce4util</Package>
@@ -551,6 +592,7 @@
         <Package>lvm2</Package>
         <Package>lzo</Package>
         <Package>mdm</Package>
+        <Package>medit</Package>
         <Package>mesa</Package>
         <Package>mesa-glu</Package>
         <Package>minizip</Package>
@@ -571,24 +613,31 @@
         <Package>ndiswrapper</Package>
         <Package>net-tools</Package>
         <Package>nettle</Package>
+        <Package>network-manager-applet</Package>
         <Package>newt</Package>
         <Package>nspr</Package>
         <Package>nss</Package>
+        <Package>openal</Package>
         <Package>opencore-amr</Package>
+        <Package>openexr-libs</Package>
         <Package>openjpeg</Package>
         <Package>openldap-client</Package>
         <Package>openssh</Package>
         <Package>openssl</Package>
+        <Package>orbit2</Package>
         <Package>orc</Package>
         <Package>os-prober</Package>
         <Package>p11-kit</Package>
+        <Package>package-manager</Package>
         <Package>pam</Package>
         <Package>pango</Package>
+        <Package>pangomm</Package>
         <Package>pciutils</Package>
         <Package>pepperflash</Package>
         <Package>perl</Package>
         <Package>piksemel</Package>
         <Package>pisi</Package>
+        <Package>pisilinux-desktop-services</Package>
         <Package>pisilinux-python</Package>
         <Package>pisilinux-python-xorg</Package>
         <Package>pixman</Package>
@@ -602,20 +651,30 @@
         <Package>portaudio</Package>
         <Package>ppp</Package>
         <Package>procps</Package>
+        <Package>pulseaudio</Package>
         <Package>pulseaudio-libs</Package>
         <Package>pycurl</Package>
         <Package>pypolkit</Package>
         <Package>python</Package>
         <Package>python-psutil</Package>
         <Package>python-pyliblzma</Package>
+        <Package>python-qt5</Package>
         <Package>python-setuptools</Package>
+        <Package>python-sip</Package>
         <Package>qbittorrent</Package>
         <Package>qt5-base</Package>
+        <Package>qt5-connectivity</Package>
         <Package>qt5-declarative</Package>
+        <Package>qt5-enginio</Package>
         <Package>qt5-location</Package>
+        <Package>qt5-multimedia</Package>
         <Package>qt5-script</Package>
         <Package>qt5-sensors</Package>
+        <Package>qt5-serialport</Package>
+        <Package>qt5-svg</Package>
+        <Package>qt5-webchannel</Package>
         <Package>qt5-webkit</Package>
+        <Package>qt5-websockets</Package>
         <Package>qt5-x11extras</Package>
         <Package>qt5-xmlpatterns</Package>
         <Package>readline</Package>
@@ -747,6 +806,7 @@
     </DesktopImagePackages>
     <LivecdImagePackages>
         <SelectedPackage>Calamares</SelectedPackage>
+        <SelectedPackage>sudo</SelectedPackage>
         <Package>Calamares</Package>
         <Package>DirectFB</Package>
         <Package>acl</Package>
@@ -756,6 +816,7 @@
         <Package>atk</Package>
         <Package>attica</Package>
         <Package>attr</Package>
+        <Package>audit</Package>
         <Package>avahi</Package>
         <Package>avahi-libs</Package>
         <Package>bluez</Package>
@@ -767,6 +828,7 @@
         <Package>cairo</Package>
         <Package>cracklib</Package>
         <Package>cups</Package>
+        <Package>cyrus-sasl</Package>
         <Package>db</Package>
         <Package>dbus</Package>
         <Package>dejavu-fonts</Package>
@@ -909,7 +971,9 @@
         <Package>mit-kerberos</Package>
         <Package>ncurses</Package>
         <Package>nspr</Package>
+        <Package>nss</Package>
         <Package>ntfs-3g</Package>
+        <Package>openldap-client</Package>
         <Package>openssl</Package>
         <Package>orc</Package>
         <Package>pam</Package>
@@ -946,6 +1010,7 @@
         <Package>speex</Package>
         <Package>spidermonkey</Package>
         <Package>sqlite</Package>
+        <Package>sudo</Package>
         <Package>tiff</Package>
         <Package>timezone</Package>
         <Package>util-linux</Package>

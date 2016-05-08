@@ -70,7 +70,7 @@ def get_exclude_list(project):
     image_dir = project.image_dir()
     path = image_dir + "/boot"
     for name in os.listdir(path):
-        if name.startswith("kernel") or name.startswith("initramfs"):
+        if name.startswith("initramfs"):
             exc.append("boot/" + name)
     return exc
 
@@ -82,7 +82,6 @@ def generate_isolinux_conf(project):
     dict = {}
     dict["title"] = project.title
     dict["exparams"] = project.extra_params or ''
-    dict["rescue_template"] = ""
 
     image_dir = project.image_dir()
     iso_dir = project.iso_dir()
@@ -90,12 +89,6 @@ def generate_isolinux_conf(project):
     lang_default = project.default_language
     lang_all = project.selected_languages
 
-    if project.type != "live":
-        dict["rescue_template"] = """
-label rescue
-    kernel /boot/kernel
-    append initrd=/boot/initrd yali=rescue %(exparams)s
-""" % dict
 
     isolinux_tmpl = """
 implicit 1
@@ -107,7 +100,6 @@ label %(title)s
     kernel /boot/kernel
     append initrd=/boot/initrd misobasedir=pisi misolabel=pisilive overlay=free quiet %(exparams)s
 
-%(rescue_template)s
 
 label harddisk
     localboot 0x80
@@ -268,7 +260,7 @@ def setup_live_mdm(project):
             if line.startswith("AutomaticLoginEnable=false"):
                 lines.append("AutomaticLoginEnable=true\n")
             elif line.startswith("AutomaticLogin="):
-                lines.append("AutomaticLogin=live\n")
+                lines.append("AutomaticLogin=Pisilive\n")
             elif line.startswith("#DefaultSession=default.desktop"):
                 lines.append("DefaultSession=xfce.desktop\n")    
             else:
@@ -307,7 +299,7 @@ def squash_image(project):
     
     sqfs_path = os.path.join(project.work_dir)
     
-
+   
     print "squashfs image dir%s" % image_dir
     if not image_dir.endswith("/"):
         image_dir += "/"
@@ -393,6 +385,29 @@ def check_file(repo_dir, name, _hash):
     if cur_hash != _hash:
         print "\nWrong hash: %s" % path
 
+def add_repo(project):    
+    image_dir = project.image_dir()
+
+    run('/bin/mount --bind /proc %s/proc' % image_dir)
+    run('/bin/mount --bind /sys %s/sys' % image_dir)
+    run("chroot \"%s\" /bin/service dbus start" % image_dir)
+    
+    run("chroot \"%s\" /usr/bin/pisi rr pisilinux-install" % image_dir)
+    
+    configdir =os.path.join(project.config_files)
+    
+    
+    address = open(os.path.join(configdir, "repo.conf")).readlines()
+
+    run("chroot \"%s\" /usr/bin/pisi ar pisi --yes-all http://ciftlik.pisilinux.org/2.0-Beta/pisi-index.xml.xz --ignore-check --no-fetch" % image_dir)
+
+    
+    run("chroot \"%s\" /bin/service dbus stop" % image_dir)
+    
+    run('umount %s/proc' % image_dir)
+    run('umount %s/sys' % image_dir)
+
+    run("rm -rf %s/run/dbus/*" % image_dir)
 
 def make_image(project):
     global bus
@@ -500,13 +515,11 @@ def make_image(project):
 
         obj = bus.get_object("tr.org.pardus.comar", "/package/baselayout")
 
-        obj.setUser(0, "", "", "", "pisilive", "", dbus_interface="tr.org.pardus.comar.User.Manager")
+        obj.setUser(0, "", "", "", "live", "", dbus_interface="tr.org.pardus.comar.User.Manager")
 
-        obj.addUser(1000, "live", "live", "/home/live", "/bin/bash", "pisilive", ["wheel", "users", "lp", "lpadmin", "cdrom", "floppy", "disk", "audio", "video", "power", "dialout"], [], [], 
-        
+        obj.addUser(1000, "Pisilive", "Livecd", "/home/pisilive", "/bin/bash", "live", ["wheel", "users", "lp", "lpadmin", "cdrom", "floppy", "disk", "audio", "video", "power", "dialout"], [], [], 
+            
         dbus_interface="tr.org.pardus.comar.User.Manager")
-
-    
 
 
         path1 = os.path.join(image_dir, "usr/share/baselayout/inittab.live")
@@ -535,7 +548,8 @@ def make_image(project):
         setup_live_mdm(project)
         install_livecd_util(project)
         make_initrd(project)
-
+        add_repo(project)
+        
     except KeyboardInterrupt:
         print "Keyboard Interrupt: make_image() cancelled."
         sys.exit(1)        
@@ -562,6 +576,8 @@ def install_desktop(project):
 
     run("chroot \"%s\" /bin/service dbus stop" % desktop_image_dir)
     
+
+    
     run('umount %s/proc' % desktop_image_dir)
     run('umount %s/sys' % desktop_image_dir)
 
@@ -577,7 +593,8 @@ def install_livecd_util(project):
     desktop_image_dir = project.desktop_image_dir()
 
     image_dir = project.image_dir()
-    
+    configdir =os.path.join(project.config_files)
+
    
     run('mount -t aufs -o br=%s:%s=ro none %s' % (livecd_image_dir,desktop_image_dir, livecd_image_dir))
     
@@ -592,17 +609,31 @@ def install_livecd_util(project):
     run('/bin/mount --bind /proc %s/proc' % livecd_image_dir)
     run('/bin/mount --bind /sys %s/sys' % livecd_image_dir)
     
-    run("chroot \"%s\" /bin/service dbus start" % livecd_image_dir)
-
-    run("chroot \"%s\" /usr/bin/pisi cp" % livecd_image_dir)
-
-    run("chroot \"%s\" /bin/service dbus stop" % livecd_image_dir)
     
+    path = os.path.join(livecd_image_dir, "etc/calamares/modules")
+    if not os.path.exists(path):
+        os.makedirs(path)
+    
+    run("cp -p %s/calamares/modules/* %s/etc/calamares/modules/." % (configdir,livecd_image_dir))
+    run("cp -p %s/calamares/* %s/etc/calamares/." % (configdir,livecd_image_dir),ignore_error=True)
+
+    run("cp -p %s/calamares/* %s/etc/calamares/." % (configdir,livecd_image_dir),ignore_error=True)
+
+    
+    run("chroot \"%s\" /bin/service dbus start" % livecd_image_dir)
+    run("chroot \"%s\" /usr/bin/pisi cp" % livecd_image_dir)
+    
+    
+    run("chroot \"%s\" /bin/service dbus stop" % livecd_image_dir)
+    run("cp -p %s/sudoers %s/etc/sudoers" % (configdir,livecd_image_dir),ignore_error=True)
+
+  
     run('umount %s/proc' % livecd_image_dir)
     run('umount %s/sys' % livecd_image_dir)
 
 
     run('/bin/umount -R %s' % livecd_image_dir)
+    
     run("rm -rf %s/run/dbus/*" % livecd_image_dir)
 
 
@@ -644,9 +675,6 @@ def make_initrd(project):
     run('/bin/umount -R %s' % initrd_image_dir)
 
     run("cp -p %s/boot/initramfs %s/boot/." % (initrd_image_dir,image_dir))    
-    
-    
-    
     
 
 def generate_sort_list(iso_dir):
