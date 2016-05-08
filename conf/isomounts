@@ -1,6 +1,8 @@
 # syntax: <img> <arch> <mount point> <type> <kernel argument>
 # Sample kernel argument in syslinux: overlay=extra,extra2
 
-desktop.sqfs x86_64 / squashfs
-rootfs.sqfs x86_64 / squashfs
-livecd.sqfs x86_64 / squashfs
+#desktop.sqfs x86_64 / squashfs
+#rootfs.sqfs x86_64 / squashfs
+#livecd.sqfs x86_64 / squashfs
+
+x86_64/rootfs.sqfs x86_64 / squashfs

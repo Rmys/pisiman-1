@@ -572,6 +572,8 @@ class Project:
     def livecd_image_dir(self, clean=False):
         return self._get_dir("livecdimage", clean)    
 
+    def efi_tmp_path_dir(self, clean=False):
+        return self._get_dir("efi_tmp", clean) 
 
     def install_repo_dir(self, clean=False):
         return self._get_dir("install_repo", clean)

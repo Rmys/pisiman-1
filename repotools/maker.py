@@ -91,28 +91,30 @@ def generate_isolinux_conf(project):
 
 
     isolinux_tmpl = """
+default start    
 implicit 1
 ui gfxboot bootlogo 
 prompt   1
 timeout  200
 
-label %(title)s
-    kernel /boot/kernel
-    append initrd=/boot/initrd misobasedir=pisi misolabel=pisilive overlay=free quiet %(exparams)s
 
+label %(title)s
+    kernel /pisi/boot/x86_64/kernel
+    append initrd=/pisi/boot/x86_64/initrd.img misobasedir=pisi misolabel=pisilive overlay=free quiet %(exparams)s
+    
 
 label harddisk
     localboot 0x80
 
 label memtest
-    kernel /boot/memtest
+    kernel /pisi/boot/x86_64/memtest
 
 label hardware
     kernel hdt.c32
 """
 
     # write isolinux.cfg
-    dest = os.path.join(iso_dir, "boot/isolinux/isolinux.cfg")
+    dest = os.path.join(iso_dir, "isolinux/isolinux.cfg")
     data = isolinux_tmpl % dict
 
     f = file(dest, "w")
@@ -121,7 +123,7 @@ label hardware
 
     # write gfxboot config for title
     data = file(os.path.join(image_dir, "usr/share/gfxtheme/pisilinux/install/gfxboot.cfg")).read()
-    f = file(os.path.join(iso_dir, "boot/isolinux/gfxboot.cfg"), "w")
+    f = file(os.path.join(iso_dir, "isolinux/gfxboot.cfg"), "w")
     f.write(data % dict)
     f.close()
 
@@ -138,17 +140,17 @@ label hardware
 
 
         # write default language
-        f = file(os.path.join(iso_dir, "boot/isolinux/lang"), "w")
+        f = file(os.path.join(iso_dir, "isolinux/lang"), "w")
         f.write("%s\n" % lang_default)
         f.close()
 
         # FIXME: this is the default language selection, make it selectable
         # when this file does not exist, isolinux pops up language menu
-        if os.path.exists(os.path.join(iso_dir, "boot/isolinux/lang")):
-            os.unlink(os.path.join(iso_dir, "boot/isolinux/lang"))
+        if os.path.exists(os.path.join(iso_dir, "isolinux/lang")):
+            os.unlink(os.path.join(iso_dir, "isolinux/lang"))
 
         # write available languages
-        f = file(os.path.join(iso_dir, "boot/isolinux/languages"), "w")
+        f = file(os.path.join(iso_dir, "isolinux/languages"), "w")
         f.write(langdata)
         f.close()
 
@@ -165,7 +167,7 @@ def setup_isolinux(project):
 
     
     # Setup dir
-    path = os.path.join(iso_dir, "boot/isolinux")
+    path = os.path.join(iso_dir, "isolinux")
     if not os.path.exists(path):
         os.makedirs(path)
 
@@ -177,12 +179,12 @@ def setup_isolinux(project):
     for name in os.listdir(path):
         if name.startswith("kernel") or name.startswith("initramfs") or name.endswith(".img"):
             if name.startswith("kernel"):
-                copy(os.path.join(path, name), "boot/kernel")
+                copy(os.path.join(path, name), "pisi/boot/x86_64/kernel")
             elif name.startswith("initramfs"):
-                copy(os.path.join(path, name), "boot/initrd")
+                copy(os.path.join(path, name), "pisi/boot/x86_64/initrd.img")
 
     tmplpath = os.path.join(image_dir, "usr/share/gfxtheme/pisilinux/install")
-    dest = os.path.join(iso_dir, "boot/isolinux")
+    dest = os.path.join(iso_dir, "isolinux")
     for name in os.listdir(tmplpath):
         if name != "gfxboot.cfg":
             copy(os.path.join(tmplpath, name), dest)
@@ -201,13 +203,14 @@ def setup_isolinux(project):
     copy(os.path.join(image_dir, "usr/lib/syslinux/vesamenu.c32"), dest)
     copy(os.path.join(image_dir, "usr/lib/syslinux/libmenu.c32"), dest)
     copy(os.path.join(image_dir, "usr/lib/syslinux/libgpl.c32"), dest)
-    
+    copy(os.path.join(image_dir, "usr/lib/syslinux/isohdpfx.bin"), dest)
+
     copy(os.path.join(image_dir, "usr/lib/syslinux/gfxboot.c32"), dest)
     copy(os.path.join(image_dir, "usr/share/misc/pci.ids"), dest)
 
     kernel_version = open(os.path.join(image_dir, "etc/kernel/kernel")).read()
     #copy(os.path.join(image_dir, "lib/modules/%s/modules.pcimap" % kernel_version), dest)
-    copy(os.path.join(image_dir, "boot/memtest"), os.path.join(iso_dir, "boot"))
+    copy(os.path.join(image_dir, "boot/memtest"), os.path.join(iso_dir, "pisi/boot/x86_64"))
 
     
 #
@@ -701,7 +704,63 @@ def generate_sort_list(iso_dir):
 
     return package_list
 
+def make_EFI(project):
+    
+    work_dir = os.path.join(project.work_dir)
+    configdir =os.path.join(project.config_files)
+    iso_dir = project.iso_dir()
+    efi_tmp = project.efi_tmp_path_dir(clean=True)
+    image_dir = project.image_dir()
+    
 
+    efi_path = os.path.join(iso_dir, "EFI")
+
+    if not os.path.exists(efi_path):
+        os.makedirs(efi_path) 
+        os.makedirs(os.path.join(efi_path, "boot"), 0644)
+        os.makedirs(os.path.join(efi_path, "pisi"), 0644)
+
+    
+    loader_path = os.path.join(iso_dir, "loader")
+    
+    if not os.path.exists(loader_path):
+        os.makedirs(loader_path) 
+        os.makedirs(os.path.join(loader_path, "entries"), 0644)
+        
+
+    run("cp -p %s/loaders/loader.conf %s/." % (configdir, loader_path))
+    run("cp -p %s/loaders/entries/* %s/entries/." % (configdir, loader_path))
+    
+    run("cp -p %s/preloader/boot/* %s/boot/." % (configdir, efi_path))
+     
+    run("cp -p %s/preloader/* %s/." % (configdir, efi_path),ignore_error=True)
+    
+    
+    run("dd if=/dev/zero bs=1M count=40 of=%s/pisi.img"% work_dir)
+    run("mkfs.vfat -n PISI_EFI %s/pisi.img"% work_dir)
+    run("mount %s/pisi.img %s"% (work_dir,efi_tmp))
+    
+    os.makedirs(os.path.join(efi_tmp, "loader"))
+    os.makedirs(os.path.join(efi_tmp, "EFI"))
+
+    run("cp -r %s/* %s/EFI/." % (efi_path, efi_tmp),ignore_error=True)
+    
+    run("cp -r %s/* %s/loader/." % (loader_path, efi_tmp),ignore_error=True)
+    
+    run('mv %s/loader/pisi-efi-x86_64.conf %s/loader/pisi-x86_64.conf' % (efi_tmp, efi_tmp),ignore_error=True)
+
+
+    run("cp -p %s/boot/kernel* %s/EFI/pisi/kernel.efi" % (image_dir,efi_tmp))  
+    run("cp -p %s/boot/initramfs* %s/EFI/pisi/initrd.img" % (image_dir,efi_tmp))  
+
+    
+    run("umount %s"% efi_tmp)
+
+    
+        
+        
+        
+        
 def make_iso(project):
     print "Preparing ISO..."
     xterm_title("Preparing ISO")
@@ -712,17 +771,23 @@ def make_iso(project):
         iso_file = project.iso_file(clean=True)
         work_dir = os.path.join(project.work_dir)
         configdir =os.path.join(project.config_files)
+        efi_tmp = project.efi_tmp_path_dir(clean=True)
 
             
         image_path = os.path.join(iso_dir, "pisi")
 
         if not os.path.exists(image_path):
-            os.makedirs(image_path)        
+            os.makedirs(image_path) 
+            
+            os.makedirs(os.path.join(image_path, "boot/x86_64"), 0644)
+            os.makedirs(os.path.join(image_path, "x86_64"), 0644)
+
         
-       
+
+        make_EFI(project)
         run("cp -p %s/isomounts %s/." % (configdir, image_path))
-        run("cp -p %s/*sqfs %s/." % (work_dir, image_path))
-        
+        run("cp -p %s/*sqfs %s/x86_64/." % (work_dir, image_path))
+        run("cp -p %s/pisi.img %s/EFI/pisi/." % (work_dir, iso_dir))
 
    
         run("touch %s/.miso" % iso_dir)
@@ -740,16 +805,31 @@ def make_iso(project):
 
         publisher="Pisi GNU/Linux http://www.pisilinux.org"
         application="Pisi GNU/Linux Live Media"
-        label="PisiLive"
+        label="pisiLive"
 
 
         the_iso_command='genisoimage -f -J -r -l -V "%s" -o "%s" -b boot/isolinux/isolinux.bin -c boot/isolinux/boot.cat -boot-info-table \
 -uid 0 -gid 0 -udf -allow-limited-size -iso-level 3 -input-charset utf-8 -no-emul-boot -boot-load-size 4 \
 -publisher "%s" -A "%s"  %s' % (label, iso_file, publisher, application, iso_dir)
+        
+        
+        iso_command ='xorriso -as mkisofs -iso-level 3 -full-iso9660-filenames -volid "%s" \
+       -eltorito-boot isolinux/isolinux.bin -eltorito-catalog isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table \
+       -isohybrid-mbr isolinux/isohdpfx.bin -output "%s"  "%s" -eltorito-alt-boot -e EFI/pisi/pisi.img -no-emul-boot \
+       -isohybrid-gpt-basdat' % (label, iso_file, iso_dir)
+        
        
-        run(the_iso_command)
+        cmd ='xorriso -as mkisofs -quiet -iso-level 3 -rock -joliet -max-iso9660-filenames -omit-period -omit-version-number \
+            -relaxed-filenames -allow-lowercase -volid "%s" \
+            -preparer "prepared by pisiman" -eltorito-boot isolinux/isolinux.bin \
+            -eltorito-catalog isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table \
+            -isohybrid-mbr "%s/isolinux/isohdpfx.bin" -eltorito-alt-boot -e EFI/pisi/pisi.img -isohybrid-gpt-basdat -no-emul-boot \
+            -output "%s" "%s/iso/"'% (label,iso_dir ,iso_file,work_dir)
+       
+       
+        run(cmd)
 
-        run("isohybrid %s" % iso_file)
+       # run("isohybrid %s" % iso_file)
 
     except KeyboardInterrupt:
         print "Keyboard Interrupt: make_iso() cancelled."
