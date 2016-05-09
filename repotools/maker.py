@@ -163,9 +163,7 @@ def setup_isolinux(project):
     iso_dir = project.iso_dir()
     repo = project.get_repo()
     
-    configdir =os.path.join(project.config_files)
-
-    
+   
     # Setup dir
     path = os.path.join(iso_dir, "isolinux")
     if not os.path.exists(path):
@@ -271,27 +269,6 @@ def setup_live_mdm(project):
         open(mdm_path, "w").write("".join(lines))
     else:
         print "*** %s doesn't exist, setup_live_mdm() returned" % mdm_path
-
-
-def setup_live_policykit_conf(project):
-    policykit_conf_tmpl = """[Live CD Rules]
-Identity=unix-user:pisi
-Action=*
-ResultAny=yes
-ResultInactive=yes
-ResultActive=yes
-"""
-
-    # Write PolicyKit.conf
-    image_dir = project.image_dir()
-    # make sure etc/polkit-1/localauthority/90-mandatory.d directory exists
-    os.makedirs(os.path.join(image_dir, "etc/polkit-1/localauthority/90-mandatory.d"), 0644)
-    dest = os.path.join(image_dir, "etc/polkit-1/localauthority/90-mandatory.d/livecd.pkla")
-
-    f = file(dest, "w")
-    f.write(policykit_conf_tmpl)
-    f.close()
-
 
 
 
@@ -495,24 +472,12 @@ def make_image(project):
         chrun("/usr/bin/pisi configure-pending")
 
         # Disable Nepomuk in live CDs
-        if project.type == "live":
-            try:
-                os.unlink("%s/usr/share/autostart/nepomukserver.desktop" % image_dir)
-            except OSError:
-                pass
+      #  if project.type == "live":
+       #     try:
+        #        os.unlink("%s/usr/share/autostart/nepomukserver.desktop" % image_dir)
+      #      except OSError:
+       #         pass
 
-        if project.type == "install":
-            # FIXME: Do not hard code installer name
-            dm_config ="DISPLAY_MANAGER=mdm"
-
-            # Write default display manager config
-            image_dir = project.image_dir()
-            #dest = os.path.join(image_dir, "etc/conf.d/xdm")
-            dest = os.path.join(image_dir, "etc/default/xdm")
-
-            f = file(dest, "w")
-            f.write(dm_config)
-            f.close()
 
         connectToDBus(image_dir)
 
@@ -530,10 +495,6 @@ def make_image(project):
         os.unlink(path2)
         run('mv "%s" "%s"' % (path1, path2))
 
-
-        if project.type != "install" and ("kde-workspace" in project.all_packages):
-            setup_live_sddm(project)            #setup_live_sddm olarak değiştirildi
-            setup_live_policykit_conf(project)
 
 
         # Make sure environment is updated regardless of the booting system, by setting comparison
@@ -579,8 +540,6 @@ def install_desktop(project):
 
     run("chroot \"%s\" /bin/service dbus stop" % desktop_image_dir)
     
-
-    
     run('umount %s/proc' % desktop_image_dir)
     run('umount %s/sys' % desktop_image_dir)
 
@@ -603,7 +562,6 @@ def install_livecd_util(project):
     
     run('mount -t aufs -o remount,append:%s=ro none %s' % (image_dir, livecd_image_dir))
    
-    
     
     livecd_image_packages = " ".join(project.all_livecd_image_packages)
             
@@ -628,7 +586,6 @@ def install_livecd_util(project):
     
     
     run("chroot \"%s\" /bin/service dbus stop" % livecd_image_dir)
-    run("cp -p %s/sudoers %s/etc/sudoers" % (configdir,livecd_image_dir),ignore_error=True)
 
   
     run('umount %s/proc' % livecd_image_dir)
@@ -726,10 +683,16 @@ def make_EFI(project):
     if not os.path.exists(loader_path):
         os.makedirs(loader_path) 
         os.makedirs(os.path.join(loader_path, "entries"), 0644)
-        
+    
+    
+    
+    run("rm -rf %s/pisi.img" % work_dir)
+    
 
     run("cp -p %s/loaders/loader.conf %s/." % (configdir, loader_path))
     run("cp -p %s/loaders/entries/* %s/entries/." % (configdir, loader_path))
+    
+    os.unlink(os.path.join(loader_path, "entries/pisi-efi-x86_64.conf"))
     
     run("cp -p %s/preloader/boot/* %s/boot/." % (configdir, efi_path))
      
@@ -747,7 +710,9 @@ def make_EFI(project):
     
     run("cp -r %s/* %s/loader/." % (loader_path, efi_tmp),ignore_error=True)
     
-    run('mv %s/loader/pisi-efi-x86_64.conf %s/loader/pisi-x86_64.conf' % (efi_tmp, efi_tmp),ignore_error=True)
+    os.unlink(os.path.join(efi_tmp, "loader/entries/pisi-x86_64.conf"))
+    
+    run('mv %s/loader/entries/pisi-efi-x86_64.conf %s/loader/entries/pisi-x86_64.conf' % (efi_tmp, efi_tmp),ignore_error=True)
 
 
     run("cp -p %s/boot/kernel* %s/EFI/pisi/kernel.efi" % (image_dir,efi_tmp))  
@@ -757,8 +722,6 @@ def make_EFI(project):
     run("umount %s"% efi_tmp)
 
     
-        
-        
         
         
 def make_iso(project):
@@ -807,29 +770,18 @@ def make_iso(project):
         application="Pisi GNU/Linux Live Media"
         label="pisiLive"
 
-
-        the_iso_command='genisoimage -f -J -r -l -V "%s" -o "%s" -b boot/isolinux/isolinux.bin -c boot/isolinux/boot.cat -boot-info-table \
--uid 0 -gid 0 -udf -allow-limited-size -iso-level 3 -input-charset utf-8 -no-emul-boot -boot-load-size 4 \
--publisher "%s" -A "%s"  %s' % (label, iso_file, publisher, application, iso_dir)
-        
-        
-        iso_command ='xorriso -as mkisofs -iso-level 3 -full-iso9660-filenames -volid "%s" \
-       -eltorito-boot isolinux/isolinux.bin -eltorito-catalog isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table \
-       -isohybrid-mbr isolinux/isohdpfx.bin -output "%s"  "%s" -eltorito-alt-boot -e EFI/pisi/pisi.img -no-emul-boot \
-       -isohybrid-gpt-basdat' % (label, iso_file, iso_dir)
         
        
         cmd ='xorriso -as mkisofs -quiet -iso-level 3 -rock -joliet -max-iso9660-filenames -omit-period -omit-version-number \
-            -relaxed-filenames -allow-lowercase -volid "%s" \
+            -relaxed-filenames -allow-lowercase -volid "%s" -publisher "%s" -appid "%s" \
             -preparer "prepared by pisiman" -eltorito-boot isolinux/isolinux.bin \
             -eltorito-catalog isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table \
             -isohybrid-mbr "%s/isolinux/isohdpfx.bin" -eltorito-alt-boot -e EFI/pisi/pisi.img -isohybrid-gpt-basdat -no-emul-boot \
-            -output "%s" "%s/iso/"'% (label,iso_dir ,iso_file,work_dir)
+            -output "%s" "%s/iso/"'% (label, publisher ,application, iso_dir, iso_file, work_dir)
        
        
         run(cmd)
 
-       # run("isohybrid %s" % iso_file)
 
     except KeyboardInterrupt:
         print "Keyboard Interrupt: make_iso() cancelled."
