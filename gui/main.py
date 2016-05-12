@@ -311,6 +311,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 return
             if not self.updateRepo():
                 return
+            
 
         dialog = PackagesDialog(self, \
                                 self.repo, \
@@ -381,6 +382,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 return
             if not self.updateRepo():
                 return
+            
+        if not self.checkImage():
+            return            
+            
         temp_project = tempfile.NamedTemporaryFile(delete=False)
         self.project.save(temp_project.name)
         app_path = self.args[0]
@@ -405,6 +410,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if not self.updateRepo():
                 return
             
+        if not self.checkImage():
+            return              
+            
         temp_project = tempfile.NamedTemporaryFile(delete=False)
         self.project.save(temp_project.name)
         app_path = self.args[0]
@@ -425,7 +433,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 return
             if not self.updateRepo():
                 return
-            
+
+        if not self.checkImage():
+            return   
+        
         temp_project = tempfile.NamedTemporaryFile(delete=False)
         self.project.save(temp_project.name)
         app_path = self.args[0]
@@ -447,6 +458,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if not self.updateRepo():
                 return
             
+        if not self.checkImage():
+            return  
+        
         temp_project = tempfile.NamedTemporaryFile(delete=False)
         self.project.save(temp_project.name)
         app_path = self.args[0]
@@ -467,6 +481,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 return
             if not self.updateRepo():
                 return
+            
+        if not self.checkImage():
+            return  
             
         temp_project = tempfile.NamedTemporaryFile(delete=False)
         self.project.save(temp_project.name)
@@ -491,14 +508,44 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if not len(self.lineTitle.text()):
             QMessageBox.warning(self, self.windowTitle(),  _("Image title is missing."))
             return False
+        
         if not len(self.lineRepository.text()):
             QMessageBox.warning(self, self.windowTitle(), _("Repository URL is missing."))
             return False
+        
         if not len(self.lineWorkFolder.text()):
             QMessageBox.warning(self, self.windowTitle(),  _("Work folder is missing."))
             return False
+        
+        if not len(self.lineConfigFiles.text()):
+            QMessageBox.warning(self, self.windowTitle(),  _("Config folder is missing."))
+            return False
+        
         return True
+    
+    def checkImage(self):   
+        """
+            Checks required step for project.
+        """        
+        
+        if not self.project.selected_languages:
+            QMessageBox.warning(self, self.title, _("Installation Languages is not selected."))
+            return         
+        
+        if not self.project.all_install_image_packages:
+            QMessageBox.warning(self, self.title, _("Root image packages not selected."))
+            return 
+        
+        if not self.project.all_desktop_image_packages:
+            QMessageBox.warning(self, self.title, _("Desktop image packages not selected."))
+            return 
+        
+        if not self.project.all_livecd_image_packages:
+            QMessageBox.warning(self, self.title, _("Live image packages not selected."))
+            return         
 
+        return True        
+        
     def updateProject(self):
         """
             Updates project information.
