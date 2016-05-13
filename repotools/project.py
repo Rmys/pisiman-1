@@ -31,7 +31,7 @@ QT_PREFIX = "usr"
 if os.path.exists("/usr/lib/qt5/libQtCore.so"):
     QT_PREFIX += "/lib/qt5"
 
-default_live_exclude_list = """
+default_exclude_list = """
 var/cache/pisi/packages/
 var/cache/pisi/archives/
 var/tmp/pisi/
@@ -42,18 +42,7 @@ var/log/pisi.log
 root/.bash_history
 """
 
-default_install_exclude_list = """
-var/cache/pisi/packages/
-var/cache/pisi/archives/
-var/tmp/pisi/
-var/pisi/
-tmp/pisi-root/
-var/log/comar.log
-var/log/pisi.log
-root/.bash_history
-""" 
-
-default_install_glob_excludes = (
+default_glob_excludes = (
     ( "usr/lib/python%s/" % PYTHON_VER, "*.pyc" ),
     ( "usr/lib/python%s/" % PYTHON_VER, "*.pyo" ),
     ( "usr/lib/pardus/", "*.pyc" ),
@@ -61,12 +50,6 @@ default_install_glob_excludes = (
     ( "var/db/comar/", "log.*" ),
 )
 
-default_live_glob_excludes = (
-    ( "usr/lib/python%s/" % PYTHON_VER, "*.pyc" ),
-    ( "usr/lib/python%s/" % PYTHON_VER, "*.pyo" ),
-    ( "var/db/comar/", "__db*" ),
-    ( "var/db/comar/", "log.*" ),
-)
 class ExProject(Exception):
     pass
 
@@ -254,7 +237,6 @@ class Project:
             self.selected_desktop_image_components.sort()
             self.selected_desktop_image_packages.sort()
             self.all_desktop_image_packages.sort()           
-            
 
         installImagePackagesTag = doc.getTag("InstallImagePackages")
         
@@ -267,8 +249,10 @@ class Project:
             self.selected_install_image_components.sort()
             self.selected_install_image_packages.sort()
             self.all_install_image_packages.sort()
-
-       
+            
+            
+          
+        
 
     def save(self, filename=None):
         # Save the data into filename as pardusman project file
@@ -322,23 +306,49 @@ class Project:
                     packageSelection.insertTag("Package").insertData(item)
 
         else:
+           
+
             self.selected_components.sort()
+            
             self.selected_packages.sort()
+            
             self.all_packages.sort()
+
 
             package_selection = doc.insertTag("PackageSelection")
             package_selection.setAttribute("repo_uri", self.repo_uri)
 
             # Insert components if any
-            for item in self.selected_components:
+            
+            for item in self.selected_install_image_components:
+                package_selection.insertTag("SelectedComponent").insertData(item)  
+                
+            for item in self.selected_desktop_image_components:
+                package_selection.insertTag("SelectedComponent").insertData(item)   
+                
+            for item in self.selected_livecd_image_components:
                 package_selection.insertTag("SelectedComponent").insertData(item)
+                
 
-            for item in self.selected_packages:
+            for item in self.selected_install_image_packages:
                 package_selection.insertTag("SelectedPackage").insertData(item)
+                
+            for item in self.selected_desktop_image_packages:
+                package_selection.insertTag("SelectedPackage").insertData(item)  
 
-            for item in self.all_packages:
+            for item in self.selected_livecd_image_packages:
+                package_selection.insertTag("SelectedPackage").insertData(item)   
+                
+            for item in self.all_install_image_packages:
+                package_selection.insertTag("Package").insertData(item)    
+                
+            for item in self.all_desktop_image_packages:
                 package_selection.insertTag("Package").insertData(item)
 
+            for item in self.all_livecd_image_packages:
+                package_selection.insertTag("Package").insertData(item)
+                
+                
         if self.all_install_image_packages:
             self.selected_install_image_components.sort()
             self.selected_install_image_packages.sort()
@@ -420,12 +430,10 @@ class Project:
                         if fnmatch.fnmatch(name, exc[1]):
                             lst.append(os.path.join(root[len(image_dir)+1:], name))
 
-        if self.type == "install":
-            temp = default_install_exclude_list.split()
-            _glob_exclude(temp, default_install_glob_excludes)
-        else:
-            temp = default_live_exclude_list.split()
-            _glob_exclude(temp, default_live_glob_excludes)
+
+        temp = default_exclude_list.split()
+        _glob_exclude(temp, default_glob_excludes)
+        
         return temp
 
     def _get_dir(self, name, clean=False):
@@ -482,7 +490,7 @@ class Project:
 
                 packages.sort()
                 collection.packages.allPackages = packages
-           # self.all_packages.extend(packages)
+            self.all_packages.extend(packages)
         else:
             for component in self.selected_components:
                 if component not in repo.components:
