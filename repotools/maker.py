@@ -337,22 +337,25 @@ def make_repos(project):
         repo_dir = project.image_repo_dir(clean=True)
         reposs = os.path.join(project.work_dir, "repo_cache")
 
-
-        imagedeps = project.all_install_image_packages
-        imagedeps1 = project.all_desktop_image_packages
-        imagedeps2 = project.all_livecd_image_packages
+        imagedeps = project.all_packages
+      #  imagedeps = project.all_install_image_packages
+       # imagedeps1 = project.all_desktop_image_packages
+        #imagedeps2 = project.all_livecd_image_packages
             
 
         repo.make_local_repo(repo_dir, imagedeps)
-        repo.make_local_repo(repo_dir, imagedeps1)
-        repo.make_local_repo(repo_dir, imagedeps2)
+       # repo.make_local_repo(repo_dir, imagedeps1)
+      #  repo.make_local_repo(repo_dir, imagedeps2)
         
-        os.chdir(reposs)
-        run('pisi ix -D "%s/" --skip-signing' % (reposs))
+       # os.chdir(reposs)
+        #run('pisi ix -D "%s/" --skip-signing' % (reposs))
 
     except KeyboardInterrupt:
         print "Keyboard Interrupt: make_repo() cancelled."
         sys.exit(1)
+
+
+
 
 
 def check_file(repo_dir, name, _hash):
@@ -404,6 +407,8 @@ def make_image(project):
         desktop_image_dir = project.desktop_image_dir()
         initrd_image_dir = project.initrd_image_dir()
         livecd_image_dir = project.livecd_image_dir()
+        efi_tmp = project.efi_tmp_path_dir()
+
        
         #umount all mount dirs
         
@@ -423,11 +428,15 @@ def make_image(project):
         run('umount %s/proc' % initrd_image_dir, ignore_error=True)
         run('umount %s/sys' % initrd_image_dir, ignore_error=True)
         run('umount -R %s' % initrd_image_dir, ignore_error=True)
+        
+        run("umount %s"% efi_tmp,ignore_error=True)
+        run("umount -l %s"% efi_tmp,ignore_error=True)
 
         image_dir = project.image_dir(clean=True)
         
         
-        run('pisi --yes-all -D"%s" ar pisilinux-install "%s" --ignore-check' % (image_dir, reposs + "/pisi-index.xml"))
+       # run('pisi --yes-all -D"%s" ar pisilinux-install "%s" --ignore-check' % (image_dir, reposs + "/pisi-index.xml"))
+        run('pisi --yes-all -D"%s" ar pisilinux-install %s --ignore-check' % (image_dir, repo_dir + "/pisi-index.xml.bz2"))
         print "project type = ",project.type
         
 
@@ -719,8 +728,8 @@ def make_EFI(project):
     run("cp -p %s/boot/initramfs* %s/EFI/pisi/initrd.img" % (image_dir,efi_tmp))  
 
     
-    run("umount %s"% efi_tmp)
-
+    run("umount %s"% efi_tmp,ignore_error=True)
+    run("umount -l %s"% efi_tmp,ignore_error=True)
     
         
         
