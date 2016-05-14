@@ -83,13 +83,13 @@ class Project:
         self.package_collections = []
         self.missing_packages = []
         self.missing_components = []
-        self.selected_install_image_components = []
-        self.selected_install_image_packages = []
+        self.selected_root_image_components = []
+        self.selected_root_image_packages = []
         self.selected_livecd_image_components = []
         self.selected_livecd_image_packages = []
         self.selected_desktop_image_components = []
         self.selected_desktop_image_packages = []
-        self.all_install_image_packages = []
+        self.all_root_image_packages = []
 
   
     def open(self, filename):
@@ -214,6 +214,28 @@ class Project:
         if languageSelectionTag:
             self.default_language, self.selected_languages = __languageSelection(languageSelectionTag)
             
+        rootImagePackagesTag = doc.getTag("RootImagePackages")
+        if rootImagePackagesTag:
+            uri, \
+            self.selected_root_image_components, \
+            self.selected_root_image_packages, \
+            self.all_root_image_packages = __packageSelection(rootImagePackagesTag)
+
+            self.selected_root_image_components.sort()
+            self.selected_root_image_packages.sort()
+            self.all_root_image_packages.sort()    
+            
+        desktopImagePackagesTag = doc.getTag("DesktopImagePackages")
+        if desktopImagePackagesTag:
+            uri, \
+            self.selected_desktop_image_components, \
+            self.selected_desktop_image_packages, \
+            self.all_desktop_image_packages = __packageSelection(desktopImagePackagesTag)
+
+            self.selected_desktop_image_components.sort()
+            self.selected_desktop_image_packages.sort()
+            self.all_desktop_image_packages.sort()       
+            
         livecdImagePackagesTag = doc.getTag("LivecdImagePackages")
         if livecdImagePackagesTag:
             uri, \
@@ -225,29 +247,7 @@ class Project:
             self.selected_livecd_image_packages.sort()
             self.all_livecd_image_packages.sort()
 
-            
-        desktopImagePackagesTag = doc.getTag("DesktopImagePackages")
-        if desktopImagePackagesTag:
-            uri, \
-            self.selected_desktop_image_components, \
-            self.selected_desktop_image_packages, \
-            self.all_desktop_image_packages = __packageSelection(desktopImagePackagesTag)
-
-            self.selected_desktop_image_components.sort()
-            self.selected_desktop_image_packages.sort()
-            self.all_desktop_image_packages.sort()           
-
-        installImagePackagesTag = doc.getTag("InstallImagePackages")
-        if installImagePackagesTag:
-            uri, \
-            self.selected_install_image_components, \
-            self.selected_install_image_packages, \
-            self.all_install_image_packages = __packageSelection(installImagePackagesTag)
-
-            self.selected_install_image_components.sort()
-            self.selected_install_image_packages.sort()
-            self.all_install_image_packages.sort()
-            
+          
 
     def save(self, filename=None):
         # Save the data into filename as pardusman project file
@@ -315,7 +315,7 @@ class Project:
 
             # Insert components if any
             
-            for item in self.selected_install_image_components:
+            for item in self.selected_root_image_components:
                 package_selection.insertTag("SelectedComponent").insertData(item)  
                 
             for item in self.selected_desktop_image_components:
@@ -325,7 +325,7 @@ class Project:
                 package_selection.insertTag("SelectedComponent").insertData(item)
                 
 
-            for item in self.selected_install_image_packages:
+            for item in self.selected_root_image_packages:
                 package_selection.insertTag("SelectedPackage").insertData(item)
                 
             for item in self.selected_desktop_image_packages:
@@ -334,7 +334,7 @@ class Project:
             for item in self.selected_livecd_image_packages:
                 package_selection.insertTag("SelectedPackage").insertData(item)   
                 
-            for item in self.all_install_image_packages:
+            for item in self.all_root_image_packages:
                 package_selection.insertTag("Package").insertData(item)    
                 
             for item in self.all_desktop_image_packages:
@@ -344,21 +344,21 @@ class Project:
                 package_selection.insertTag("Package").insertData(item)
                 
                 
-        if self.all_install_image_packages:
-            self.selected_install_image_components.sort()
-            self.selected_install_image_packages.sort()
-            self.all_install_image_packages.sort()
+        if self.all_root_image_packages:
+            self.selected_root_image_components.sort()
+            self.selected_root_image_packages.sort()
+            self.all_root_image_packages.sort()
 
-            package_selection = doc.insertTag("InstallImagePackages")
+            package_selection = doc.insertTag("RootImagePackages")
             
             # Insert components if any
-            for item in self.selected_install_image_components:
+            for item in self.selected_root_image_components:
                 package_selection.insertTag("SelectedComponent").insertData(item)
 
-            for item in self.selected_install_image_packages:
+            for item in self.selected_root_image_packages:
                 package_selection.insertTag("SelectedPackage").insertData(item)
 
-            for item in self.all_install_image_packages:
+            for item in self.all_root_image_packages:
                 package_selection.insertTag("Package").insertData(item)
                 
                 
@@ -503,11 +503,11 @@ class Project:
 
         self.all_packages.sort()
 
-        # Find all install image packages
+        # Find all root image packages
         packages = []
-        self.all_install_image_packages = []
+        self.all_root_image_packages = []
 
-        for component in self.selected_install_image_components:
+        for component in self.selected_root_image_components:
             if component not in repo.components:
                 if component not in self.missing_components:
                     self.missing_components.append(component)
@@ -515,11 +515,11 @@ class Project:
             for package in repo.components[component]:
                 collect(package)
 
-        for package in self.selected_install_image_packages:
+        for package in self.selected_root_image_packages:
             collect(package)
 
         packages.sort()
-        self.all_install_image_packages = packages
+        self.all_root_image_packages = packages
         
         # Find all desktop image packages
         

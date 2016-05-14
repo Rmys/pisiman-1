@@ -226,7 +226,7 @@
     </property>
     <addaction name="actionUpdateRepo"/>
     <addaction name="separator"/>
-    <addaction name="actionInstallationImagePackages"/>
+    <addaction name="actionRootImagePackages"/>
     <addaction name="actionDesktopImagePackages"/>
     <addaction name="actionLivecdImagePackages"/>
     <addaction name="actionLanguages"/>
@@ -310,7 +310,7 @@
     <string>&amp;Packages...</string>
    </property>
   </action>
-  <action name="actionInstallationImagePackages">
+  <action name="actionRootImagePackages">
    <property name="icon">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/applications-other.png</normaloff>:/raw/pics/applications-other.png</iconset>
@@ -397,7 +397,7 @@
      <normaloff>:/raw/pics/folder-new.png</normaloff>:/raw/pics/folder-new.png</iconset>
    </property>
    <property name="text">
-    <string>Make Repo</string>
+    <string>&amp;Make Repo</string>
    </property>
   </action>
   <action name="actionMake_Squashfs">
@@ -406,7 +406,7 @@
      <normaloff>:/raw/pics/list-add.png</normaloff>:/raw/pics/list-add.png</iconset>
    </property>
    <property name="text">
-    <string>Make Squashfs</string>
+    <string>Make &amp;Squashfs</string>
    </property>
   </action>
   <action name="actionMake_Iso">
@@ -415,7 +415,7 @@
      <normaloff>:/raw/pics/media-optical.png</normaloff>:/raw/pics/media-optical.png</iconset>
    </property>
    <property name="text">
-    <string>Make Iso</string>
+    <string>Ma&amp;ke Iso</string>
    </property>
   </action>
   <action name="actionMake_Image">
@@ -424,7 +424,7 @@
      <normaloff>:/raw/pics/applications-other.png</normaloff>:/raw/pics/applications-other.png</iconset>
    </property>
    <property name="text">
-    <string>Make Image</string>
+    <string>Make &amp;Image</string>
    </property>
   </action>
  </widget>

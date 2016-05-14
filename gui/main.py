@@ -87,7 +87,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionUpdateRepo.triggered.connect(self.slotUpdateRepo)
         self.actionLanguages.triggered.connect(self.slotSelectLanguages)
         self.actionPackages.triggered.connect(self.slotSelectPackages)
-        self.actionInstallationImagePackages.triggered.connect(self.slotSelectInstallImagePackages)
+        self.actionRootImagePackages.triggered.connect(self.slotSelectRootImagePackages)
         self.actionLivecdImagePackages.triggered.connect(self.slotSelectLivecdImagePackages)
         self.actionDesktopImagePackages.triggered.connect(self.slotSelectDesktopImagePackages)
         self.actionMakeImage.triggered.connect(self.slotMakeImage)
@@ -241,11 +241,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.updateCollection()
 
-    def slotRemovePackageCollection(self):
-        for item in self.listPackageCollection.selectedItems():
-            self.listPackageCollection.takeItem(self.listPackageCollection.row(item))
-
-        self.updateCollection()
 
     def slotClickedCollection(self, item):
         if item.collection.default == "True":
@@ -302,9 +297,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.project.selected_components = dialog.components
             self.project.all_packages = dialog.all_packages
 
-    def slotSelectInstallImagePackages(self):
+    def slotSelectRootImagePackages(self):
         """
-            "Installation Image Packages..." menu item fires this function.
+            "Root Image Packages..." menu item fires this function.
         """
         if not self.repo:
             if not self.checkProject():
@@ -315,14 +310,33 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         dialog = PackagesDialog(self, \
                                 self.repo, \
-                                self.project.selected_install_image_packages, \
-                                self.project.selected_install_image_components)
+                                self.project.selected_root_image_packages, \
+                                self.project.selected_root_image_components)
 
         if dialog.exec_():
-            self.project.selected_install_image_packages = dialog.packages
-            self.project.selected_install_image_components = dialog.components
-            self.project.all_install_image_packages = dialog.all_packages
+            self.project.selected_Root_image_packages = dialog.packages
+            self.project.selected_root_image_components = dialog.components
+            self.project.all_root_image_packages = dialog.all_packages
             
+    def slotSelectDesktopImagePackages(self):
+        """
+            "Desktop Image Packages..." menu item fires this function.
+        """
+        if not self.repo:
+            if not self.checkProject():
+                return
+            if not self.updateRepo():
+                return
+
+        dialog = PackagesDialog(self, \
+                                self.repo, \
+                                self.project.selected_desktop_image_packages, \
+                                self.project.selected_desktop_image_components)
+
+        if dialog.exec_():
+            self.project.selected_desktop_image_packages = dialog.packages
+            self.project.selected_desktop_image_components = dialog.components
+            self.project.all_desktop_image_packages = dialog.all_packages             
             
     def slotSelectLivecdImagePackages(self):
         """
@@ -344,25 +358,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.project.selected_livecd_image_components = dialog.components
             self.project.all_livecd_image_packages = dialog.all_packages   
             
-    def slotSelectDesktopImagePackages(self):
-        """
-            "Desktop Image Packages..." menu item fires this function.
-        """
-        if not self.repo:
-            if not self.checkProject():
-                return
-            if not self.updateRepo():
-                return
-
-        dialog = PackagesDialog(self, \
-                                self.repo, \
-                                self.project.selected_desktop_image_packages, \
-                                self.project.selected_desktop_image_components)
-
-        if dialog.exec_():
-            self.project.selected_desktop_image_packages = dialog.packages
-            self.project.selected_desktop_image_components = dialog.components
-            self.project.all_desktop_image_packages = dialog.all_packages 
 
             
     def slotUpdateRepo(self):
@@ -533,7 +528,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             QMessageBox.warning(self, self.title, _("Installation Languages is not selected."))
             return         
         
-        if not self.project.all_install_image_packages:
+        if not self.project.all_root_image_packages:
             QMessageBox.warning(self, self.title, _("Root image packages not selected."))
             return 
         

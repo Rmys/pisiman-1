@@ -424,9 +424,9 @@ def make_image(project):
         print "project type = ",project.type
         
 
-        install_image_packages = " ".join(project.all_install_image_packages)
+        root_image_packages = " ".join(project.all_root_image_packages)
 
-        run('pisi --yes-all --ignore-comar --ignore-dep --ignore-check --ignore-package-conflicts --ignore-file-conflicts -D"%s" it %s' % (image_dir, install_image_packages))
+        run('pisi --yes-all --ignore-comar --ignore-dep --ignore-check --ignore-package-conflicts --ignore-file-conflicts -D"%s" it %s' % (image_dir, root_image_packages))
         
         
         #    if project.plugin_package:
@@ -510,6 +510,8 @@ def make_image(project):
         sys.exit(1)        
         
 def install_desktop(project):
+    print "Preparing desktop image..."
+    xterm_title("Preparing desktop image")
     
     image_dir = project.image_dir()
     
