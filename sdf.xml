@@ -1,0 +1,5 @@
+<PisiManProject type="install" compression="xz">
+    <Title>sadas</Title>
+    <WorkDir>/tmp/asdeer</WorkDir>
+    <ConfigFiles>/home/erturk/yedek/git/pisiman/conf</ConfigFiles>
+    <PackageSelection repo_uri="http://ciftlik.pisilinux.org/2.0-Beta/pisi-index.xml.xz"/></PisiManProject>

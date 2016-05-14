@@ -224,8 +224,7 @@ class Project:
             self.selected_livecd_image_components.sort()
             self.selected_livecd_image_packages.sort()
             self.all_livecd_image_packages.sort()
-            
-         
+
             
         desktopImagePackagesTag = doc.getTag("DesktopImagePackages")
         if desktopImagePackagesTag:
@@ -239,7 +238,6 @@ class Project:
             self.all_desktop_image_packages.sort()           
 
         installImagePackagesTag = doc.getTag("InstallImagePackages")
-        
         if installImagePackagesTag:
             uri, \
             self.selected_install_image_components, \
@@ -250,9 +248,6 @@ class Project:
             self.selected_install_image_packages.sort()
             self.all_install_image_packages.sort()
             
-            
-          
-        
 
     def save(self, filename=None):
         # Save the data into filename as pardusman project file
