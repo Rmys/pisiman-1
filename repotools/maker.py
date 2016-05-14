@@ -279,7 +279,6 @@ def squash_image(project):
     
     sqfs_path = os.path.join(project.work_dir)
     
-   
     print "squashfs image dir%s" % image_dir
     if not image_dir.endswith("/"):
         image_dir += "/"
@@ -335,27 +334,13 @@ def make_repos(project):
     try:
         repo = project.get_repo()
         repo_dir = project.image_repo_dir(clean=True)
-        reposs = os.path.join(project.work_dir, "repo_cache")
 
         imagedeps = project.all_packages
-      #  imagedeps = project.all_install_image_packages
-       # imagedeps1 = project.all_desktop_image_packages
-        #imagedeps2 = project.all_livecd_image_packages
-            
-
         repo.make_local_repo(repo_dir, imagedeps)
-       # repo.make_local_repo(repo_dir, imagedeps1)
-      #  repo.make_local_repo(repo_dir, imagedeps2)
-        
-       # os.chdir(reposs)
-        #run('pisi ix -D "%s/" --skip-signing' % (reposs))
 
     except KeyboardInterrupt:
         print "Keyboard Interrupt: make_repo() cancelled."
         sys.exit(1)
-
-
-
 
 
 def check_file(repo_dir, name, _hash):
@@ -380,9 +365,9 @@ def add_repo(project):
     configdir =os.path.join(project.config_files)
     
     
-    address = open(os.path.join(configdir, "repo.conf")).readlines()
+    address = open(os.path.join(configdir, "repo.conf")).read()
 
-    run("chroot \"%s\" /usr/bin/pisi ar pisi --yes-all http://ciftlik.pisilinux.org/2.0-Beta/pisi-index.xml.xz --ignore-check --no-fetch" % image_dir)
+    run("chroot \"%s\" /usr/bin/pisi ar pisi --yes-all  --ignore-check --no-fetch \"%s\"" % (image_dir,address))
 
     
     run("chroot \"%s\" /bin/service dbus stop" % image_dir)
@@ -435,7 +420,6 @@ def make_image(project):
         image_dir = project.image_dir(clean=True)
         
         
-       # run('pisi --yes-all -D"%s" ar pisilinux-install "%s" --ignore-check' % (image_dir, reposs + "/pisi-index.xml"))
         run('pisi --yes-all -D"%s" ar pisilinux-install %s --ignore-check' % (image_dir, repo_dir + "/pisi-index.xml.bz2"))
         print "project type = ",project.type
         
@@ -472,7 +456,6 @@ def make_image(project):
         run('/bin/mount --bind /proc %s/proc' % image_dir)
         run('/bin/mount --bind /sys %s/sys' % image_dir)
 
-        #chrun("ln -s /dev/shm /run/shm")
         chrun("/sbin/ldconfig")
         chrun("/sbin/update-environment")
         chroot_comar(image_dir)
@@ -518,7 +501,6 @@ def make_image(project):
         chrun("rm -rf /run/dbus/*")
         
         install_desktop(project)
-        setup_live_mdm(project)
         install_livecd_util(project)
         make_initrd(project)
         add_repo(project)
@@ -618,12 +600,12 @@ def make_initrd(project):
     
     run('mount -t aufs -o br=%s:%s=ro none %s' % (initrd_image_dir,image_dir,initrd_image_dir))
     
-    path = "%s/install/" % configdir
+    path = "%s/initcpio/install/" % configdir
     path2 = "%s/usr/lib/initcpio/install/" %initrd_image_dir
     for name in os.listdir(path):
         run('cp -p "%s" "%s"' % (os.path.join(path, name), os.path.join(path2, name)))    
     
-    path = "%s/hooks/" % configdir
+    path = "%s/initcpio/hooks/" % configdir
     path2 = "%s/usr/lib/initcpio/hooks/" %initrd_image_dir
     for name in os.listdir(path):
         run('cp -p "%s" "%s"' % (os.path.join(path, name), os.path.join(path2, name)))    
@@ -683,29 +665,29 @@ def make_EFI(project):
 
     if not os.path.exists(efi_path):
         os.makedirs(efi_path) 
-        os.makedirs(os.path.join(efi_path, "boot"), 0644)
-        os.makedirs(os.path.join(efi_path, "pisi"), 0644)
+        os.makedirs(os.path.join(efi_path, "boot"))
+        os.makedirs(os.path.join(efi_path, "pisi"))
 
     
     loader_path = os.path.join(iso_dir, "loader")
     
     if not os.path.exists(loader_path):
         os.makedirs(loader_path) 
-        os.makedirs(os.path.join(loader_path, "entries"), 0644)
+        os.makedirs(os.path.join(loader_path, "entries"))
     
     
     
     run("rm -rf %s/pisi.img" % work_dir)
     
 
-    run("cp -p %s/loaders/loader.conf %s/." % (configdir, loader_path))
-    run("cp -p %s/loaders/entries/* %s/entries/." % (configdir, loader_path))
+    run("cp -p %s/efi/loaders/loader.conf %s/." % (configdir, loader_path))
+    run("cp -p %s/efi/loaders/entries/* %s/entries/." % (configdir, loader_path))
     
     os.unlink(os.path.join(loader_path, "entries/pisi-efi-x86_64.conf"))
     
-    run("cp -p %s/preloader/boot/* %s/boot/." % (configdir, efi_path))
+    run("cp -p %s/efi/preloader/boot/* %s/boot/." % (configdir, efi_path))
      
-    run("cp -p %s/preloader/* %s/." % (configdir, efi_path),ignore_error=True)
+    run("cp -p %s/efi/preloader/* %s/." % (configdir, efi_path),ignore_error=True)
     
     
     run("dd if=/dev/zero bs=1M count=40 of=%s/pisi.img"% work_dir)
@@ -721,9 +703,6 @@ def make_EFI(project):
     
     os.unlink(os.path.join(efi_tmp, "loader/entries/pisi-x86_64.conf"))
     
-    run('mv %s/loader/entries/pisi-efi-x86_64.conf %s/loader/entries/pisi-x86_64.conf' % (efi_tmp, efi_tmp),ignore_error=True)
-
-
     run("cp -p %s/boot/kernel* %s/EFI/pisi/kernel.efi" % (image_dir,efi_tmp))  
     run("cp -p %s/boot/initramfs* %s/EFI/pisi/initrd.img" % (image_dir,efi_tmp))  
 
@@ -751,8 +730,8 @@ def make_iso(project):
         if not os.path.exists(image_path):
             os.makedirs(image_path) 
             
-            os.makedirs(os.path.join(image_path, "boot/x86_64"), 0644)
-            os.makedirs(os.path.join(image_path, "x86_64"), 0644)
+            os.makedirs(os.path.join(image_path, "boot/x86_64"))
+            os.makedirs(os.path.join(image_path, "x86_64"))
 
         
 

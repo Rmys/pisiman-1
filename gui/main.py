@@ -363,6 +363,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.project.selected_desktop_image_packages = dialog.packages
             self.project.selected_desktop_image_components = dialog.components
             self.project.all_desktop_image_packages = dialog.all_packages 
+
             
     def slotUpdateRepo(self):
         """
