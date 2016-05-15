@@ -10,4 +10,4 @@ Requirements
  - python-sip
  - python-qt5
  - libisoburn
- - kernel >4.0
+ - kernel >4.0 wiht aufs patch
