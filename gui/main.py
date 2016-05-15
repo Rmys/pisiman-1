@@ -552,7 +552,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.project.config_files = unicode(self.lineConfigFiles.text())
         self.project.plugin_package = unicode(self.linePluginPackage.text())
         self.project.extra_params = unicode(self.lineParameters.text())
-        self.project.type = ["install", "live"][self.comboType.currentIndex()]
+        self.project.type = ["None", "Lxdm", "Lightdm" ,"Mdm" ,"Sddm"][self.comboType.currentIndex()]
         self.project.squashfs_comp_type = ["xz", "gzip", "lzma", "lzo"][self.comboCompression.currentIndex()]
 
 
@@ -566,7 +566,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.lineConfigFiles.setText(unicode(self.project.config_files))
         self.linePluginPackage.setText(unicode(self.project.plugin_package))
         self.lineParameters.setText(unicode(self.project.extra_params))
-        self.comboType.setCurrentIndex(["install", "live"].index(self.project.type))
+        self.comboType.setCurrentIndex(["None", "Lxdm", "Lightdm" ,"Mdm" ,"Sddm"].index(self.project.type))
         self.comboCompression.setCurrentIndex(["xz","gzip", "lzma", "lzo"].index(self.project.squashfs_comp_type))
 
 

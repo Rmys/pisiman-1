@@ -134,12 +134,27 @@
           <widget class="QComboBox" name="comboType">
            <item>
             <property name="text">
-             <string>Installation Image</string>
+             <string>None</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>Live Image</string>
+             <string>Lxdm</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Lightdm</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Mdm</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Sddm</string>
             </property>
            </item>
           </widget>
@@ -161,7 +176,7 @@
          <item row="6" column="0">
           <widget class="QLabel" name="label_7">
            <property name="text">
-            <string>Image type</string>
+            <string>Display Manager</string>
            </property>
           </widget>
          </item>

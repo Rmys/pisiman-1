@@ -39,6 +39,7 @@ var/pisi/
 tmp/pisi-root/
 var/log/comar.log
 var/log/pisi.log
+/var/log/comar3/trace.log
 root/.bash_history
 """
 
@@ -71,7 +72,7 @@ class Project:
         self.work_dir = ""
         self.config_files = ""
         self.repo_uri = ""
-        self.type = "install"
+        self.type = "None"
         self.squashfs_comp_type = "xz"
         self.extra_params = ""
         self.plugin_package = ""
