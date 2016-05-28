@@ -217,17 +217,16 @@ def setup_isolinux(project):
 
 
 def setup_live_sddm(project):
-    image_dir = project.image_dir()
-    sddmconf_path = os.path.join(image_dir, "etc/sddm.conf")
+    desktop_image_dir = project.desktop_image_dir()
+    
+    sddmconf_path = os.path.join(desktop_image_dir, "etc/sddm.conf")
     if os.path.exists(sddmconf_path):
         lines = []
         for line in open(sddmconf_path, "r").readlines():
             if line.startswith("User"):
-                lines.append("User=pisi\n")
+                lines.append("User=pisilive\n")
             elif line.startswith("Session"):
-                lines.append("Session=/usr/share/xsessions/plasma-mediacenter\n") #this code may be have an error
-            #elif line.startswith("#ServerTimeout="):
-            #    lines.append("ServerTimeout=60\n")
+                lines.append("Session=plasma.desktop\n") #this code may be have an error
             else:
                 lines.append(line)
         open(sddmconf_path, "w").write("".join(lines))
@@ -477,16 +476,9 @@ def make_image(project):
 
         obj.setUser(0, "", "", "", "live", "", dbus_interface="tr.org.pardus.comar.User.Manager")
 
-        obj.addUser(1000, "Pisilive", "Livecd", "/home/pisilive", "/bin/bash", "live", ["wheel", "users", "lp", "lpadmin", "cdrom", "floppy", "disk", "audio", "video", "power", "dialout"], [], [], 
+        obj.addUser(1000, "pisilive", "livecd", "/home/pisilive", "/bin/bash", "live", ["wheel", "users", "lp", "lpadmin", "cdrom", "floppy", "disk", "audio", "video", "power", "dialout"], [], [], 
             
         dbus_interface="tr.org.pardus.comar.User.Manager")
-
-
-        path1 = os.path.join(image_dir, "usr/share/baselayout/inittab.live")
-        path2 = os.path.join(image_dir, "etc/inittab")
-        os.unlink(path2)
-        run('mv "%s" "%s"' % (path1, path2))
-
 
 
         # Make sure environment is updated regardless of the booting system, by setting comparison
@@ -499,6 +491,19 @@ def make_image(project):
         run('umount %s/sys' % image_dir)
         
         chrun("rm -rf /run/dbus/*")
+        
+        #setup liveuser
+               
+        chrun("rm -rf /etc/sudoers")
+
+        path1 = os.path.join(image_dir, "etc/sudoers.orig")
+        path2 = os.path.join(image_dir, "etc/sudoers")
+        
+        run('cp "%s" "%s"' % (path1, path2))
+        
+        run("/bin/echo 'pisilive ALL=(ALL) NOPASSWD: ALL' >> %s/etc/sudoers" % image_dir)
+        
+        run("/bin/chmod 440 %s/etc/sudoers" % image_dir)
         
         install_desktop(project)
         install_livecd_util(project)
@@ -540,6 +545,9 @@ def install_desktop(project):
     run('/bin/umount -R %s' % desktop_image_dir)
     run("rm -rf %s/run/dbus/*" % desktop_image_dir)
     
+
+    
+    setup_live_sddm(project)
     
     
 def install_livecd_util(project):
@@ -737,10 +745,10 @@ def make_iso(project):
 
         
 
-        make_EFI(project)
+       # make_EFI(project)
         run("cp -p %s/isomounts %s/." % (configdir, image_path))
         run("cp -p %s/*sqfs %s/x86_64/." % (work_dir, image_path))
-        run("cp -p %s/pisi.img %s/EFI/pisi/." % (work_dir, iso_dir))
+      #  run("cp -p %s/pisi.img %s/EFI/pisi/." % (work_dir, iso_dir))
 
    
         run("touch %s/.miso" % iso_dir)
@@ -766,9 +774,10 @@ def make_iso(project):
             -relaxed-filenames -allow-lowercase -volid "%s" -publisher "%s" -appid "%s" \
             -preparer "prepared by pisiman" -eltorito-boot isolinux/isolinux.bin \
             -eltorito-catalog isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table \
-            -isohybrid-mbr "%s/isolinux/isohdpfx.bin" -eltorito-alt-boot -e EFI/pisi/pisi.img -isohybrid-gpt-basdat -no-emul-boot \
+            -isohybrid-mbr "%s/isolinux/isohdpfx.bin" \
             -output "%s" "%s/iso/"'% (label, publisher ,application, iso_dir, iso_file, work_dir)
        
+       #-eltorito-alt-boot -e EFI/pisi/pisi.img -isohybrid-gpt-basdat -no-emul-boot
        
         run(cmd)
 
