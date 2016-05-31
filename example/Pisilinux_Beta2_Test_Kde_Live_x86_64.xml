@@ -1,13 +1,14 @@
 <PisiManProject type="None" compression="xz">
     <Title>Pisilinux_Beta2_Test_Kde_Live_x86_64</Title>
     <WorkDir>/tmp/test</WorkDir>
-    <ConfigFiles>/home/erturk/yedek/git/pisiman/conf</ConfigFiles>
+    <ConfigFiles>/media/erturk/yedekext4/git/pisiman/conf</ConfigFiles>
     <PackageSelection repo_uri="http://ciftlik.pisilinux.org/2.0-Beta/pisi-index.xml.xz">
         <SelectedComponent>system.base</SelectedComponent>
         <SelectedComponent>desktop.kde.framework</SelectedComponent>
         <SelectedComponent>desktop.kde.plasma</SelectedComponent>
         <SelectedComponent>desktop.kde.porting-aids</SelectedComponent>
         <SelectedComponent>desktop.toolkit.qt5</SelectedComponent>
+        <SelectedComponent>hardware.firmware</SelectedComponent>
         <SelectedComponent>x11.server</SelectedComponent>
         <SelectedPackage>gfxtheme-pisilinux-install</SelectedPackage>
         <SelectedPackage>glibc-locales-ca</SelectedPackage>
@@ -33,6 +34,7 @@
         <SelectedPackage>bash-completion</SelectedPackage>
         <SelectedPackage>bashdb</SelectedPackage>
         <SelectedPackage>cpupowertools</SelectedPackage>
+        <SelectedPackage>desktop-file-utils</SelectedPackage>
         <SelectedPackage>dolphin</SelectedPackage>
         <SelectedPackage>droid-fonts</SelectedPackage>
         <SelectedPackage>firefox</SelectedPackage>
@@ -41,6 +43,7 @@
         <SelectedPackage>foomatic-db</SelectedPackage>
         <SelectedPackage>foomatic-db-engine</SelectedPackage>
         <SelectedPackage>ghostscript</SelectedPackage>
+        <SelectedPackage>gpgme</SelectedPackage>
         <SelectedPackage>gst-libav-next</SelectedPackage>
         <SelectedPackage>gst-plugins-bad</SelectedPackage>
         <SelectedPackage>gst-plugins-bad-next</SelectedPackage>
@@ -51,16 +54,22 @@
         <SelectedPackage>gutenprint</SelectedPackage>
         <SelectedPackage>gwenview</SelectedPackage>
         <SelectedPackage>kaptan</SelectedPackage>
+        <SelectedPackage>kate</SelectedPackage>
         <SelectedPackage>kde-baseapps</SelectedPackage>
+        <SelectedPackage>kio-extras</SelectedPackage>
         <SelectedPackage>konsole</SelectedPackage>
         <SelectedPackage>libavc1394</SelectedPackage>
         <SelectedPackage>libcrystalhd</SelectedPackage>
         <SelectedPackage>libdvbpsi</SelectedPackage>
+        <SelectedPackage>liberation-fonts</SelectedPackage>
+        <SelectedPackage>libevent</SelectedPackage>
+        <SelectedPackage>libexif</SelectedPackage>
         <SelectedPackage>libfreebob</SelectedPackage>
         <SelectedPackage>libmatroska</SelectedPackage>
         <SelectedPackage>libmpeg2</SelectedPackage>
         <SelectedPackage>libquicktime</SelectedPackage>
         <SelectedPackage>libva-intel-driver</SelectedPackage>
+        <SelectedPackage>logrotate</SelectedPackage>
         <SelectedPackage>module-bbswitch</SelectedPackage>
         <SelectedPackage>module-broadcom-wl</SelectedPackage>
         <SelectedPackage>module-virtualbox-userspace</SelectedPackage>
@@ -78,7 +87,9 @@
         <SelectedPackage>smpeg</SelectedPackage>
         <SelectedPackage>smplayer</SelectedPackage>
         <SelectedPackage>spectacle</SelectedPackage>
+        <SelectedPackage>startup-notification</SelectedPackage>
         <SelectedPackage>suspend</SelectedPackage>
+        <SelectedPackage>udisks2</SelectedPackage>
         <SelectedPackage>upower</SelectedPackage>
         <SelectedPackage>uuidd</SelectedPackage>
         <SelectedPackage>v4l-utils</SelectedPackage>
@@ -172,8 +183,21 @@
         <Package>gawk</Package>
         <Package>gdbm</Package>
         <Package>gettext</Package>
+        <Package>gfxtheme-pisilinux-install</Package>
         <Package>glib2</Package>
         <Package>glibc</Package>
+        <Package>glibc-locales-ca</Package>
+        <Package>glibc-locales-de</Package>
+        <Package>glibc-locales-en</Package>
+        <Package>glibc-locales-es</Package>
+        <Package>glibc-locales-fr</Package>
+        <Package>glibc-locales-hu</Package>
+        <Package>glibc-locales-it</Package>
+        <Package>glibc-locales-nl</Package>
+        <Package>glibc-locales-pl</Package>
+        <Package>glibc-locales-pt</Package>
+        <Package>glibc-locales-ru</Package>
+        <Package>glibc-locales-sv</Package>
         <Package>gmp</Package>
         <Package>gperf</Package>
         <Package>gperftools</Package>
@@ -185,6 +209,7 @@
         <Package>help2man</Package>
         <Package>json-c</Package>
         <Package>kbd</Package>
+        <Package>kernel</Package>
         <Package>keyutils</Package>
         <Package>kmod</Package>
         <Package>less</Package>
@@ -223,6 +248,7 @@
         <Package>man-db</Package>
         <Package>man-pages</Package>
         <Package>mdadm-static</Package>
+        <Package>memtest86</Package>
         <Package>mingetty</Package>
         <Package>miscfiles</Package>
         <Package>mit-kerberos</Package>
@@ -230,6 +256,7 @@
         <Package>mpfr</Package>
         <Package>mtools</Package>
         <Package>mudur</Package>
+        <Package>nano</Package>
         <Package>ncompress</Package>
         <Package>ncurses</Package>
         <Package>net-tools</Package>
@@ -268,7 +295,10 @@
         <Package>snappy</Package>
         <Package>spidermonkey</Package>
         <Package>sqlite</Package>
+        <Package>squashfs-tools</Package>
+        <Package>sudo</Package>
         <Package>sysfsutils</Package>
+        <Package>syslinux</Package>
         <Package>sysvinit</Package>
         <Package>sysvinit-tools</Package>
         <Package>tar</Package>
@@ -295,6 +325,7 @@
         <Package>aalib</Package>
         <Package>accountsservice</Package>
         <Package>acl</Package>
+        <Package>alsa-firmware</Package>
         <Package>alsa-lib</Package>
         <Package>alsa-tools</Package>
         <Package>alternatives</Package>
@@ -308,6 +339,8 @@
         <Package>autogen</Package>
         <Package>avahi</Package>
         <Package>avahi-libs</Package>
+        <Package>b43-firmware</Package>
+        <Package>b43-fwcutter</Package>
         <Package>baloo</Package>
         <Package>baloo-widgets</Package>
         <Package>baselayout</Package>
@@ -350,6 +383,7 @@
         <Package>dbus-x11</Package>
         <Package>dconf</Package>
         <Package>dejavu-fonts</Package>
+        <Package>desktop-file-utils</Package>
         <Package>device-mapper</Package>
         <Package>device-mapper-event</Package>
         <Package>discover</Package>
@@ -359,6 +393,7 @@
         <Package>docbook-xml</Package>
         <Package>docbook-xsl</Package>
         <Package>dolphin</Package>
+        <Package>dosfstools</Package>
         <Package>drkonqi</Package>
         <Package>droid-fonts</Package>
         <Package>e2fsprogs</Package>
@@ -403,9 +438,11 @@
         <Package>glibmm</Package>
         <Package>gmp</Package>
         <Package>gnu-gs-fonts-std</Package>
+        <Package>gnupg</Package>
         <Package>gnutls</Package>
         <Package>gobject-introspection</Package>
         <Package>gperftools</Package>
+        <Package>gpgme</Package>
         <Package>gpm</Package>
         <Package>graphite2</Package>
         <Package>grub2</Package>
@@ -448,6 +485,7 @@
         <Package>kapidox</Package>
         <Package>kaptan</Package>
         <Package>karchive</Package>
+        <Package>kate</Package>
         <Package>kauth</Package>
         <Package>kbd</Package>
         <Package>kbookmarks</Package>
@@ -489,6 +527,7 @@
         <Package>kinfocenter</Package>
         <Package>kinit</Package>
         <Package>kio</Package>
+        <Package>kio-extras</Package>
         <Package>kitemmodels</Package>
         <Package>kitemviews</Package>
         <Package>kjobwidgets</Package>
@@ -563,7 +602,9 @@
         <Package>libarchive</Package>
         <Package>libart_lgpl</Package>
         <Package>libass</Package>
+        <Package>libassuan</Package>
         <Package>libasyncns</Package>
+        <Package>libatasmart</Package>
         <Package>libavc1394</Package>
         <Package>libbluray</Package>
         <Package>libbsd</Package>
@@ -595,8 +636,11 @@
         <Package>libebml</Package>
         <Package>libedit</Package>
         <Package>libepoxy</Package>
+        <Package>liberation-fonts</Package>
         <Package>libestr</Package>
         <Package>libevdev</Package>
+        <Package>libevent</Package>
+        <Package>libexif</Package>
         <Package>libffado</Package>
         <Package>libffi</Package>
         <Package>libfontenc</Package>
@@ -621,6 +665,7 @@
         <Package>libkipi</Package>
         <Package>libkmod</Package>
         <Package>libkms</Package>
+        <Package>libksba</Package>
         <Package>libkscreen</Package>
         <Package>libksysguard</Package>
         <Package>liblogging</Package>
@@ -634,6 +679,7 @@
         <Package>libmp4v2</Package>
         <Package>libmpeg2</Package>
         <Package>libmtdev</Package>
+        <Package>libmtp</Package>
         <Package>libndp</Package>
         <Package>libnfnetlink</Package>
         <Package>libnih</Package>
@@ -659,11 +705,13 @@
         <Package>libraw1394</Package>
         <Package>libsamplerate</Package>
         <Package>libsdl</Package>
+        <Package>libsecret</Package>
         <Package>libsigc++</Package>
         <Package>libsndfile</Package>
         <Package>libsoup</Package>
         <Package>libsoup-gnome</Package>
         <Package>libspectre</Package>
+        <Package>libssh</Package>
         <Package>libssh2</Package>
         <Package>libtalloc</Package>
         <Package>libtasn1</Package>
@@ -705,10 +753,12 @@
         <Package>llvm-libs</Package>
         <Package>lm_sensors</Package>
         <Package>lmdb</Package>
+        <Package>logrotate</Package>
         <Package>lua</Package>
         <Package>lvm2</Package>
         <Package>lzo</Package>
         <Package>mariadb-lib</Package>
+        <Package>mdadm</Package>
         <Package>media-player-info</Package>
         <Package>mesa</Package>
         <Package>mesa-glu</Package>
@@ -733,9 +783,11 @@
         <Package>networkmanager-qt</Package>
         <Package>newt</Package>
         <Package>noto-fonts</Package>
+        <Package>npth</Package>
         <Package>nspr</Package>
         <Package>nss</Package>
         <Package>ntfs-3g</Package>
+        <Package>ntfsprogs</Package>
         <Package>okular</Package>
         <Package>openal</Package>
         <Package>openconnect</Package>
@@ -743,6 +795,7 @@
         <Package>openexr-libs</Package>
         <Package>openjpeg</Package>
         <Package>openldap-client</Package>
+        <Package>openslp</Package>
         <Package>openssl</Package>
         <Package>orc</Package>
         <Package>os-prober</Package>
@@ -757,6 +810,7 @@
         <Package>pciutils</Package>
         <Package>perl</Package>
         <Package>piksemel</Package>
+        <Package>pinentry</Package>
         <Package>pisi</Package>
         <Package>pisilinux-desktop-services</Package>
         <Package>pisilinux-python</Package>
@@ -862,6 +916,7 @@
         <Package>scim-libs</Package>
         <Package>sddm</Package>
         <Package>sddm-kcm</Package>
+        <Package>sg3_utils</Package>
         <Package>sgml-common</Package>
         <Package>shared-mime-info</Package>
         <Package>slang</Package>
@@ -876,6 +931,7 @@
         <Package>speex</Package>
         <Package>spidermonkey</Package>
         <Package>sqlite</Package>
+        <Package>startup-notification</Package>
         <Package>suspend</Package>
         <Package>sysfsutils</Package>
         <Package>system-config-printer</Package>
@@ -890,6 +946,7 @@
         <Package>tidy</Package>
         <Package>tiff</Package>
         <Package>timezone</Package>
+        <Package>udisks2</Package>
         <Package>unixODBC</Package>
         <Package>unrar</Package>
         <Package>upower</Package>
@@ -923,6 +980,7 @@
         <Package>xdg-utils</Package>
         <Package>xinit</Package>
         <Package>xkeyboard-config</Package>
+        <Package>xmlto</Package>
         <Package>xorg-app</Package>
         <Package>xorg-input-acecad</Package>
         <Package>xorg-input-aiptek</Package>
@@ -1267,8 +1325,21 @@
         <Package>gawk</Package>
         <Package>gdbm</Package>
         <Package>gettext</Package>
+        <Package>gfxtheme-pisilinux-install</Package>
         <Package>glib2</Package>
         <Package>glibc</Package>
+        <Package>glibc-locales-ca</Package>
+        <Package>glibc-locales-de</Package>
+        <Package>glibc-locales-en</Package>
+        <Package>glibc-locales-es</Package>
+        <Package>glibc-locales-fr</Package>
+        <Package>glibc-locales-hu</Package>
+        <Package>glibc-locales-it</Package>
+        <Package>glibc-locales-nl</Package>
+        <Package>glibc-locales-pl</Package>
+        <Package>glibc-locales-pt</Package>
+        <Package>glibc-locales-ru</Package>
+        <Package>glibc-locales-sv</Package>
         <Package>gmp</Package>
         <Package>gperf</Package>
         <Package>gperftools</Package>
@@ -1280,6 +1351,7 @@
         <Package>help2man</Package>
         <Package>json-c</Package>
         <Package>kbd</Package>
+        <Package>kernel</Package>
         <Package>keyutils</Package>
         <Package>kmod</Package>
         <Package>less</Package>
@@ -1318,6 +1390,7 @@
         <Package>man-db</Package>
         <Package>man-pages</Package>
         <Package>mdadm-static</Package>
+        <Package>memtest86</Package>
         <Package>mingetty</Package>
         <Package>miscfiles</Package>
         <Package>mit-kerberos</Package>
@@ -1325,6 +1398,7 @@
         <Package>mpfr</Package>
         <Package>mtools</Package>
         <Package>mudur</Package>
+        <Package>nano</Package>
         <Package>ncompress</Package>
         <Package>ncurses</Package>
         <Package>net-tools</Package>
@@ -1363,7 +1437,10 @@
         <Package>snappy</Package>
         <Package>spidermonkey</Package>
         <Package>sqlite</Package>
+        <Package>squashfs-tools</Package>
+        <Package>sudo</Package>
         <Package>sysfsutils</Package>
+        <Package>syslinux</Package>
         <Package>sysvinit</Package>
         <Package>sysvinit-tools</Package>
         <Package>tar</Package>
@@ -1388,12 +1465,14 @@
         <SelectedComponent>desktop.kde.plasma</SelectedComponent>
         <SelectedComponent>desktop.kde.porting-aids</SelectedComponent>
         <SelectedComponent>desktop.toolkit.qt5</SelectedComponent>
+        <SelectedComponent>hardware.firmware</SelectedComponent>
         <SelectedComponent>x11.server</SelectedComponent>
         <SelectedPackage>alsa-tools</SelectedPackage>
         <SelectedPackage>ark</SelectedPackage>
         <SelectedPackage>bash-completion</SelectedPackage>
         <SelectedPackage>bashdb</SelectedPackage>
         <SelectedPackage>cpupowertools</SelectedPackage>
+        <SelectedPackage>desktop-file-utils</SelectedPackage>
         <SelectedPackage>dolphin</SelectedPackage>
         <SelectedPackage>droid-fonts</SelectedPackage>
         <SelectedPackage>firefox</SelectedPackage>
@@ -1402,6 +1481,7 @@
         <SelectedPackage>foomatic-db</SelectedPackage>
         <SelectedPackage>foomatic-db-engine</SelectedPackage>
         <SelectedPackage>ghostscript</SelectedPackage>
+        <SelectedPackage>gpgme</SelectedPackage>
         <SelectedPackage>gst-libav-next</SelectedPackage>
         <SelectedPackage>gst-plugins-bad</SelectedPackage>
         <SelectedPackage>gst-plugins-bad-next</SelectedPackage>
@@ -1412,16 +1492,22 @@
         <SelectedPackage>gutenprint</SelectedPackage>
         <SelectedPackage>gwenview</SelectedPackage>
         <SelectedPackage>kaptan</SelectedPackage>
+        <SelectedPackage>kate</SelectedPackage>
         <SelectedPackage>kde-baseapps</SelectedPackage>
+        <SelectedPackage>kio-extras</SelectedPackage>
         <SelectedPackage>konsole</SelectedPackage>
         <SelectedPackage>libavc1394</SelectedPackage>
         <SelectedPackage>libcrystalhd</SelectedPackage>
         <SelectedPackage>libdvbpsi</SelectedPackage>
+        <SelectedPackage>liberation-fonts</SelectedPackage>
+        <SelectedPackage>libevent</SelectedPackage>
+        <SelectedPackage>libexif</SelectedPackage>
         <SelectedPackage>libfreebob</SelectedPackage>
         <SelectedPackage>libmatroska</SelectedPackage>
         <SelectedPackage>libmpeg2</SelectedPackage>
         <SelectedPackage>libquicktime</SelectedPackage>
         <SelectedPackage>libva-intel-driver</SelectedPackage>
+        <SelectedPackage>logrotate</SelectedPackage>
         <SelectedPackage>module-bbswitch</SelectedPackage>
         <SelectedPackage>module-broadcom-wl</SelectedPackage>
         <SelectedPackage>module-virtualbox-userspace</SelectedPackage>
@@ -1439,7 +1525,9 @@
         <SelectedPackage>smpeg</SelectedPackage>
         <SelectedPackage>smplayer</SelectedPackage>
         <SelectedPackage>spectacle</SelectedPackage>
+        <SelectedPackage>startup-notification</SelectedPackage>
         <SelectedPackage>suspend</SelectedPackage>
+        <SelectedPackage>udisks2</SelectedPackage>
         <SelectedPackage>upower</SelectedPackage>
         <SelectedPackage>uuidd</SelectedPackage>
         <SelectedPackage>v4l-utils</SelectedPackage>
@@ -1499,6 +1587,7 @@
         <Package>aalib</Package>
         <Package>accountsservice</Package>
         <Package>acl</Package>
+        <Package>alsa-firmware</Package>
         <Package>alsa-lib</Package>
         <Package>alsa-tools</Package>
         <Package>alternatives</Package>
@@ -1512,6 +1601,8 @@
         <Package>autogen</Package>
         <Package>avahi</Package>
         <Package>avahi-libs</Package>
+        <Package>b43-firmware</Package>
+        <Package>b43-fwcutter</Package>
         <Package>baloo</Package>
         <Package>baloo-widgets</Package>
         <Package>baselayout</Package>
@@ -1554,6 +1645,7 @@
         <Package>dbus-x11</Package>
         <Package>dconf</Package>
         <Package>dejavu-fonts</Package>
+        <Package>desktop-file-utils</Package>
         <Package>device-mapper</Package>
         <Package>device-mapper-event</Package>
         <Package>discover</Package>
@@ -1563,6 +1655,7 @@
         <Package>docbook-xml</Package>
         <Package>docbook-xsl</Package>
         <Package>dolphin</Package>
+        <Package>dosfstools</Package>
         <Package>drkonqi</Package>
         <Package>droid-fonts</Package>
         <Package>e2fsprogs</Package>
@@ -1607,9 +1700,11 @@
         <Package>glibmm</Package>
         <Package>gmp</Package>
         <Package>gnu-gs-fonts-std</Package>
+        <Package>gnupg</Package>
         <Package>gnutls</Package>
         <Package>gobject-introspection</Package>
         <Package>gperftools</Package>
+        <Package>gpgme</Package>
         <Package>gpm</Package>
         <Package>graphite2</Package>
         <Package>grub2</Package>
@@ -1652,6 +1747,7 @@
         <Package>kapidox</Package>
         <Package>kaptan</Package>
         <Package>karchive</Package>
+        <Package>kate</Package>
         <Package>kauth</Package>
         <Package>kbd</Package>
         <Package>kbookmarks</Package>
@@ -1693,6 +1789,7 @@
         <Package>kinfocenter</Package>
         <Package>kinit</Package>
         <Package>kio</Package>
+        <Package>kio-extras</Package>
         <Package>kitemmodels</Package>
         <Package>kitemviews</Package>
         <Package>kjobwidgets</Package>
@@ -1767,7 +1864,9 @@
         <Package>libarchive</Package>
         <Package>libart_lgpl</Package>
         <Package>libass</Package>
+        <Package>libassuan</Package>
         <Package>libasyncns</Package>
+        <Package>libatasmart</Package>
         <Package>libavc1394</Package>
         <Package>libbluray</Package>
         <Package>libbsd</Package>
@@ -1799,8 +1898,11 @@
         <Package>libebml</Package>
         <Package>libedit</Package>
         <Package>libepoxy</Package>
+        <Package>liberation-fonts</Package>
         <Package>libestr</Package>
         <Package>libevdev</Package>
+        <Package>libevent</Package>
+        <Package>libexif</Package>
         <Package>libffado</Package>
         <Package>libffi</Package>
         <Package>libfontenc</Package>
@@ -1825,6 +1927,7 @@
         <Package>libkipi</Package>
         <Package>libkmod</Package>
         <Package>libkms</Package>
+        <Package>libksba</Package>
         <Package>libkscreen</Package>
         <Package>libksysguard</Package>
         <Package>liblogging</Package>
@@ -1838,6 +1941,7 @@
         <Package>libmp4v2</Package>
         <Package>libmpeg2</Package>
         <Package>libmtdev</Package>
+        <Package>libmtp</Package>
         <Package>libndp</Package>
         <Package>libnfnetlink</Package>
         <Package>libnih</Package>
@@ -1863,11 +1967,13 @@
         <Package>libraw1394</Package>
         <Package>libsamplerate</Package>
         <Package>libsdl</Package>
+        <Package>libsecret</Package>
         <Package>libsigc++</Package>
         <Package>libsndfile</Package>
         <Package>libsoup</Package>
         <Package>libsoup-gnome</Package>
         <Package>libspectre</Package>
+        <Package>libssh</Package>
         <Package>libssh2</Package>
         <Package>libtalloc</Package>
         <Package>libtasn1</Package>
@@ -1909,10 +2015,12 @@
         <Package>llvm-libs</Package>
         <Package>lm_sensors</Package>
         <Package>lmdb</Package>
+        <Package>logrotate</Package>
         <Package>lua</Package>
         <Package>lvm2</Package>
         <Package>lzo</Package>
         <Package>mariadb-lib</Package>
+        <Package>mdadm</Package>
         <Package>media-player-info</Package>
         <Package>mesa</Package>
         <Package>mesa-glu</Package>
@@ -1937,9 +2045,11 @@
         <Package>networkmanager-qt</Package>
         <Package>newt</Package>
         <Package>noto-fonts</Package>
+        <Package>npth</Package>
         <Package>nspr</Package>
         <Package>nss</Package>
         <Package>ntfs-3g</Package>
+        <Package>ntfsprogs</Package>
         <Package>okular</Package>
         <Package>openal</Package>
         <Package>openconnect</Package>
@@ -1947,6 +2057,7 @@
         <Package>openexr-libs</Package>
         <Package>openjpeg</Package>
         <Package>openldap-client</Package>
+        <Package>openslp</Package>
         <Package>openssl</Package>
         <Package>orc</Package>
         <Package>os-prober</Package>
@@ -1961,6 +2072,7 @@
         <Package>pciutils</Package>
         <Package>perl</Package>
         <Package>piksemel</Package>
+        <Package>pinentry</Package>
         <Package>pisi</Package>
         <Package>pisilinux-desktop-services</Package>
         <Package>pisilinux-python</Package>
@@ -2066,6 +2178,7 @@
         <Package>scim-libs</Package>
         <Package>sddm</Package>
         <Package>sddm-kcm</Package>
+        <Package>sg3_utils</Package>
         <Package>sgml-common</Package>
         <Package>shared-mime-info</Package>
         <Package>slang</Package>
@@ -2080,6 +2193,7 @@
         <Package>speex</Package>
         <Package>spidermonkey</Package>
         <Package>sqlite</Package>
+        <Package>startup-notification</Package>
         <Package>suspend</Package>
         <Package>sysfsutils</Package>
         <Package>system-config-printer</Package>
@@ -2094,6 +2208,7 @@
         <Package>tidy</Package>
         <Package>tiff</Package>
         <Package>timezone</Package>
+        <Package>udisks2</Package>
         <Package>unixODBC</Package>
         <Package>unrar</Package>
         <Package>upower</Package>
@@ -2127,6 +2242,7 @@
         <Package>xdg-utils</Package>
         <Package>xinit</Package>
         <Package>xkeyboard-config</Package>
+        <Package>xmlto</Package>
         <Package>xorg-app</Package>
         <Package>xorg-input-acecad</Package>
         <Package>xorg-input-aiptek</Package>
