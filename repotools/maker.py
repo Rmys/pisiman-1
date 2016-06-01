@@ -437,26 +437,22 @@ def make_image(project):
             run('chroot "%s" %s' % (image_dir, cmd))
 
 
-     
         os.mknod("%s/dev/null" % image_dir, 0666 | stat.S_IFCHR, os.makedev(1, 3))
         os.mknod("%s/dev/console" % image_dir, 0666 | stat.S_IFCHR, os.makedev(5, 1))
         os.mknod("%s/dev/random" % image_dir, 0666 | stat.S_IFCHR, os.makedev(1, 8))
         os.mknod("%s/dev/urandom" % image_dir, 0666 | stat.S_IFCHR, os.makedev(1, 9))
         
-
-        
-        
         path = "%s/usr/share/baselayout/" % image_dir
         path2 = "%s/etc" % image_dir
         for name in os.listdir(path):
             run('cp -p "%s" "%s"' % (os.path.join(path, name), os.path.join(path2, name)))
-            
-            
+
         run('/bin/mount --bind /proc %s/proc' % image_dir)
         run('/bin/mount --bind /sys %s/sys' % image_dir)
 
         chrun("/sbin/ldconfig")
         chrun("/sbin/update-environment")
+           
         chroot_comar(image_dir)
         chrun("/usr/bin/pisi configure-pending baselayout")
 
@@ -479,7 +475,7 @@ def make_image(project):
         obj.addUser(1000, "pisilive", "livecd", "/home/pisilive", "/bin/bash", "live", ["wheel", "users", "lp", "lpadmin", "cdrom", "floppy", "disk", "audio", "video", "power", "dialout"], [], [], 
             
         dbus_interface="tr.org.pardus.comar.User.Manager")
-
+       
 
         # Make sure environment is updated regardless of the booting system, by setting comparison
         # files' atime and mtime to UNIX time 1
@@ -545,8 +541,7 @@ def install_desktop(project):
     run('/bin/umount -R %s' % desktop_image_dir)
     run("rm -rf %s/run/dbus/*" % desktop_image_dir)
     
-
-    
+   
     setup_live_sddm(project)
     
     
@@ -580,7 +575,17 @@ def install_livecd_util(project):
     run("cp -p %s/calamares/* %s/etc/calamares/." % (configdir,livecd_image_dir),ignore_error=True)
 
     run("cp -p %s/calamares/* %s/etc/calamares/." % (configdir,livecd_image_dir),ignore_error=True)
+    
+    run("cp -p %s/live/sudoers/* %s/etc/sudoers.d/." % (configdir,livecd_image_dir),ignore_error=True)
 
+    
+    path = os.path.join(livecd_image_dir, "home/pisilive/.config")
+    if not os.path.exists(path):
+        os.makedirs(path)
+        
+    run("cp -p %s/live/kde/.config/* %s/home/pisilive/.config/." % (configdir,livecd_image_dir),ignore_error=True)
+    os.system('/bin/chown 1000:100 "%s/home/pisilive/.config"' % livecd_image_dir)
+    os.chmod(path, 0711)
     
     run("chroot \"%s\" /bin/service dbus start" % livecd_image_dir)
     run("chroot \"%s\" /usr/bin/pisi cp" % livecd_image_dir)
@@ -603,12 +608,14 @@ def make_initrd(project):
     image_dir = project.image_dir()
    
     initrd_image_dir = project.initrd_image_dir(clean=True)
-    
+    desktop_image_dir = project.desktop_image_dir()
     
     configdir =os.path.join(project.config_files)
     
     
     run('mount -t aufs -o br=%s:%s=ro none %s' % (initrd_image_dir,image_dir,initrd_image_dir))
+    
+    run('mount -t aufs -o remount,append:%s=ro none %s' % (desktop_image_dir, initrd_image_dir))
     
     path = "%s/initcpio/install/" % configdir
     path2 = "%s/usr/lib/initcpio/install/" %initrd_image_dir

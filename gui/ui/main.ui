@@ -220,7 +220,7 @@
      <x>0</x>
      <y>0</y>
      <width>647</width>
-     <height>27</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -263,7 +263,7 @@
    <addaction name="menuHelper"/>
   </widget>
   <action name="actionNew">
-   <property name="icon">
+   <property name="icon" stdset="0">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/document-new.png</normaloff>:/raw/pics/document-new.png</iconset>
    </property>
@@ -272,7 +272,7 @@
    </property>
   </action>
   <action name="actionOpen">
-   <property name="icon">
+   <property name="icon" stdset="0">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/document-open.png</normaloff>:/raw/pics/document-open.png</iconset>
    </property>
@@ -281,7 +281,7 @@
    </property>
   </action>
   <action name="actionSave">
-   <property name="icon">
+   <property name="icon" stdset="0">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/document-save.png</normaloff>:/raw/pics/document-save.png</iconset>
    </property>
@@ -290,7 +290,7 @@
    </property>
   </action>
   <action name="actionSaveAs">
-   <property name="icon">
+   <property name="icon" stdset="0">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/document-save-as.png</normaloff>:/raw/pics/document-save-as.png</iconset>
    </property>
@@ -299,7 +299,7 @@
    </property>
   </action>
   <action name="actionExit">
-   <property name="icon">
+   <property name="icon" stdset="0">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/application-exit.png</normaloff>:/raw/pics/application-exit.png</iconset>
    </property>
@@ -308,7 +308,7 @@
    </property>
   </action>
   <action name="actionUpdateRepo">
-   <property name="icon">
+   <property name="icon" stdset="0">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/view-refresh.png</normaloff>:/raw/pics/view-refresh.png</iconset>
    </property>
@@ -317,7 +317,7 @@
    </property>
   </action>
   <action name="actionPackages">
-   <property name="icon">
+   <property name="icon" stdset="0">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/applications-other.png</normaloff>:/raw/pics/applications-other.png</iconset>
    </property>
@@ -326,7 +326,7 @@
    </property>
   </action>
   <action name="actionRootImagePackages">
-   <property name="icon">
+   <property name="icon" stdset="0">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/applications-other.png</normaloff>:/raw/pics/applications-other.png</iconset>
    </property>
@@ -335,7 +335,7 @@
    </property>
   </action>
   <action name="actionLanguages">
-   <property name="icon">
+   <property name="icon" stdset="0">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/applications-education-language.png</normaloff>:/raw/pics/applications-education-language.png</iconset>
    </property>
@@ -344,7 +344,7 @@
    </property>
   </action>
   <action name="actionMakeImage">
-   <property name="icon">
+   <property name="icon" stdset="0">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/media-optical.png</normaloff>:/raw/pics/media-optical.png</iconset>
    </property>
@@ -353,7 +353,7 @@
    </property>
   </action>
   <action name="actionLivecdImagePackages">
-   <property name="icon">
+   <property name="icon" stdset="0">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/applications-other.png</normaloff>:/raw/pics/applications-other.png</iconset>
    </property>
@@ -362,7 +362,7 @@
    </property>
   </action>
   <action name="actionDesktopImagePackages">
-   <property name="icon">
+   <property name="icon" stdset="0">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/applications-other.png</normaloff>:/raw/pics/applications-other.png</iconset>
    </property>
@@ -371,7 +371,7 @@
    </property>
   </action>
   <action name="action">
-   <property name="icon">
+   <property name="icon" stdset="0">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/folder-new.png</normaloff>:/raw/pics/folder-new.png</iconset>
    </property>
@@ -383,7 +383,7 @@
    </property>
   </action>
   <action name="action_2">
-   <property name="icon">
+   <property name="icon" stdset="0">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/list-add.png</normaloff>:/raw/pics/list-add.png</iconset>
    </property>
@@ -395,7 +395,7 @@
    </property>
   </action>
   <action name="action_3">
-   <property name="icon">
+   <property name="icon" stdset="0">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/media-optical.png</normaloff>:/raw/pics/media-optical.png</iconset>
    </property>
@@ -407,7 +407,7 @@
    </property>
   </action>
   <action name="actionMake_Repo">
-   <property name="icon">
+   <property name="icon" stdset="0">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/folder-new.png</normaloff>:/raw/pics/folder-new.png</iconset>
    </property>
@@ -416,7 +416,7 @@
    </property>
   </action>
   <action name="actionMake_Squashfs">
-   <property name="icon">
+   <property name="icon" stdset="0">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/list-add.png</normaloff>:/raw/pics/list-add.png</iconset>
    </property>
@@ -425,7 +425,7 @@
    </property>
   </action>
   <action name="actionMake_Iso">
-   <property name="icon">
+   <property name="icon" stdset="0">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/media-optical.png</normaloff>:/raw/pics/media-optical.png</iconset>
    </property>
@@ -434,7 +434,7 @@
    </property>
   </action>
   <action name="actionMake_Image">
-   <property name="icon">
+   <property name="icon" stdset="0">
     <iconset resource="raw.qrc">
      <normaloff>:/raw/pics/applications-other.png</normaloff>:/raw/pics/applications-other.png</iconset>
    </property>
