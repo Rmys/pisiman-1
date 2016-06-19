@@ -6,4 +6,4 @@ Autolock=false
 Timeout=1
 
 [Greeter]
-Theme=org.kde.maia.desktop
+Theme=org.kde.oxygen

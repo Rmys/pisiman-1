@@ -357,24 +357,38 @@ def add_repo(project):
 
     run('/bin/mount --bind /proc %s/proc' % image_dir)
     run('/bin/mount --bind /sys %s/sys' % image_dir)
+    run('/bin/mount --bind /dev %s/dev' %image_dir)
+    
     run("chroot \"%s\" /bin/service dbus start" % image_dir)
     
     run("chroot \"%s\" /usr/bin/pisi rr pisilinux-install" % image_dir)
+
+    
+    run("cp -p /etc/localtime %s/etc/." % image_dir,ignore_error=True)
+    run("cp -p /etc/resolv.conf %s/etc/." % image_dir,ignore_error=True)
+
     
     configdir =os.path.join(project.config_files)
     
     
     address = open(os.path.join(configdir, "repo.conf")).read()
 
-    run("chroot \"%s\" /usr/bin/pisi ar pisi --yes-all  --ignore-check --no-fetch \"%s\"" % (image_dir,address))
-
+    run("chroot \"%s\" /usr/bin/pisi ar pisi --yes-all  --ignore-check  \"%s\"" % (image_dir,address))
+    run("chroot \"%s\" /usr/bin/pisi ar contrib --yes-all  --ignore-check  https://github.com/pisilinux/contrib/raw/master/pisi-index.xml.xz" % image_dir)
+    run("chroot \"%s\" /usr/bin/pisi ar pisilife --yes-all  --ignore-check  https://github.com/pisilinux/pisilife-2/raw/master/pisi-index.xml.xz" % image_dir)
+    
+    
     
     run("chroot \"%s\" /bin/service dbus stop" % image_dir)
     
     run('umount %s/proc' % image_dir)
     run('umount %s/sys' % image_dir)
-
+    run('umount %s/dev' % image_dir)
+    
     run("rm -rf %s/run/dbus/*" % image_dir)
+    run("rm -rf %s/etc/localtime" % image_dir)
+    run("rm -rf %s/etc/resolv.conf" % image_dir)
+    
 
 def make_image(project):
     global bus

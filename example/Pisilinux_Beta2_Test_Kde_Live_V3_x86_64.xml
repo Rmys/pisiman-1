@@ -1,6 +1,6 @@
 <PisiManProject type="None" compression="xz">
-    <Title>Pisilinux_Beta2_Test_Kde_Live_V2_x86_64</Title>
-    <WorkDir>/tmp/test</WorkDir>
+    <Title>Pisilinux_Beta2_Test_Kde_Live_V3_x86_64</Title>
+    <WorkDir>/tmp/testkde</WorkDir>
     <ConfigFiles>/media/erturk/yedekext4/git/pisiman/config</ConfigFiles>
     <PackageSelection repo_uri="http://ciftlik.pisilinux.org/2.0-Beta/pisi-index.xml.xz">
         <SelectedComponent>system.base</SelectedComponent>
@@ -30,6 +30,7 @@
         <SelectedPackage>sudo</SelectedPackage>
         <SelectedPackage>syslinux</SelectedPackage>
         <SelectedPackage>alsa-tools</SelectedPackage>
+        <SelectedPackage>alsa-utils</SelectedPackage>
         <SelectedPackage>ark</SelectedPackage>
         <SelectedPackage>bash-completion</SelectedPackage>
         <SelectedPackage>bashdb</SelectedPackage>
@@ -54,6 +55,7 @@
         <SelectedPackage>gst-plugins-ugly-next</SelectedPackage>
         <SelectedPackage>gutenprint</SelectedPackage>
         <SelectedPackage>gwenview</SelectedPackage>
+        <SelectedPackage>history-manager</SelectedPackage>
         <SelectedPackage>kaptan</SelectedPackage>
         <SelectedPackage>kate</SelectedPackage>
         <SelectedPackage>kde-baseapps</SelectedPackage>
@@ -86,6 +88,7 @@
         <SelectedPackage>pulseaudio</SelectedPackage>
         <SelectedPackage>qbittorrent</SelectedPackage>
         <SelectedPackage>qt5-phonon-backend-gstreamer</SelectedPackage>
+        <SelectedPackage>service-manager</SelectedPackage>
         <SelectedPackage>smpeg</SelectedPackage>
         <SelectedPackage>smplayer</SelectedPackage>
         <SelectedPackage>spectacle</SelectedPackage>
@@ -331,6 +334,7 @@
         <Package>alsa-firmware</Package>
         <Package>alsa-lib</Package>
         <Package>alsa-tools</Package>
+        <Package>alsa-utils</Package>
         <Package>alternatives</Package>
         <Package>ark</Package>
         <Package>aspell</Package>
@@ -356,6 +360,7 @@
         <Package>bluez-libs</Package>
         <Package>bluez-qt</Package>
         <Package>boost</Package>
+        <Package>boost-python</Package>
         <Package>breeze-cursors</Package>
         <Package>breeze-grub</Package>
         <Package>breeze-gtk</Package>
@@ -429,6 +434,7 @@
         <Package>fribidi</Package>
         <Package>fuse</Package>
         <Package>gc</Package>
+        <Package>gconf</Package>
         <Package>gdb</Package>
         <Package>gdbm</Package>
         <Package>gdk-pixbuf</Package>
@@ -470,8 +476,10 @@
         <Package>gwenview</Package>
         <Package>harfbuzz</Package>
         <Package>hdparm</Package>
+        <Package>history-manager</Package>
         <Package>hunspell</Package>
         <Package>ibus</Package>
+        <Package>icon-theme-adwaita</Package>
         <Package>icon-theme-hicolor</Package>
         <Package>iconcan</Package>
         <Package>icu4c</Package>
@@ -570,6 +578,7 @@
         <Package>kwrited</Package>
         <Package>kxmlgui</Package>
         <Package>kxmlrpcclient</Package>
+        <Package>l-smash</Package>
         <Package>lame</Package>
         <Package>lcms2</Package>
         <Package>leveldb</Package>
@@ -906,6 +915,7 @@
         <Package>qt5-svg</Package>
         <Package>qt5-translations</Package>
         <Package>qt5-webchannel</Package>
+        <Package>qt5-webengine</Package>
         <Package>qt5-webkit</Package>
         <Package>qt5-websockets</Package>
         <Package>qt5-x11extras</Package>
@@ -923,6 +933,7 @@
         <Package>scim-libs</Package>
         <Package>sddm</Package>
         <Package>sddm-kcm</Package>
+        <Package>service-manager</Package>
         <Package>sg3_utils</Package>
         <Package>sgml-common</Package>
         <Package>shared-mime-info</Package>
@@ -1477,8 +1488,6 @@
         <SelectedComponent>x11.server</SelectedComponent>
         <SelectedPackage>alsa-tools</SelectedPackage>
         <SelectedPackage>alsa-utils</SelectedPackage>
-        <SelectedPackage>history-manager</SelectedPackage>
-        <SelectedPackage>service-manager</SelectedPackage>
         <SelectedPackage>ark</SelectedPackage>
         <SelectedPackage>bash-completion</SelectedPackage>
         <SelectedPackage>bashdb</SelectedPackage>
@@ -1503,6 +1512,7 @@
         <SelectedPackage>gst-plugins-ugly-next</SelectedPackage>
         <SelectedPackage>gutenprint</SelectedPackage>
         <SelectedPackage>gwenview</SelectedPackage>
+        <SelectedPackage>history-manager</SelectedPackage>
         <SelectedPackage>kaptan</SelectedPackage>
         <SelectedPackage>kate</SelectedPackage>
         <SelectedPackage>kde-baseapps</SelectedPackage>
@@ -1535,6 +1545,7 @@
         <SelectedPackage>pulseaudio</SelectedPackage>
         <SelectedPackage>qbittorrent</SelectedPackage>
         <SelectedPackage>qt5-phonon-backend-gstreamer</SelectedPackage>
+        <SelectedPackage>service-manager</SelectedPackage>
         <SelectedPackage>smpeg</SelectedPackage>
         <SelectedPackage>smplayer</SelectedPackage>
         <SelectedPackage>spectacle</SelectedPackage>
@@ -1604,6 +1615,7 @@
         <Package>alsa-firmware</Package>
         <Package>alsa-lib</Package>
         <Package>alsa-tools</Package>
+        <Package>alsa-utils</Package>
         <Package>alternatives</Package>
         <Package>ark</Package>
         <Package>aspell</Package>
@@ -1629,6 +1641,7 @@
         <Package>bluez-libs</Package>
         <Package>bluez-qt</Package>
         <Package>boost</Package>
+        <Package>boost-python</Package>
         <Package>breeze-cursors</Package>
         <Package>breeze-grub</Package>
         <Package>breeze-gtk</Package>
@@ -1702,6 +1715,7 @@
         <Package>fribidi</Package>
         <Package>fuse</Package>
         <Package>gc</Package>
+        <Package>gconf</Package>
         <Package>gdb</Package>
         <Package>gdbm</Package>
         <Package>gdk-pixbuf</Package>
@@ -1743,8 +1757,10 @@
         <Package>gwenview</Package>
         <Package>harfbuzz</Package>
         <Package>hdparm</Package>
+        <Package>history-manager</Package>
         <Package>hunspell</Package>
         <Package>ibus</Package>
+        <Package>icon-theme-adwaita</Package>
         <Package>icon-theme-hicolor</Package>
         <Package>iconcan</Package>
         <Package>icu4c</Package>
@@ -1843,6 +1859,7 @@
         <Package>kwrited</Package>
         <Package>kxmlgui</Package>
         <Package>kxmlrpcclient</Package>
+        <Package>l-smash</Package>
         <Package>lame</Package>
         <Package>lcms2</Package>
         <Package>leveldb</Package>
@@ -2179,6 +2196,7 @@
         <Package>qt5-svg</Package>
         <Package>qt5-translations</Package>
         <Package>qt5-webchannel</Package>
+        <Package>qt5-webengine</Package>
         <Package>qt5-webkit</Package>
         <Package>qt5-websockets</Package>
         <Package>qt5-x11extras</Package>
@@ -2196,6 +2214,7 @@
         <Package>scim-libs</Package>
         <Package>sddm</Package>
         <Package>sddm-kcm</Package>
+        <Package>service-manager</Package>
         <Package>sg3_utils</Package>
         <Package>sgml-common</Package>
         <Package>shared-mime-info</Package>

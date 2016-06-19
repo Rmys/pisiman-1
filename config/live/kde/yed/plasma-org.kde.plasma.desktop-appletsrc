@@ -94,13 +94,8 @@ plugin=org.kde.plasma.digitalclock
 [Containments][1][General]
 AppletOrder=2;3;4;5;6
 
-[Containments][41][Wallpaper][org.kde.image][General]
-Image=file:///usr/share/wallpapers/ColdRipple/contents/images/1920x1080.jpg
-height=1080
-width=1920
-
-[Containments][8]
-activityId=2170c5f9-61f5-4bf3-bd26-906830ec620b
+[Containments][7]
+activityId=8cbb1be0-067d-4a0e-9108-98dd7de00854
 formfactor=0
 immutability=1
 lastScreen=0
@@ -108,11 +103,7 @@ location=0
 plugin=org.kde.desktopcontainment
 wallpaperplugin=org.kde.image
 
-[Containments][8][ConfigDialog]
-DialogHeight=540
-DialogWidth=720
-
-[Containments][8][Wallpaper][org.kde.image][General]
+[Containments][41][Wallpaper][org.kde.image][General]
 Image=file:///usr/share/wallpapers/ColdRipple/contents/images/1920x1080.jpg
 height=1080
 width=1920
