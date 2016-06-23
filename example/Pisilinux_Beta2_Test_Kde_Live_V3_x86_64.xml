@@ -2,7 +2,7 @@
     <Title>Pisilinux_Beta2_Test_Kde_Live_V3_x86_64</Title>
     <WorkDir>/tmp/testkde</WorkDir>
     <ConfigFiles>/media/erturk/yedekext4/git/pisiman/config</ConfigFiles>
-    <PackageSelection repo_uri="http://ciftlik.pisilinux.org/2.0-Beta/pisi-index.xml.xz">
+    <PackageSelection repo_uri="file:///media/erturk/yedekext4/2depo/beta/pisi-index.xml.xz">
         <SelectedComponent>system.base</SelectedComponent>
         <SelectedComponent>desktop.kde.framework</SelectedComponent>
         <SelectedComponent>desktop.kde.plasma</SelectedComponent>
