@@ -714,7 +714,7 @@ def make_EFI(project):
     run("cp -p %s/efi/loaders/loader.conf %s/." % (configdir, loader_path))
     run("cp -p %s/efi/loaders/entries/* %s/entries/." % (configdir, loader_path))
     
-    os.unlink(os.path.join(loader_path, "entries/pisi-efi-x86_64.conf"))
+  #  os.unlink(os.path.join(loader_path, "entries/pisi-efi-x86_64.conf"))
     
     run("cp -p %s/efi/preloader/boot/* %s/boot/." % (configdir, efi_path))
      
@@ -732,7 +732,7 @@ def make_EFI(project):
     
     run("cp -r %s/* %s/loader/." % (loader_path, efi_tmp),ignore_error=True)
     
-    os.unlink(os.path.join(efi_tmp, "loader/entries/pisi-x86_64.conf"))
+   # os.unlink(os.path.join(efi_tmp, "loader/entries/pisi-x86_64.conf"))
     
     run("cp -p %s/boot/kernel* %s/EFI/pisi/kernel.efi" % (image_dir,efi_tmp))  
     run("cp -p %s/boot/initramfs* %s/EFI/pisi/initrd.img" % (image_dir,efi_tmp))  
@@ -766,10 +766,10 @@ def make_iso(project):
 
         
 
-       # make_EFI(project)
+        make_EFI(project)
         run("cp -p %s/isomounts %s/." % (configdir, image_path))
         run("cp -p %s/*sqfs %s/x86_64/." % (work_dir, image_path))
-      #  run("cp -p %s/pisi.img %s/EFI/pisi/." % (work_dir, iso_dir))
+        run("cp -p %s/pisi.img %s/EFI/pisi/." % (work_dir, iso_dir))
 
    
         run("touch %s/.miso" % iso_dir)
@@ -795,10 +795,10 @@ def make_iso(project):
             -relaxed-filenames -allow-lowercase -volid "%s" -publisher "%s" -appid "%s" \
             -preparer "prepared by pisiman" -eltorito-boot isolinux/isolinux.bin \
             -eltorito-catalog isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table \
-            -isohybrid-mbr "%s/isolinux/isohdpfx.bin" \
+            -isohybrid-mbr "%s/isolinux/isohdpfx.bin" -eltorito-alt-boot -e EFI/pisi/pisi.img -isohybrid-gpt-basdat -no-emul-boot \
             -output "%s" "%s/iso/"'% (label, publisher ,application, iso_dir, iso_file, work_dir)
        
-       #-eltorito-alt-boot -e EFI/pisi/pisi.img -isohybrid-gpt-basdat -no-emul-boot
+       
        
         run(cmd)
 
