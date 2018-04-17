@@ -178,6 +178,7 @@
         <Package>dosfstools</Package>
         <Package>e2fsprogs</Package>
         <Package>efibootmgr</Package>
+        <Package>efitools</Package>
         <Package>efivar</Package>
         <Package>eudev</Package>
         <Package>expat</Package>
@@ -1141,6 +1142,7 @@
         <Package>dotconf</Package>
         <Package>e2fsprogs</Package>
         <Package>efibootmgr</Package>
+        <Package>efitools</Package>
         <Package>efivar</Package>
         <Package>elfutils</Package>
         <Package>espeak</Package>
@@ -1469,6 +1471,7 @@
         <SelectedPackage>memtest86</SelectedPackage>
         <SelectedPackage>mkinitcpio</SelectedPackage>
         <SelectedPackage>nano</SelectedPackage>
+        <SelectedPackage>plymouth</SelectedPackage>
         <SelectedPackage>squashfs-tools</SelectedPackage>
         <SelectedPackage>sudo</SelectedPackage>
         <SelectedPackage>syslinux</SelectedPackage>
@@ -1501,6 +1504,7 @@
         <Package>dosfstools</Package>
         <Package>e2fsprogs</Package>
         <Package>efibootmgr</Package>
+        <Package>efitools</Package>
         <Package>efivar</Package>
         <Package>eudev</Package>
         <Package>expat</Package>
@@ -1608,6 +1612,14 @@
         <Package>pisi</Package>
         <Package>pisilinux-python</Package>
         <Package>plyvel</Package>
+        <Package>plymouth</Package>
+        <Package>plymouth-core-libs</Package>
+        <Package>plymouth-graphics-libs</Package>
+        <Package>plymouth-plugin-label</Package>
+        <Package>plymouth-plugin-script</Package>
+        <Package>plymouth-plugin-two-step</Package>
+        <Package>plymouth-theme-pisilinux</Package>
+        <Package>plymouth-theme-spinner</Package>
         <Package>polkit</Package>
         <Package>popt</Package>
         <Package>procps</Package>
@@ -1659,6 +1671,8 @@
         <SelectedPackage>ark</SelectedPackage>
         <SelectedPackage>bash-completion</SelectedPackage>
         <SelectedPackage>bashdb</SelectedPackage>
+        <SelectedPackage>busybox-mkinitcpio</SelectedPackage>
+        <SelectedPackage>mkinitcpio</SelectedPackage>
         <SelectedPackage>cpupowertools</SelectedPackage>
         <SelectedPackage>cups-filters</SelectedPackage>
         <SelectedPackage>desktop-file-utils</SelectedPackage>
@@ -1815,6 +1829,7 @@
         <Package>breeze-plymouth</Package>
         <Package>breeze-style</Package>
         <Package>breeze-wallpapers</Package>
+        <Package>busybox-mkinitcpio</Package>
         <Package>bzip2</Package>
         <Package>ca-certificates</Package>
         <Package>cairo</Package>
@@ -2244,6 +2259,7 @@
         <Package>media-player-info</Package>
         <Package>mesa</Package>
         <Package>mesa-glu</Package>
+        <Package>mkinitcpio</Package>
         <Package>milou</Package>
         <Package>minizip</Package>
         <Package>mit-kerberos</Package>
@@ -2592,6 +2608,7 @@
         <Package>dotconf</Package>
         <Package>e2fsprogs</Package>
         <Package>efibootmgr</Package>
+        <Package>efitools</Package>
         <Package>efivar</Package>
         <Package>elfutils</Package>
         <Package>espeak</Package>
