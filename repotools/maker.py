@@ -374,8 +374,8 @@ def add_repo(project):
     address = open(os.path.join(configdir, "repo.conf")).read()
 
     run("chroot \"%s\" /usr/bin/pisi ar pisi --yes-all  --ignore-check  \"%s\"" % (image_dir,address))
-    run("chroot \"%s\" /usr/bin/pisi ar contrib --yes-all  --ignore-check  https://github.com/pisilinux/contrib/raw/master/pisi-index.xml.xz" % image_dir)
-    run("chroot \"%s\" /usr/bin/pisi ar pisilife --yes-all  --ignore-check  https://github.com/pisilinux/pisilife-2/raw/master/pisi-index.xml.xz" % image_dir)
+    #run("chroot \"%s\" /usr/bin/pisi ar contrib --yes-all  --ignore-check  https://github.com/pisilinux/contrib/raw/master/pisi-index.xml.xz" % image_dir)
+    #run("chroot \"%s\" /usr/bin/pisi ar pisilife --yes-all  --ignore-check  https://github.com/pisilinux/pisilife-2/raw/master/pisi-index.xml.xz" % image_dir)
     
     
     
