@@ -1471,7 +1471,6 @@
         <SelectedPackage>memtest86</SelectedPackage>
         <SelectedPackage>mkinitcpio</SelectedPackage>
         <SelectedPackage>nano</SelectedPackage>
-        <SelectedPackage>plymouth</SelectedPackage>
         <SelectedPackage>squashfs-tools</SelectedPackage>
         <SelectedPackage>sudo</SelectedPackage>
         <SelectedPackage>syslinux</SelectedPackage>
@@ -1612,14 +1611,6 @@
         <Package>pisi</Package>
         <Package>pisilinux-python</Package>
         <Package>plyvel</Package>
-        <Package>plymouth</Package>
-        <Package>plymouth-core-libs</Package>
-        <Package>plymouth-graphics-libs</Package>
-        <Package>plymouth-plugin-label</Package>
-        <Package>plymouth-plugin-script</Package>
-        <Package>plymouth-plugin-two-step</Package>
-        <Package>plymouth-theme-pisilinux</Package>
-        <Package>plymouth-theme-spinner</Package>
         <Package>polkit</Package>
         <Package>popt</Package>
         <Package>procps</Package>
